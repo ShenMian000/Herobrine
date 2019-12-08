@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="头文件\database">
+      <UniqueIdentifier>{38bf6141-bdcf-49a1-9148-97cabf824c20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\database">
+      <UniqueIdentifier>{289fd477-7a96-4e6a-baff-3dba97045b6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="其他文件">
+      <UniqueIdentifier>{220926b8-aa53-4e72-8fda-90f0e938e956}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\command">
+      <UniqueIdentifier>{b260bcac-0ed1-4670-b8a1-9837d8d6a2d5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="slave.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="himconsole.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="attribute.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="print.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="database\mysql\mysql.h">
+      <Filter>头文件\database</Filter>
+    </ClInclude>
+    <ClInclude Include="database\mysql\result.h">
+      <Filter>头文件\database</Filter>
+    </ClInclude>
+    <ClInclude Include="command.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="console.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="command\clear.h">
+      <Filter>头文件\command</Filter>
+    </ClInclude>
+    <ClInclude Include="command\help.h">
+      <Filter>头文件\command</Filter>
+    </ClInclude>
+    <ClInclude Include="command\history.h">
+      <Filter>头文件\command</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="himconsole.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="attribute.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="print.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="slave.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="database\mysql\mysql.cpp">
+      <Filter>源文件\database</Filter>
+    </ClCompile>
+    <ClCompile Include="database\mysql\result.cpp">
+      <Filter>源文件\database</Filter>
+    </ClCompile>
+    <ClCompile Include="console.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="command.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.zh-CN.md">
+      <Filter>其他文件</Filter>
+    </None>
+  </ItemGroup>
+</Project>

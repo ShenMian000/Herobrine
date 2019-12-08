@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Herobrine", "Herobrine\Herobrine.vcxproj", "{5E04C9BA-E0FB-4597-80DE-85DB82D29B69}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Himconsole", "Himconsole\Himconsole.vcxproj", "{859C514D-A955-46F6-9A31-9551B7D42145}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "其他文件", "其他文件", "{6B863B9B-52CA-4462-A0E7-FEB7346162F0}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.en.md = README.en.md
+		README.zh-CN.md = README.zh-CN.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E04C9BA-E0FB-4597-80DE-85DB82D29B69}.Debug|x64.ActiveCfg = Debug|x64
+		{5E04C9BA-E0FB-4597-80DE-85DB82D29B69}.Debug|x64.Build.0 = Debug|x64
+		{5E04C9BA-E0FB-4597-80DE-85DB82D29B69}.Debug|x86.ActiveCfg = Debug|Win32
+		{5E04C9BA-E0FB-4597-80DE-85DB82D29B69}.Debug|x86.Build.0 = Debug|Win32
+		{5E04C9BA-E0FB-4597-80DE-85DB82D29B69}.Release|x64.ActiveCfg = Release|x64
+		{5E04C9BA-E0FB-4597-80DE-85DB82D29B69}.Release|x64.Build.0 = Release|x64
+		{5E04C9BA-E0FB-4597-80DE-85DB82D29B69}.Release|x86.ActiveCfg = Release|Win32
+		{5E04C9BA-E0FB-4597-80DE-85DB82D29B69}.Release|x86.Build.0 = Release|Win32
+		{859C514D-A955-46F6-9A31-9551B7D42145}.Debug|x64.ActiveCfg = Debug|x64
+		{859C514D-A955-46F6-9A31-9551B7D42145}.Debug|x64.Build.0 = Debug|x64
+		{859C514D-A955-46F6-9A31-9551B7D42145}.Debug|x86.ActiveCfg = Debug|Win32
+		{859C514D-A955-46F6-9A31-9551B7D42145}.Debug|x86.Build.0 = Debug|Win32
+		{859C514D-A955-46F6-9A31-9551B7D42145}.Release|x64.ActiveCfg = Release|x64
+		{859C514D-A955-46F6-9A31-9551B7D42145}.Release|x64.Build.0 = Release|x64
+		{859C514D-A955-46F6-9A31-9551B7D42145}.Release|x86.ActiveCfg = Release|Win32
+		{859C514D-A955-46F6-9A31-9551B7D42145}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1CD55569-9271-4320-98F0-33C1CBB9F31B}
+	EndGlobalSection
+EndGlobal

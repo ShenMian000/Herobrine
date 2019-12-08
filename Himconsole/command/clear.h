@@ -1,0 +1,27 @@
+// Copyright 2019 SMS
+// License(Apache-2.0)
+
+#include "../command.h"
+
+
+
+class Clear : public Command
+{
+public:
+	Clear()
+		: Command("clear", "«Âø’√¸¡Ó––ª∫≥Â«¯", "Herobrine")
+	{
+	}
+
+	void excute()
+	{
+		#ifdef OS_WIN
+			system("cls");
+		#elif OS_LINUX
+			system("clear");
+		#endif
+	}
+
+};
+
+
