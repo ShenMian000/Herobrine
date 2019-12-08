@@ -1,6 +1,6 @@
 **简体中文|[EN](README.en.md)**  
 
-![横幅](banner.jpg) 
+![横幅](./banner.jpg) 
 
 详情请翻阅[**Wiki**](https://gitee.com/ShenMian/Herobrine/wikis/).  
 
