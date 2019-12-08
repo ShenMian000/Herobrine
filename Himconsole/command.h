@@ -44,9 +44,11 @@ public:
 	const string& getName();
 	const string& getDescription();
 	const string& getAuthor();
-	/*Platform      getPlatform();
+	/*
+	Platform      getPlatform();
 	License       getLicense();
-	const string& getPlatform();*/
+	const string& getPlatform();
+	*/
 
 	virtual void excute() = 0;          // Ö´ÐÐÃüÁî
 
