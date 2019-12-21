@@ -29,6 +29,9 @@ enum class License
 };
 
 
+class Console;
+
+
 class Command
 {
 public:
@@ -50,7 +53,8 @@ public:
 	const string& getPlatform();
 	*/
 
-	virtual void excute() = 0;          // 执行命令
+	bool checkSyntax(Console&);
+	virtual void excute(Console&) = 0;  // 执行命令
 
 protected:
 	string   name;
@@ -58,7 +62,7 @@ protected:
 	string   author;
 	Platform platform;
 	License  license;
-	map<string, string> syntax;         // arg-type
+	map<string, string> syntax;         // 语法格式 name-type-value
 };
 
 

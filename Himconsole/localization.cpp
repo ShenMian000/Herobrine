@@ -16,6 +16,7 @@ const char* LOC_ERROR_COMMAND_TOO_LONG = "Command too long";
 const char* LOC_WARN_DEBUG             = "该版本于开发中构建, 仅供调试用";
 const char* LOC_ERROR_UNKNOWN_COMMAND  = "未知命令";
 const char* LOC_ERROR_COMMAND_TOO_LONG = "命令过长";
+const char* LOC_ERROR_INVALID_ARGUMENT = "无效参数";
 #endif
 
 #ifdef LANG_ZH_TW

@@ -25,6 +25,7 @@ extern const char* LOC_ERROR_COMMAND_TOO_LONG;
 extern const char* LOC_WARN_DEBUG;
 extern const char* LOC_ERROR_UNKNOWN_COMMAND;
 extern const char* LOC_ERROR_COMMAND_TOO_LONG;
+extern const char* LOC_ERROR_INVALID_ARGUMENT;
 #endif
 
 #ifdef LANG_ZH_TW

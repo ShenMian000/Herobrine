@@ -13,7 +13,7 @@ public:
 	{
 	}
 
-	void excute()
+	void excute(Console& console) override
 	{
 		#ifdef OS_WIN
 			system("cls");

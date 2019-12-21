@@ -29,11 +29,15 @@ int main()
 			" [Update Date: %-17.17s]\n"
 			" [Update Time: %-17.17s]\n",
 			__DATE__, __TIME__);
+
 	Console console;
 	console.setPrompt("him");
-	console.addCommand((Command*)new Clear());
-	console.addCommand((Command*)new Help());
-	console.addCommand((Command*)new History());
+	console.setHistorySize(20);
+
+	console.addCommand(dynamic_cast<Command*>(new Clear()));
+	console.addCommand(dynamic_cast<Command*>(new Help()));
+	console.addCommand(dynamic_cast<Command*>(new History()));
+
 	console.console();
 
 	return 0;

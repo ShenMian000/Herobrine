@@ -3,6 +3,8 @@
 // 
 
 #include "command.h"
+#include "console.h"
+#include "localization.h"
 
 
 
@@ -42,6 +44,17 @@ const string& Command::getDescription()
 const string& Command::getAuthor()
 {
 	return author;
+}
+
+
+bool Command::checkSyntax(Console& c)
+{
+	if(c.getArgSize()-1 > syntax.size())
+		return false;
+
+	
+
+	return true;
 }
 
 

@@ -14,6 +14,20 @@
 
 
 
+enum class Type
+{
+	Short,
+	Long,
+	String,
+};
+
+struct arg
+{
+	Type  type;
+	void* value;
+};
+
+
 class Console
 {
 public:
@@ -27,11 +41,12 @@ public:
 	void setHistorySize(size_t);
 
 	void addCommand(Command*);
+	void delCommand(Command*);
 
 	void console();
 
 private:
-	map<string, string> arg;
+	map<string, string> args;
 	vector<Command*>    command;
 	deque<string>       history;           // 命令历史记录
 	size_t              historySize = 10;  // 最大命令历史记录数量

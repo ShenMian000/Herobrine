@@ -9,6 +9,7 @@
 
 Console::Console()
 {
+	history.resize(historySize);
 }
 
 
@@ -20,14 +21,14 @@ Console::~Console()
 // 获取参数数量
 size_t Console::getArgSize()
 {
-	return arg.size();
+	return args.size();
 }
 
 
 // 获取参数
 const string& Console::getArg(const string& key)
 {
-	return arg[key];
+	return args[key];
 }
 
 
@@ -39,6 +40,7 @@ void Console::setPrompt(const string& prompt)
 void Console::setHistorySize(size_t size)
 {
 	historySize = size;
+	history.resize(historySize);
 }
 
 
@@ -74,23 +76,30 @@ void Console::console()
 		// 分隔命令参数
 		size_t lastPos;
 		lastPos = cmd.find(' ');
-		arg["cmd"] = cmd.substr(0, lastPos);
+		args["cmd"] = cmd.substr(0, lastPos);
 		
 
 		// 退出命令行
-		if (arg["cmd"] == "exit")
+		if (args["cmd"] == "exit")
 			return;
 
 		// 查找并执行命令
 		for(auto& c : command)
-			if(c->getName() == arg["cmd"])
+		{
+			if(c->getName() == args["cmd"])
 			{
-				print::good("");
-				c->excute();
-				continue;
+				if(!c->checkSyntax(*this))
+				{
+					print::error(LOC_ERROR_INVALID_ARGUMENT);
+					break;
+				}
+				c->excute(*this);
+				break;
 			}
 
-		print::error(LOC_ERROR_UNKNOWN_COMMAND);
+			if(c == command.back())
+				print::error(LOC_ERROR_UNKNOWN_COMMAND);
+		}
 	}
 }
 
