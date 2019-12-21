@@ -47,7 +47,7 @@ public:
 	void console();
 
 private:
-	map<string, string>    args;
+	map<string, string> args;
 	vector<Command*>    command;
 	deque<string>       history;           // 命令历史记录
 	size_t              historySize = 10;  // 最大命令历史记录数量

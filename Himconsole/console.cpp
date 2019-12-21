@@ -144,7 +144,7 @@ string Console::ReadLine()
 		// 功能键
 		if (buf == -32 || buf == 0)
 		{
-			buf = _getch();	   // 获取功能键ASCII代码 // TODO(SMS): 存在可移植性问题
+			buf = getch();
 
 			if (history.empty())
 				continue;
