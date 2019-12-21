@@ -19,26 +19,26 @@ enum class os_type
 	
 
 // 目标操作系统基本信息
-typedef struct
+struct os_info_
 {
 	os_type type;
-} os_info;
+};
 
 
 // 目标用户基本信息
-typedef struct
+struct user_info_
 {
 	char* name; // 用户名称
-} user_info;
+};
 
 
 // 模块信息
-typedef struct
+struct module_info
 {
 	char*	path;     // 路径
 	char* auther;   // 作者
 	char* license;  // 许可证
-} module_info;
+};
 
 
 class Slave
@@ -51,8 +51,8 @@ public:
 	bool Unload(const string& mod); // 卸载模块
 
 private:
-	os_info   os_info;                 // 系统信息
-	user_info user_info;               // 用户信息
+	os_info_   os_info;                 // 系统信息
+	user_info_ user_info;               // 用户信息
 	forward_list<module_info*> module; // 已装载的模块
 
 	void OnAccept();
