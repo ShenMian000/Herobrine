@@ -32,7 +32,6 @@ int main()
 
 	Console console;
 	console.setPrompt("him");
-	console.setHistorySize(20);
 
 	console.addCommand(dynamic_cast<Command*>(new Clear()));
 	console.addCommand(dynamic_cast<Command*>(new Help()));
