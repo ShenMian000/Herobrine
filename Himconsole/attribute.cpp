@@ -49,7 +49,7 @@ class WinAttributeInit
 public:
 	WinAttributeInit()
 	{
-		hStdOut_  = GetStdHandle(STD_OUTPUT_HANDLE);
+		hStdOut_ = GetStdHandle(STD_OUTPUT_HANDLE);
 
 		// 获取当前缓冲区字符属性
 		CONSOLE_SCREEN_BUFFER_INFO bufInfo;

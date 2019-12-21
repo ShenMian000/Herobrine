@@ -3,6 +3,7 @@
 // 命令行
 
 #include "console.h"
+#include "localization.h"
 
 
 
@@ -89,7 +90,7 @@ void Console::console()
 				continue;
 			}
 
-		print::error("未知命令");
+		print::error(LOC_ERROR_UNKNOWN_COMMAND);
 	}
 }
 
@@ -108,7 +109,7 @@ string Console::ReadLine()
 		// 边界检查
 		if (cmd.size() >= cmd.max_size())
 		{
-			print::error("命令过长");
+			print::error(LOC_ERROR_COMMAND_TOO_LONG);
 			cmd.clear();
 			break;
 		}

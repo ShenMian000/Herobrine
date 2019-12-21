@@ -38,9 +38,9 @@ private:
 	string              prompt;            // √¸¡Ó––Ã· æ∑˚
 
 	string ReadLine();
+	void   SplitCmdToArg(const string& cmd);
+	bool   CheckSyntax();
 	virtual void PrintPrompt();
-	void SplitCmdToArg(const string& cmd);
-	bool CheckSyntax();
 };
 
 

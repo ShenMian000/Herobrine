@@ -59,6 +59,9 @@
     <ClInclude Include="command\history.h">
       <Filter>头文件\command</Filter>
     </ClInclude>
+    <ClInclude Include="localization.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="himconsole.cpp">
@@ -83,6 +86,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="command.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="localization.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

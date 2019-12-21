@@ -8,13 +8,15 @@
 #include "command/help.h"
 #include "command/history.h"
 
+#include "localization.h"
+
 
 
 ///////////
 
 int main()
 {
-	print::warn("该版本于开发中构建, 仅供调试用");
+	print::warn(LOC_WARN_DEBUG);
 	printf(
 			"  __      __    __\n"
 			" |  |    |  |  |__|   __________\n"
@@ -27,7 +29,6 @@ int main()
 			" [Update Date: %-17.17s]\n"
 			" [Update Time: %-17.17s]\n",
 			__DATE__, __TIME__);
-
 	Console console;
 	console.setPrompt("him");
 	console.addCommand((Command*)new Clear());

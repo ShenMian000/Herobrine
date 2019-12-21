@@ -136,6 +136,7 @@
     <ClInclude Include="database\mysql\result.h" />
     <ClInclude Include="himconsole.h" />
     <ClInclude Include="include.h" />
+    <ClInclude Include="localization.h" />
     <ClInclude Include="print.h" />
     <ClInclude Include="slave.h" />
   </ItemGroup>
@@ -146,6 +147,7 @@
     <ClCompile Include="database\mysql\mysql.cpp" />
     <ClCompile Include="database\mysql\result.cpp" />
     <ClCompile Include="himconsole.cpp" />
+    <ClCompile Include="localization.cpp" />
     <ClCompile Include="print.cpp" />
     <ClCompile Include="slave.cpp" />
   </ItemGroup>
