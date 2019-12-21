@@ -15,11 +15,13 @@ public:
 
 	void excute(Console& console) override
 	{
-		#ifdef OS_WIN
+#ifdef OS_WIN
 			system("cls");
-		#elif OS_LINUX
+#endif
+
+#ifdef OS_LINUX
 			printf("\33[2J");
-		#endif
+#endif
 	}
 
 };
