@@ -16,7 +16,7 @@
 
 int main()
 {
-	print::warn(LOC_WARN_DEBUG);
+	print::warn(local::WARN_DEBUG);
 	printf(
 			"  __      __    __\n"
 			" |  |    |  |  |__|   __________\n"

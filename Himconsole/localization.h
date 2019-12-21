@@ -7,6 +7,9 @@
 
 
 
+namespace local
+{
+
 /*
  ”Ô—‘(Language)
  LANG_ZH_CH ÷–ŒƒºÚÃÂ
@@ -15,24 +18,12 @@
  */
 #define LANG_ZH_CN
 
-#ifdef LANG_EN
-extern const char* LOC_WARN_DEBUG;
-extern const char* LOC_ERROR_UNKNOWN_COMMAND;
-extern const char* LOC_ERROR_COMMAND_TOO_LONG;
-#endif
+extern const char* WARN_DEBUG;
+extern const char* ERROR_UNKNOWN_COMMAND;
+extern const char* ERROR_COMMAND_TOO_LONG;
+extern const char* ERROR_INVALID_ARGUMENT;
 
-#ifdef LANG_ZH_CN
-extern const char* LOC_WARN_DEBUG;
-extern const char* LOC_ERROR_UNKNOWN_COMMAND;
-extern const char* LOC_ERROR_COMMAND_TOO_LONG;
-extern const char* LOC_ERROR_INVALID_ARGUMENT;
-#endif
-
-#ifdef LANG_ZH_TW
-extern const char* LOC_WARN_DEBUG;
-extern const char* LOC_ERROR_UNKNOWN_COMMAND;
-extern const char* LOC_ERROR_COMMAND_TOO_LONG;
-#endif
+}
 
 
 

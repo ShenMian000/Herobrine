@@ -91,7 +91,7 @@ void Console::console()
 			{
 				if(!c->checkSyntax(*this))
 				{
-					print::error(LOC_ERROR_INVALID_ARGUMENT);
+					print::error(local::ERROR_INVALID_ARGUMENT);
 					break;
 				}
 				c->excute(*this);
@@ -99,7 +99,7 @@ void Console::console()
 			}
 
 			if(c == command.back())
-				print::error(LOC_ERROR_UNKNOWN_COMMAND);
+				print::error(local::ERROR_UNKNOWN_COMMAND);
 		}
 	}
 }
@@ -136,7 +136,7 @@ string Console::ReadLine()
 		// ±ß½ç¼ì²é
 		if (cmd.size() >= cmd.max_size())
 		{
-			print::error(LOC_ERROR_COMMAND_TOO_LONG);
+			print::error(local::ERROR_COMMAND_TOO_LONG);
 			cmd.clear();
 			break;
 		}
