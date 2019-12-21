@@ -7,7 +7,6 @@
 #define ATTRIBUTE_H_
 
 #include "include.h"
-#include <windows.h>
 
 
 
@@ -39,9 +38,9 @@ enum class back
 
 enum class mode
 {
-	underline = COMMON_LVB_UNDERSCORE,
-	fore_bold = FOREGROUND_INTENSITY,
-	back_bold = BACKGROUND_INTENSITY
+	underline = 0x8000,
+	fore_bold = 0x0008,
+	back_bold = 0x0080,
 };
 
 

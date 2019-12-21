@@ -13,8 +13,6 @@ typedef unsigned int   uint;
 typedef unsigned long  ulong;
 
 
-// C 标准库
-#include <conio.h>
 
 // C++ 标准库
 #include <thread>
@@ -63,6 +61,12 @@ using std::mutex;
 	#endif
 #else
 	#define   OS_LINUX  // Linux
+#endif
+
+
+#ifdef OS_WIN
+	#include <conio.h>
+	#include <windows.h>
 #endif
 
 

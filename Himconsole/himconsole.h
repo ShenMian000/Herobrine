@@ -6,6 +6,7 @@
 #define HIMCONSOLE_H_
 
 #include "console.h"
+#include "slave.h"
 
 
 
@@ -14,6 +15,11 @@ class Himconsole : public Console
 public:
 	Himconsole();
 	~Himconsole();
+
+	const Slave& GetSlaveInfo();
+
+private:
+	vector<Slave*> slave;
 };
 
 

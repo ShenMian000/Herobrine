@@ -18,7 +18,7 @@ public:
 		#ifdef OS_WIN
 			system("cls");
 		#elif OS_LINUX
-			system("clear");
+			printf("\33[2J");
 		#endif
 	}
 

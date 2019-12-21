@@ -7,6 +7,7 @@
 
 
 
+
 Console::Console()
 {
 	history.resize(historySize);
@@ -104,6 +105,23 @@ void Console::console()
 }
 
 
+// 读入单个字符, 不回显
+inline char Console::getch()
+{
+#ifdef OS_WIN
+		return _getch();
+#endif
+
+#ifdef OS_LINUX
+		system("stty -echo");
+		char c = getchar();
+		system("stty echo");
+
+		return c;
+#endif
+}
+
+
 string Console::ReadLine()
 {
 	string cmd;
@@ -113,7 +131,7 @@ string Console::ReadLine()
 
 	while (true)
 	{
-		char buf = _getch();	// TODO(SMS): 存在可移植性问题
+		char buf = getch();
 
 		// 边界检查
 		if (cmd.size() >= cmd.max_size())

@@ -29,7 +29,8 @@ enum class License
 };
 
 
-class Console;
+class  Console;
+struct arg;
 
 
 class Command
@@ -62,7 +63,7 @@ protected:
 	string   author;
 	Platform platform;
 	License  license;
-	map<string, string> syntax;         // 语法格式 name-type-value
+	vector<arg> syntax;         // 语法格式 name-type-value
 };
 
 
