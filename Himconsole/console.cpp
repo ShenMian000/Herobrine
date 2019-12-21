@@ -115,7 +115,7 @@ inline char Console::getch()
 #ifdef OS_LINUX
 	system("stty -echo");
 	system("stty -icanon");
-	char c =getchar();
+	char c = getchar();
 	system("stty icanon");
 	system("stty echo");
 	return c;
