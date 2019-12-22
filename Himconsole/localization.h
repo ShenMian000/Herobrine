@@ -16,7 +16,7 @@ namespace local
  LANG_ZH_TW ÖÐÎÄ·±ów
  LANG_EN    English
  */
-#define LANG_ZH_CN
+#define LANG_EN
 
 extern const char* WARN_DEBUG;
 extern const char* ERROR_UNKNOWN_COMMAND;

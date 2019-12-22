@@ -109,15 +109,16 @@ void Console::console()
 inline char Console::getch()
 {
 #ifdef OS_WIN
-		return _getch();
+	return _getch();
 #endif
 
 #ifdef OS_LINUX
-		system("stty -echo");
-		char c = getchar();
-		system("stty echo");
-
-		return c;
+	system("stty -echo");
+	system("stty -icanon");
+	char c =getchar();
+	system("stty icanon");
+	system("stty echo");
+	return c;
 #endif
 }
 
