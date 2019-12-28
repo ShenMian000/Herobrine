@@ -18,8 +18,6 @@ Himconsole::Himconsole()
 
 Himconsole::~Himconsole()
 {
-	for(auto i : slave)
-		i->~Slave();
 }
 
 

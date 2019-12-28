@@ -19,7 +19,7 @@ public:
 	const Slave& getSlave();
 
 private:
-	vector<Slave*> slave;
+	map<id_t, Slave*> slave;
 };
 
 

@@ -15,6 +15,14 @@ public:
 
 	void excute(Console& console) override
 	{
+		auto size = console.getCommandSize();
+
+		for(size_t i = 0; i < size; i++)
+		{
+			auto cmd = console.getCommand(i);
+
+			printf("%-15s %s\n", cmd->getName().c_str(), cmd->getDescription().c_str());
+		}
 	}
 };
 

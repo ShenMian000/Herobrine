@@ -12,6 +12,8 @@ typedef unsigned short ushort;
 typedef unsigned int   uint;
 typedef unsigned long  ulong;
 
+typedef ulong          id_t;
+
 
 
 // C++ ±ê×¼¿â

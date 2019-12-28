@@ -38,17 +38,42 @@ void Console::setPrompt(const string& prompt)
 	this->prompt = prompt;
 }
 
+
 void Console::setHistorySize(size_t size)
 {
 	historySize = size;
 	history.resize(historySize);
 }
 
+const string& Console::getHistory(size_t id)
+{
+	return history.at(id);
+}
+
+size_t Console::getHistorySize()
+{
+	return history.size();
+}
+
 
 void Console::addCommand(Command* cmd)
 {
 	command.push_back(cmd);
+	command.shrink_to_fit();
 }
+
+
+Command* Console::getCommand(size_t id)
+{
+	return command.at(id);
+}
+
+
+size_t Console::getCommandSize()
+{
+	return command.size();
+}
+
 
 
 void Console::console()

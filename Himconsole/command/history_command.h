@@ -15,6 +15,15 @@ public:
 
 	void excute(Console& console) override
 	{
+		auto size = console.getHistorySize();
+
+		for(size_t i = 0; i < size; i++)
+		{
+			if(console.getHistory(i).empty())
+				break;
+
+			printf("%3lu %s\n", i, console.getHistory(i).c_str());
+		}
 	}
 };
 

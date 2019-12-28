@@ -6,6 +6,7 @@
 
 
 
+/*
 // ×°ÔØÄ£¿é
 bool Slave::Load(const string& path)
 {
@@ -49,3 +50,4 @@ void Slave::OnAccept()
 
 	delete[] pBuf;
 }
+*/
