@@ -4,11 +4,23 @@
 
 #include "himconsole.h"
 
-#include "command/clear.h"
-#include "command/help.h"
-#include "command/history.h"
+#include "command/clear_command.h"
+#include "command/help_command.h"
+#include "command/history_command.h"
 
 #include "localization.h"
+
+
+
+Himconsole::Himconsole()
+{
+}
+
+Himconsole::~Himconsole()
+{
+	for(auto i : slave)
+		i->~Slave();
+}
 
 
 
@@ -33,9 +45,9 @@ int main()
 	Console console;
 	console.setPrompt("him");
 
-	console.addCommand(dynamic_cast<Command*>(new Clear()));
-	console.addCommand(dynamic_cast<Command*>(new Help()));
-	console.addCommand(dynamic_cast<Command*>(new History()));
+	console.addCommand(dynamic_cast<Command*>(new ClearCommand()));
+	console.addCommand(dynamic_cast<Command*>(new HelpCommand()));
+	console.addCommand(dynamic_cast<Command*>(new HistoryCommand()));
 
 	console.console();
 
@@ -43,6 +55,12 @@ int main()
 }
 
 ///////////
+
+
+
+
+
+
 
 /*
 
@@ -371,5 +389,3 @@ inline vector<string> split(string str, const char pattern)
 }
 
 */
-
-

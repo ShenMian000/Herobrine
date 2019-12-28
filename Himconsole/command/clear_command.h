@@ -5,10 +5,10 @@
 
 
 
-class Clear : public Command
+class ClearCommand : public Command
 {
 public:
-	Clear()
+	ClearCommand()
 		: Command("clear", "Çå¿ÕÃüÁîĞĞ»º³åÇø", "Herobrine")
 	{
 	}

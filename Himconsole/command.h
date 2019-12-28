@@ -54,7 +54,6 @@ public:
 	const string& getPlatform();
 	*/
 
-	bool checkSyntax(Console&);
 	virtual void excute(Console&) = 0;  // Ö´ÐÐÃüÁî
 
 protected:

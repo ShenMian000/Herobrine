@@ -47,14 +47,3 @@ const string& Command::getAuthor()
 }
 
 
-bool Command::checkSyntax(Console& c)
-{
-	if(c.getArgSize()-1 > syntax.size())
-		return false;
-
-	
-
-	return true;
-}
-
-

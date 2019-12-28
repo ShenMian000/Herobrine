@@ -40,12 +40,12 @@ void Slave::OnAccept()
 	print::info("新连接建立");
 
 	// 接收目标基本信息
-	char* pBuf = new char[sizeof(os_info)+sizeof(user_info)];
+	char* pBuf = new char[sizeof(osInfo)+sizeof(userInfo)];
 
 	memset(pBuf, '\0', sizeof(*pBuf));
-	memcpy(pBuf, &os_info, sizeof(os_info));
-	pBuf += sizeof(os_info);
-	memcpy(pBuf, &user_info, sizeof(user_info));
+	memcpy(pBuf, &osInfo, sizeof(osInfo));
+	pBuf += sizeof(osInfo);
+	memcpy(pBuf, &userInfo, sizeof(userInfo));
 
 	delete[] pBuf;
 }

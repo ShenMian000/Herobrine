@@ -5,10 +5,10 @@
 
 
 
-class Help : public Command
+class HelpCommand : public Command
 {
 public:
-	Help()
+	HelpCommand()
 		: Command("help", "ÏÔÊ¾ÃüÁî°ïÖúĞÅÏ¢", "Herobrine")
 	{
 	}

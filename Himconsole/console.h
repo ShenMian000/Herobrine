@@ -56,7 +56,7 @@ private:
 	string ReadLine();
 	void   SplitCmdToArg(const string& cmd);
 	bool   CheckSyntax();
-	inline char  getch(); // 读入单个字符, 不回显
+	inline  int  Input();                  // 读入一个字符, 不回显
 	virtual void PrintPrompt();
 };
 

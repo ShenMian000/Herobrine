@@ -16,7 +16,7 @@ public:
 	Himconsole();
 	~Himconsole();
 
-	const Slave& GetSlaveInfo();
+	const Slave& getSlave();
 
 private:
 	vector<Slave*> slave;

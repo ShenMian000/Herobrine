@@ -5,10 +5,10 @@
 
 
 
-class History : public Command
+class HistoryCommand : public Command
 {
 public:
-	History()
+	HistoryCommand()
 		: Command("history", "显示命令历史纪录", "Herobrine")
 	{
 	}

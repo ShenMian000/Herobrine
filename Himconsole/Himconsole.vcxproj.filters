@@ -50,17 +50,17 @@
     <ClInclude Include="console.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="command\clear.h">
-      <Filter>头文件\command</Filter>
-    </ClInclude>
-    <ClInclude Include="command\help.h">
-      <Filter>头文件\command</Filter>
-    </ClInclude>
-    <ClInclude Include="command\history.h">
-      <Filter>头文件\command</Filter>
-    </ClInclude>
     <ClInclude Include="localization.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="command\clear_command.h">
+      <Filter>头文件\command</Filter>
+    </ClInclude>
+    <ClInclude Include="command\help_command.h">
+      <Filter>头文件\command</Filter>
+    </ClInclude>
+    <ClInclude Include="command\history_command.h">
+      <Filter>头文件\command</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

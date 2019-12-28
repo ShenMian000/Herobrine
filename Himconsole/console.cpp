@@ -89,11 +89,7 @@ void Console::console()
 		{
 			if(c->getName() == args["cmd"])
 			{
-				if(!c->checkSyntax(*this))
-				{
-					print::error(local::ERROR_INVALID_ARGUMENT);
-					break;
-				}
+				
 				c->excute(*this);
 				break;
 			}
@@ -102,24 +98,6 @@ void Console::console()
 				print::error(local::ERROR_UNKNOWN_COMMAND);
 		}
 	}
-}
-
-
-// 读入单个字符, 不回显
-inline char Console::getch()
-{
-#ifdef OS_WIN
-	return _getch();
-#endif
-
-#ifdef OS_LINUX
-	system("stty -echo");
-	system("stty -icanon");
-	char c = getchar();
-	system("stty icanon");
-	system("stty echo");
-	return c;
-#endif
 }
 
 
@@ -132,7 +110,7 @@ string Console::ReadLine()
 
 	while (true)
 	{
-		char buf = getch();
+		char buf = Input();
 
 		// 边界检查
 		if (cmd.size() >= cmd.max_size())
@@ -145,7 +123,7 @@ string Console::ReadLine()
 		// 功能键
 		if (buf == -32 || buf == 0)
 		{
-			buf = getch();
+			buf = Input();
 
 			if (history.empty())
 				continue;
@@ -268,6 +246,23 @@ void Console::SplitCmdToArg(const string& cmd)
 bool Console::CheckSyntax()
 {
 	return false;
+}
+
+
+// 读入一个字符, 不回显
+inline int Console::Input() {
+#ifdef OS_WIN
+	return _getch();
+#endif
+
+#ifdef OS_LINUX
+	system("stty -echo");
+	system("stty -icanon");
+	char c = getchar();
+	system("stty icanon");
+	system("stty echo");
+	return c;
+#endif
 }
 
 

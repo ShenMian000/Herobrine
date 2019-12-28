@@ -45,14 +45,13 @@ class Slave
 {
 public:
 	Slave();
-	~Slave();
 
-	bool Load(const string& mod);   // 装载模块
-	bool Unload(const string& mod); // 卸载模块
+	bool Load(const string& mod);      // 装载模块
+	bool Unload(const string& mod);    // 卸载模块
 
 private:
-	os_info_   os_info;                 // 系统信息
-	user_info_ user_info;               // 用户信息
+	os_info_   osInfo;                 // 系统信息
+	user_info_ userInfo;               // 用户信息
 	forward_list<module_info*> module; // 已装载的模块
 
 	void OnAccept();

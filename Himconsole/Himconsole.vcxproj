@@ -128,9 +128,9 @@
   <ItemGroup>
     <ClInclude Include="attribute.h" />
     <ClInclude Include="command.h" />
-    <ClInclude Include="command\clear.h" />
-    <ClInclude Include="command\help.h" />
-    <ClInclude Include="command\history.h" />
+    <ClInclude Include="command\clear_command.h" />
+    <ClInclude Include="command\help_command.h" />
+    <ClInclude Include="command\history_command.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="database\mysql\mysql.h" />
     <ClInclude Include="database\mysql\result.h" />
