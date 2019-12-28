@@ -19,17 +19,25 @@ Console::~Console()
 }
 
 
-// 获取参数数量
 size_t Console::getArgSize()
 {
 	return args.size();
 }
 
 
-// 获取参数
-const string& Console::getArg(const string& key)
+const string& Console::getStringArg(const string& key)
 {
-	return args[key];
+	return args.at(key);
+}
+
+short Console::getShortArg(const string& key)
+{
+	return stoi(args.at(key));
+}
+
+long Console::getLongArg(const string& key)
+{
+	return stol(args.at(key));
 }
 
 
@@ -62,6 +70,14 @@ void Console::addCommand(Command* cmd)
 	command.shrink_to_fit();
 }
 
+
+Command* Console::getCommand(const string& name)
+{
+	for(size_t i = 0; i < command.size(); i++)
+		if(command[i]->getName() == name)
+			return command[i];
+	return nullptr;
+}
 
 Command* Console::getCommand(size_t id)
 {
@@ -102,19 +118,18 @@ void Console::console()
 		// 分隔命令参数
 		size_t lastPos;
 		lastPos = cmd.find(' ');
-		args["cmd"] = cmd.substr(0, lastPos);
+		string commandName = cmd.substr(0, lastPos);
 		
 
 		// 退出命令行
-		if (args["cmd"] == "exit")
+		if (commandName == "exit")
 			return;
 
 		// 查找并执行命令
 		for(auto& c : command)
 		{
-			if(c->getName() == args["cmd"])
+			if(c->getName() == commandName)
 			{
-				
 				c->excute(*this);
 				break;
 			}

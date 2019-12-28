@@ -16,7 +16,6 @@
 
 enum class Type
 {
-	Int,     // 整型
 	Short,   // 短整型
 	Long,    // 长整型
 	String,  // 字符串
@@ -35,24 +34,27 @@ public:
 	Console();
 	virtual ~Console();
 
-	size_t        getArgSize();          // 获取参数数量
-	const string& getArg(const string&); // 获取参数
-
-	void setPrompt(const string&);
+	const string& getStringArg(const string& key);
+	short         getShortArg(const string& key);
+	long          getLongArg(const string& key);
+	size_t        getArgSize();
 
 	void          setHistorySize(size_t);
 	const string& getHistory(size_t);
 	size_t        getHistorySize();
 
-	void     addCommand(Command*);
-	void     delCommand(Command*);
-	Command* getCommand(size_t);
-	size_t   getCommandSize();
+	void          addCommand(Command*);
+	void          delCommand(Command*);
+	Command*      getCommand(const string& name);
+	Command*      getCommand(size_t);
+	size_t        getCommandSize();
+
+	void          setPrompt(const string&);
 
 	void console();
 
 private:
-	map<string, string> args;
+	map<string, string> args;              // 参数
 	vector<Command*>    command;
 	deque<string>       history;           // 命令历史记录
 	size_t              historySize = 30;  // 最大命令历史记录数量
