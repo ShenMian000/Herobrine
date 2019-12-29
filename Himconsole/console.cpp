@@ -94,31 +94,29 @@ size_t Console::getCommandSize()
 
 void Console::console()
 {
-	string cmd;
-	size_t pos;
-
 	while(true)
 	{
 		PrintPrompt();
-		cmd = ReadLine();
+		string buf = ReadLine();
 
-		if (cmd.size() == 0)
+		if (buf.size() == 0)
 			continue;
 
 		// 去除多余空格
-		while ((pos = cmd.find("  ")) != string::npos)
-			cmd.replace(pos, 2, " ");
+		size_t pos;
+		while ((pos = buf.find("  ")) != string::npos)
+			buf.replace(pos, 2, " ");
 
 		// 添加命令历史记录
 		if (history.size() == historySize)
 			history.pop_back();
-		history.push_front(cmd);
+		history.push_front(buf);
 		history.begin()->shrink_to_fit();
 
 		// 分隔命令参数
 		size_t lastPos;
-		lastPos = cmd.find(' ');
-		string commandName = cmd.substr(0, lastPos);
+		lastPos = buf.find(' ');
+		string commandName = buf.substr(0, lastPos);
 		
 
 		// 退出命令行
@@ -126,15 +124,18 @@ void Console::console()
 			return;
 
 		// 查找并执行命令
-		for(auto& c : command)
+		for(auto& cmd : command)
 		{
-			if(c->getName() == commandName)
+			if(cmd->getName() == commandName)
 			{
-				c->excute(*this);
+				CheckSyntax(cmd);
+				cmd->excute(*this);
 				break;
 			}
 
-			if(c == command.back())
+			CheckSyntax(cmd);
+
+			if(cmd == command.back())
 				print::error(local::ERROR_UNKNOWN_COMMAND);
 		}
 	}
@@ -214,8 +215,8 @@ string Console::ReadLine()
 			if (pPredict == -1)	// 没有匹配项
 				continue;
 			
-			ConsoleOutAttribute(fore::white);
-			ConsoleOutAttribute(mode::fore_bold);
+			Attribute::set(Attribute::fore::white);
+			Attribute::set(Attribute::mode::fore_bold);
 			
 			printf("%s", &(command[pPredict]->getName()[cmd.size()]));
 			cmd += &(command[pPredict]->getName()[cmd.size()]);
@@ -251,16 +252,15 @@ string Console::ReadLine()
 		else
 		{
 			// 回显输入的字符
-			ConsoleOutAttribute(fore::white);
-			ConsoleOutAttribute(mode::fore_bold);
+			Attribute::set(Attribute::fore::white);
+			Attribute::set(Attribute::mode::fore_bold);
 
 			printf("%c", buf);
 			cmd += buf;
 		}
-
 	}
 
-	ConsoleOutAttributeRest();
+	Attribute::rest();
 	
 	return cmd;
 }
@@ -270,9 +270,9 @@ string Console::ReadLine()
 void Console::PrintPrompt()
 {
 		printf("\n");
-		ConsoleOutAttribute(mode::underline);
+		Attribute::set(Attribute::mode::underline);
 		printf(prompt.c_str());
-		ConsoleOutAttributeRest();
+		Attribute::rest();
 		printf("> ");
 }
 
@@ -283,8 +283,10 @@ void Console::SplitCmdToArg(const string& cmd)
 
 
 // 检查是参数是否合法
-bool Console::CheckSyntax()
+bool Console::CheckSyntax(Command* cmd)
 {
+	// TODO: 不需要检测参数是否合法, 只需要在ReadLine里让用户无法输入错误的参数即可
+
 	return false;
 }
 

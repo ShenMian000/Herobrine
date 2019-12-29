@@ -9,6 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Himconsole", "Himconsole\Hi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "其他文件", "其他文件", "{6B863B9B-52CA-4462-A0E7-FEB7346162F0}"
 	ProjectSection(SolutionItems) = preProject
+		.clang-format = .clang-format
 		LICENSE = LICENSE
 		README.en.md = README.en.md
 		README.md = README.md

@@ -22,7 +22,7 @@ public:
 			if(console.getHistory(i).empty())
 				break;
 
-			printf("%3lu %s\n", i, console.getHistory(i).c_str());
+			printf("%3zu %s\n", i, console.getHistory(i).c_str());
 		}
 	}
 };

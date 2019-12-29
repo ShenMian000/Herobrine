@@ -11,37 +11,37 @@ namespace print
 
 void info(const string& str)
 {
-	ConsoleOutAttribute(fore::blue);
-	ConsoleOutAttribute(mode::fore_bold);
+	Attribute::set(Attribute::fore::blue);
+	Attribute::set(Attribute::mode::fore_bold);
 	printf("[*] ");
-	ConsoleOutAttributeRest();
+	Attribute::rest();
 	puts(str.c_str());
 }
 
 void good(const string& str)
 {
-	ConsoleOutAttribute(fore::green);
-	ConsoleOutAttribute(mode::fore_bold);
+	Attribute::set(Attribute::fore::green);
+	Attribute::set(Attribute::mode::fore_bold);
 	printf("[+] ");
-	ConsoleOutAttributeRest();
+	Attribute::rest();
 	puts(str.c_str());
 }
 
 void error(const string& str)
 {
-	ConsoleOutAttribute(fore::red);
-	ConsoleOutAttribute(mode::fore_bold);
+	Attribute::set(Attribute::fore::red);
+	Attribute::set(Attribute::mode::fore_bold);
 	printf("[-] ");
-	ConsoleOutAttributeRest();
+	Attribute::rest();
 	puts(str.c_str());
 }
 
 void warn(const string& str)
 {
-	ConsoleOutAttribute(fore::yellow);
-	ConsoleOutAttribute(mode::fore_bold);
+	Attribute::set(Attribute::fore::yellow);
+	Attribute::set(Attribute::mode::fore_bold);
 	printf("[!] ");
-	ConsoleOutAttributeRest();
+	Attribute::rest();
 	puts(str.c_str());
 }
 

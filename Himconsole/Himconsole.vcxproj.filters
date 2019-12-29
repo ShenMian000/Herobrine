@@ -53,13 +53,13 @@
     <ClInclude Include="localization.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="command\clear_command.h">
+    <ClInclude Include="command\ClearCommand.h">
       <Filter>头文件\command</Filter>
     </ClInclude>
-    <ClInclude Include="command\help_command.h">
+    <ClInclude Include="command\HelpCommand.h">
       <Filter>头文件\command</Filter>
     </ClInclude>
-    <ClInclude Include="command\history_command.h">
+    <ClInclude Include="command\HistoryCommand.h">
       <Filter>头文件\command</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,6 +89,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="localization.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

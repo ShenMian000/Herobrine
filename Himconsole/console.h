@@ -2,9 +2,6 @@
 // License(Apache-2.0)
 // 命令行
 
-// 涵盖一个普通命令行该具备的功能
-// Himconsole加入而外的功能, 比如模块API GetSessionInfo...
-
 #ifndef CONSOLE_H_
 #define CONSOLE_H_
 
@@ -12,20 +9,6 @@
 #include "command.h"
 #include "print.h"
 
-
-
-enum class Type
-{
-	Short,   // 短整型
-	Long,    // 长整型
-	String,  // 字符串
-};
-
-struct arg
-{
-	Type  type;
-	void* value;
-};
 
 
 class Console
@@ -60,11 +43,11 @@ private:
 	size_t              historySize = 30;  // 最大命令历史记录数量
 	string              prompt;            // 命令行提示符
 
-	string ReadLine();
-	void   SplitCmdToArg(const string& cmd);
-	bool   CheckSyntax();
-	inline  int  Input();                  // 读入一个字符, 不回显
+	string       ReadLine();
+	void         SplitCmdToArg(const string& cmd);
+	bool         CheckSyntax(Command*);
 	virtual void PrintPrompt();
+	inline  int  Input();                  // 读入一个字符, 不回显
 };
 
 

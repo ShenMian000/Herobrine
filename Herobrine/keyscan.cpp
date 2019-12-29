@@ -6,8 +6,6 @@ using namespace std;
 
 #include "include.h"
 
-
-
 string keyscanBuf;
 
 void keyscan()
@@ -21,15 +19,4 @@ void keyscan()
 
 		keyscanBuf += to_string(code) + ";";
 	}
-}
-
-int main()
-{
-	while(true)
-	{
-		keyscan();
-		cout << keyscanBuf << endl;
-	}
-
-	getchar(); getchar();
 }

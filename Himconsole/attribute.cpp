@@ -8,43 +8,41 @@
 
 #ifdef OS_WIN
 
-HANDLE hStdOut_;  // 标准输出句柄
-WORD   defAttr_;  // 默认属性
-
-WORD   attr_;     // 当前控制台字符属性值
-
+HANDLE Attribute::hStdOut;
+WORD   Attribute::defAttr;
+WORD   Attribute::attr;
 
 // 设置前景属性
-void ConsoleOutAttribute(fore attr)
+void Attribute::set(fore attr_)
 {
-	attr_ &= 0xf0;
-	attr_ |= (WORD)attr;
-	SetConsoleTextAttribute(hStdOut_, attr_);
+	attr &= 0xf0;
+	attr |= (WORD)attr_;
+	SetConsoleTextAttribute(hStdOut, attr);
 }
 
 
 // 设置背景属性
-void ConsoleOutAttribute(back attr)
+void Attribute::set(back attr_)
 {
-	attr_ &= 0x0f;
-	attr_ |= (WORD)attr;
-	SetConsoleTextAttribute(hStdOut_, attr_);
+	attr &= 0x0f;
+	attr |= (WORD)attr_;
+	SetConsoleTextAttribute(hStdOut, attr);
 }
 
 
 // 设置共同属性
-void ConsoleOutAttribute(mode attr)
+void Attribute::set(mode attr_)
 {
-	attr_ |= (WORD)attr;
-	SetConsoleTextAttribute(hStdOut_, attr_);
+	attr |= (WORD)attr_;
+	SetConsoleTextAttribute(hStdOut, attr);
 }
 
 
 // 还原到默认属性
-void ConsoleOutAttributeRest()
+void Attribute::rest()
 {
-	attr_ = defAttr_;
-	SetConsoleTextAttribute(hStdOut_, attr_);
+	attr = defAttr;
+	SetConsoleTextAttribute(hStdOut, attr);
 }
 
 
@@ -54,13 +52,13 @@ class WinAttributeInit
 public:
 	WinAttributeInit()
 	{
-		hStdOut_ = GetStdHandle(STD_OUTPUT_HANDLE);
+		Attribute::hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 		// 获取当前缓冲区字符属性
 		CONSOLE_SCREEN_BUFFER_INFO bufInfo;
-		GetConsoleScreenBufferInfo(hStdOut_, &bufInfo);
-		defAttr_ = bufInfo.wAttributes;
-		attr_    = defAttr_;
+		GetConsoleScreenBufferInfo(Attribute::hStdOut, &bufInfo);
+		Attribute::defAttr = bufInfo.wAttributes;
+		Attribute::attr    = bufInfo.wAttributes;
 	}
 
 	~WinAttributeInit()
@@ -77,7 +75,7 @@ WinAttributeInit winAttributeInit;
 #ifdef OS_LINUX
 
 // 设置前景属性
-void ConsoleOutAttribute(fore attr)
+void Attribute::set(fore attr)
 {
 	switch(attr)
 	{
@@ -121,7 +119,7 @@ void ConsoleOutAttribute(fore attr)
 
 
 // 设置背景属性
-void ConsoleOutAttribute(back attr)
+void Attribute::set(back attr)
 {
 	switch(attr)
 	{
@@ -165,7 +163,7 @@ void ConsoleOutAttribute(back attr)
 
 
 // 设置共同属性
-void ConsoleOutAttribute(mode attr)
+void Attribute::set(mode attr)
 {
 	switch(attr)
 	{
@@ -185,7 +183,7 @@ void ConsoleOutAttribute(mode attr)
 
 
 // 还原到默认属性
-void ConsoleOutAttributeRest()
+void Attribute::rest()
 {
 	printf("\33[0m");
 }
