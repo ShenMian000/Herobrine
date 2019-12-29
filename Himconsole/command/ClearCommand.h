@@ -23,7 +23,6 @@ public:
 			printf("\33[2J");
 #endif
 	}
-
 };
 
 

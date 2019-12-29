@@ -30,27 +30,19 @@ enum class License
 
 struct Argument
 {
-	Argument()
-		: Long(0)
-	{
-	}
-
-	~Argument()
-	{
-		String.~String();
-	}
+	string value;
 
 	enum class Type
 	{
 		Int,     // 整型   long
 		String,  // 字符串 std::string
-	};
+	} type;
+};
 
-	union
-	{
-		long   Long;
-		string String; // TODO(SMS): string能否在正确的时候被析构?
-	};
+struct Syntax
+{
+	string         key;
+	Argument::Type type;
 };
 
 class  Console;
@@ -66,8 +58,7 @@ public:
 		const string& desc,
 		const string& author,
 		Platform      platform = Platform::Common,
-		License       license  = License::Apache_2_0
-	);
+		License       license  = License::Apache_2_0);
 	virtual ~Command();
 
 	const string& getName();
@@ -79,12 +70,12 @@ public:
 	virtual void excute(Console&) = 0;  // 执行命令
 
 protected:
-	string   name;
-	string   desc;
-	string   author;
-	Platform platform;
-	License  license;
-	map<string, Argument::Type> syntax;
+	string				 name;
+	string				 desc;
+	string				 author;
+	Platform			 platform;
+	License				 license;
+	vector<Syntax> syntax;
 };
 
 

@@ -27,17 +27,17 @@ size_t Console::getArgSize()
 
 const string& Console::getStringArg(const string& key)
 {
-	return args.at(key);
+	return args.at(key).value;
 }
 
-short Console::getShortArg(const string& key)
+int Console::getIntArg(const string& key)
 {
-	return stoi(args.at(key));
+	return stoi(args.at(key).value);
 }
 
 long Console::getLongArg(const string& key)
 {
-	return stol(args.at(key));
+	return stol(args.at(key).value);
 }
 
 

@@ -129,6 +129,7 @@
     <ClInclude Include="attribute.h" />
     <ClInclude Include="command.h" />
     <ClInclude Include="command\ClearCommand.h" />
+    <ClInclude Include="command\ExecCommand.h" />
     <ClInclude Include="command\HelpCommand.h" />
     <ClInclude Include="command\HistoryCommand.h" />
     <ClInclude Include="console.h" />

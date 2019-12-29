@@ -26,6 +26,7 @@ using std::thread;
 using std::string;
 using std::to_string;
 using std::stoi;
+using std::stol;
 
 #include <vector>
 using std::vector;

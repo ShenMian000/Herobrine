@@ -11,7 +11,7 @@ public:
 	HelpCommand()
 		: Command("help", "ÏÔÊ¾ÃüÁî°ïÖúĞÅÏ¢", "Herobrine")
 	{
-		syntax.insert({"command", Argument::Type::String});
+		syntax.push_back({"command", Argument::Type::String});
 	}
 
 	void excute(Console& console) override

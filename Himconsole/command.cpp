@@ -13,8 +13,7 @@ Command::Command(
 		const string& desc,
 		const string& author,
 		Platform      platform,
-		License       license
-	)
+		License       license)
 	: name(name),
 	  desc(desc),
 	  author(author),
@@ -44,6 +43,16 @@ const string& Command::getDescription()
 const string& Command::getAuthor()
 {
 	return author;
+}
+
+Platform Command::getPlatform()
+{
+	return platform;
+}
+
+License Command::getLicense()
+{
+	return license;
 }
 
 
