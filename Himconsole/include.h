@@ -16,6 +16,10 @@ typedef ulong          id_t;
 
 
 
+// C 标准库
+#include <assert.h>
+
+
 // C++ 标准库
 #include <thread>
 using std::thread;

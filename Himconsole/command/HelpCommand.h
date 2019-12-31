@@ -11,7 +11,7 @@ public:
 	HelpCommand()
 		: Command("显示命令帮助信息", "Herobrine")
 	{
-		syntax.insert({"command", Syntax(Syntax::Type::STRING, true, "要显示帮助信息的命令")});
+		syntax.insert({"command", Syntax(Syntax::Type::STRING, "要显示帮助信息的命令", true)});
 	}
 
 	void excute(Console& console) override

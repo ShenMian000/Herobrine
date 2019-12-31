@@ -44,14 +44,19 @@ struct Syntax
 		OPTION  // СЎПо
 	};
 	
-	Syntax(Type type, bool required, const string& desc, Syntax* compliance = nullptr)
-			: type(type), required(required), desc(desc), compliance(compliance)
+	Syntax(Type type, const string& desc, bool required = true, Syntax* compliance = nullptr)
+		: type(type), desc(desc), required(required), compliance(compliance)
+	{
+	}
+
+	Syntax()
+		: type(Type::OPTION), required(true), compliance(nullptr)
 	{
 	}
 
 	Type		type;
-	bool		required;
 	string  desc;
+	bool		required;
 	Syntax* compliance;
 };
 
@@ -70,15 +75,17 @@ public:
 
 	const string& getDescription();
 	const string& getAuthor();
+	Platform      getPlatform();
+	License       getLicense();
 
 protected:
 	map<string, Syntax> syntax;
 
 private:
-	string	 desc;
-	string	 author;
-	Platform platform;
-	License	 license;
+	const string	 desc;
+	const string	 author;
+	const Platform platform;
+	const License	 license;
 
 	virtual void excute(Console&) = 0;
 };

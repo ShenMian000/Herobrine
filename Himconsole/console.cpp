@@ -70,6 +70,9 @@ size_t Console::getHistorySize()
 
 void Console::addCommand(const string& name, Command* cmd)
 {
+	if(getCommand(name) != nullptr)
+		;	// TODO
+
 	commands.insert({name, cmd});
 }
 
@@ -92,17 +95,19 @@ size_t Console::getCommandSize()
 
 void Console::console()
 {
-	string buffer;
-	size_t pos = 0;
-
 	string key, value;
 
-	Syntax::Type type;
-
-	Command* cmd;
+	size_t cPos = 0; // 当前光标位置
+	size_t lPos = 0; // 上一个参数结尾
 
 	while(true)
 	{
+		Syntax*	 syntax = nullptr;
+		Command* cmd    = nullptr;
+		string*  arg    = nullptr;
+
+		size_t inputSize = 0;
+		size_t keySize   = 0;
 
 		bool inputValue	 = false; // 正在输入值
 		bool inputString = false; // 正在输入字符串
@@ -116,42 +121,149 @@ void Console::console()
 			if(inputValue)
 			{
 				// 输入 值
+				if(arg == nullptr)
+					arg = &args[key];
+
+				if(ch == '\r' || (inputString == false && ch == ' '))
+				{
+					inputValue = false;
+					key.clear();
+					break;
+				}
+
 				switch(cmd->syntax[key].type)
 				{
 				case Syntax::Type::INT:
 				case Syntax::Type::LONG:
+					if(!isalnum(ch))
+					{
+						printf("\a");
+						continue;
+					}
 					break;
 
 				case Syntax::Type::FLOAT:
 				case Syntax::Type::DOUBLE:
+					if(!isalnum(ch) && ch != '.')
+					{
+						printf("\a");
+						continue;
+					}
 					break;
 
 				case Syntax::Type::STRING:
+					if(!isprint(ch))
+					{
+						printf("\a");
+						continue;
+					}
+					if(ch == '"')
+						if(!inputString)
+							inputString = true;
+						else
+							inputString = false;
 					break;
 
 				case Syntax::Type::OPTION:
+					if(!isalnum(ch) && ch != '_')
+					{
+						printf("\a");
+						continue;
+					}
 					break;
 				}
+
+				if(ch == '"')
+					break;
+
+				arg += ch;
 			}
 			else
 			{
 				// 输入 键
-				if(!isalnum(ch) || ch != 95)
+				if(!isalnum(ch) && ch != ' ' && ch != '_' && ch != '\r' && ch != '\b')
+				{
+					printf("\a");
 					continue;
+				}
 
-				if(ch == 95)
+				if(cmd == nullptr || ch == ' ' || ch == '\r')
+				{
+					cmd = getCommand(key);
+					if(cmd == nullptr)
+					{
+						if(key == "exit")
+							return;
+
+						printf("\a");
+						continue;
+					}
+				}
+
+				switch(ch)
+				{
+				case ' ':
+					// 是否连续输入两个空格
+					if(key.size() == 0)
+					{
+						printf("\a");
+						continue;
+					}
+
+					// 是否可以继续填写参数
+					if(cmd->syntax.size() <= args.size())
+					{
+						printf("\a");
+						continue;
+					}
+
 					inputValue = true;
-				else
+					arg = nullptr;
+					break;
+
+				case '\r':
+					// 是否可以不填写任何参数(必填参数全部填写完毕)
+					if(cmd->syntax.size() != 0)
+						for(auto& s : cmd->syntax)
+							if(s.second.required == false)
+							{
+								printf("\a");
+								continue;
+							}
+
+					inputValue = true;
+					arg = nullptr;
+					break;
+
+				case '\b':
+					if(inputSize > 0)
+					{
+						printf("\b \b");
+						key.pop_back();
+					} else 
+					{
+						printf("\a");
+						continue;
+					}
+
+				default:
 					key += ch;
+				}
+			}
+
+			if(ch == '\r')
+			{
+				printf("\n");
+				break;
 			}
 
 			printf("%c", ch);
-
-			if(ch == '\r')
-				break;
-
-			buffer += ch;
+			inputSize++;
 		}
+
+		args.clear();
+
+		assert(cmd != nullptr);
 
 		try
 		{

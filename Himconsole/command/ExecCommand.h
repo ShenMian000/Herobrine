@@ -12,7 +12,7 @@ public:
 	ExecCommand()
 		: Command("执行外部系统命令", "Herobrine")
 	{
-		syntax.insert({"command", Syntax(Syntax::Type::STRING, false, "要执行的命令")});
+		syntax.insert({"command", Syntax(Syntax::Type::STRING, "要执行的命令", false)});
 	}
 
 	void excute(Console& console) override

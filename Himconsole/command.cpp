@@ -36,4 +36,14 @@ const string& Command::getAuthor()
 	return author;
 }
 
+Platform Command::getPlatform()
+{
+	return platform;
+}
+
+License Command::getLicense()
+{
+	return license;
+}
+
 
