@@ -26,11 +26,11 @@ public:
 	const string& getHistory(size_t);
 	size_t        getHistorySize();
 
-	void          addCommand(Command*);
-	void          delCommand(Command*);
+	void          addCommand(const string& name, Command*);
 	Command*      getCommand(const string& name);
-	Command*      getCommand(size_t);
 	size_t        getCommandSize();
+	Command*      getCommandFirst();
+	Command*      getCommandNext();
 
 	void          setPrompt(const string&);
 
@@ -43,11 +43,8 @@ private:
 	size_t							  historySize = 30; // 最大命令历史记录数量
 	string							  prompt;						// 命令行提示符
 
-	string       ReadLine();
-	void         SplitCmdToArg(const string& cmd);
-	bool         CheckSyntax(Command*);
 	virtual void PrintPrompt();
-	inline  int  Input();                  // 读入一个字符, 不回显
+	inline  int  GetChar();                   // 读入一个字符, 不回显
 };
 
 

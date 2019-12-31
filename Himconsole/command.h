@@ -65,7 +65,8 @@ public:
 
 	virtual void excute(Console&) = 0;
 
-	const string& getDescription;
+	const string& getDescription();
+	const string& getAuthor();
 
 protected:
 	map<string, Syntax> syntax;

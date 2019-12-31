@@ -26,6 +26,14 @@ Command::~Command()
 }
 
 
+const string& Command::getDescription()
+{
+	return desc;
+}
 
+const string& Command::getAuthor()
+{
+	return author;
+}
 
 
