@@ -69,11 +69,4 @@ using std::mutex;
 
 
 
-#ifdef OS_WIN
-	#include <conio.h>
-	#include <windows.h>
-#endif
-
-
-
 #endif // INCLUDE_H_

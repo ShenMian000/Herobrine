@@ -4,7 +4,11 @@
 
 #include "console.h"
 #include "localization.h"
+#include <ctype.h>
 
+#ifdef OS_WIN
+	#include <conio.h>
+#endif
 
 
 
@@ -88,27 +92,132 @@ size_t Console::getCommandSize()
 
 void Console::console()
 {
+	string buffer;
+	size_t pos = 0;
+
+	string key, value;
+
+	Syntax::Type type;
+
+	Command* cmd;
+
 	while(true)
 	{
+
+		bool inputValue	 = false; // 正在输入值
+		bool inputString = false; // 正在输入字符串
+
 		PrintPrompt();
-		
+
+		while(true)
+		{
+			char ch = _getch();
+
+			if(inputValue)
+			{
+				// 输入 值
+				switch(cmd->syntax[key].type)
+				{
+				case Syntax::Type::INT:
+				case Syntax::Type::LONG:
+					break;
+
+				case Syntax::Type::FLOAT:
+				case Syntax::Type::DOUBLE:
+					break;
+
+				case Syntax::Type::STRING:
+					break;
+
+				case Syntax::Type::OPTION:
+					break;
+				}
+			}
+			else
+			{
+				// 输入 键
+				if(!isalnum(ch) || ch != 95)
+					continue;
+
+				if(ch == 95)
+					inputValue = true;
+				else
+					key += ch;
+			}
+
+			printf("%c", ch);
+
+			if(ch == '\r')
+				break;
+
+			buffer += ch;
+		}
+
+		try
+		{
+			cmd->excute(*this);
+		} catch(char* error)
+		{
+			print::error(error);
+		}
 	}
 }
+
+
+/*
+		case ' ':
+			if(inputString)
+				break;
+		case '\r':
+			if(inputValue)
+			{
+				value = buffer.substr(pos);
+				if()
+					arg.Long = stol(value);
+				else
+					arg.String = value;
+			}
+			break;
+
+		case '"':
+			if(!inputValue)
+				continue;
+
+			if(!inputString)
+			{
+				// 检查key对应的类型是不是string
+				inputString = true;
+			}
+			else
+			{
+				arg.String = buffer.substr(pos);
+				args.insert({key, arg});
+				inputString = false;
+			}
+			break;
+
+		case ':':
+			key				 = buffer.substr(pos);
+			pos				 = buffer.size();
+			inputValue = true;
+			break;
+*/
 
 
 // 输出命令行提示符
 void Console::PrintPrompt()
 {
-		printf("\n");
-		Attribute::set(Attribute::mode::underline);
-		printf(prompt.c_str());
-		Attribute::rest();
-		printf("> ");
+	printf("\n");
+	Attribute::set(Attribute::mode::underline);
+	printf(prompt.c_str());
+	Attribute::rest();
+	printf("> ");
 }
 
 
 // 读入一个字符, 不回显
-inline int Console::GetChar() {
+inline int Console::GetChar()
+{
 #ifdef OS_WIN
 	return _getch();
 #endif
@@ -122,5 +231,3 @@ inline int Console::GetChar() {
 	return c;
 #endif
 }
-
-

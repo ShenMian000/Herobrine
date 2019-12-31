@@ -44,10 +44,10 @@ int main()
 	Console console;
 	console.setPrompt("him");
 
-	console.addCommand(dynamic_cast<Command*>(new ClearCommand()));
-	console.addCommand(dynamic_cast<Command*>(new ExecCommand()));
-	console.addCommand(dynamic_cast<Command*>(new HelpCommand()));
-	console.addCommand(dynamic_cast<Command*>(new HistoryCommand()));
+	console.addCommand("clear",   dynamic_cast<Command*>(new ClearCommand()));
+	console.addCommand("exec",    dynamic_cast<Command*>(new ExecCommand()));
+	console.addCommand("help",    dynamic_cast<Command*>(new HelpCommand()));
+	console.addCommand("history", dynamic_cast<Command*>(new HistoryCommand()));
 
 	console.console();
 

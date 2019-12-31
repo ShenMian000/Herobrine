@@ -149,7 +149,6 @@
     <ClCompile Include="database\mysql\result.cpp" />
     <ClCompile Include="himconsole.cpp" />
     <ClCompile Include="localization.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="print.cpp" />
     <ClCompile Include="slave.cpp" />
   </ItemGroup>

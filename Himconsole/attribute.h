@@ -7,14 +7,14 @@
 
 #include "include.h"
 
+#ifdef OS_WIN
+	#include <windows.h>
+#endif
+
 
 
 class Attribute
 {
-#ifdef OS_WIN
-	friend class WinAttributeInit;
-#endif
-
 public:
 	enum class fore
 	{
@@ -59,6 +59,8 @@ private:
 	static HANDLE hStdOut;  // 标准输出句柄
 	static WORD   defAttr;  // 默认属性
 	static WORD   attr;     // 当前控制台字符属性值
+	
+	friend class WinAttributeInit;
 #endif
 };
 

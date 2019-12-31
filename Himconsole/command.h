@@ -35,8 +35,13 @@ struct Syntax
 {
 	enum class Type
 	{
-		INT,	 // 整型   long
-		STRING // 字符串 std::string
+		INT,	  // 整型 int
+		LONG,   // 长整型 long
+		FLOAT,  // 单精度浮点数 float
+		DOUBLE, // 双精度浮点数 double
+		BOOL,   // 布尔值 bool
+		STRING, // 字符串 std::string
+		OPTION  // 选项
 	};
 	
 	Syntax(Type type, bool required, const string& desc, Syntax* compliance = nullptr)
@@ -63,8 +68,6 @@ public:
 		License       license  = License::Apache_2_0);
 	virtual ~Command();
 
-	virtual void excute(Console&) = 0;
-
 	const string& getDescription();
 	const string& getAuthor();
 
@@ -76,6 +79,8 @@ private:
 	string	 author;
 	Platform platform;
 	License	 license;
+
+	virtual void excute(Console&) = 0;
 };
 
 

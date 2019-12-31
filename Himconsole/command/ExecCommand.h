@@ -23,20 +23,14 @@ public:
 		pipe = _popen(console.getStringArg("command").c_str(), "r");
 
 		if(pipe == NULL)
-		{
-			print::error("无法打开管道");
-			return;
-		}
+			throw "无法打开管道";
 
 		while(!feof(pipe))
 			if(fgets(buf, 1024, pipe))
 				printf("%s", buf);
 
 		if(_pclose(pipe) == -1)
-		{
-			print::error("无法关闭管道");
-			return;
-		}
+			throw "无法关闭管道";
 	}
 };
 
