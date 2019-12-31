@@ -95,24 +95,51 @@ size_t Console::getCommandSize()
 
 void Console::console()
 {
-	string key, value;
-
-	size_t cPos = 0; // 当前光标位置
-	size_t lPos = 0; // 上一个参数结尾
+	string				 key, value;
 
 	while(true)
 	{
 		Syntax*	 syntax = nullptr;
 		Command* cmd    = nullptr;
 		string*  arg    = nullptr;
+		
+		size_t				 cPos = 0; // 当前光标位置
+		vector<size_t> lPos;		 // 命令/参数结尾
 
-		size_t inputSize = 0;
 		size_t keySize   = 0;
 
 		bool inputValue	 = false; // 正在输入值
 		bool inputString = false; // 正在输入字符串
 
 		PrintPrompt();
+
+		// 输入 命令
+		// TODO(SMS): 此处是否要使用goto语句简化流程
+		while(true)
+		{
+			string buf;
+
+			char ch = _getch();
+
+			if(!isprint(ch))
+			{
+				printf("\a");
+				continue;
+			}
+
+			if(ch == ' ' || ch == '\r')
+			{
+				cmd = getCommand(buf);
+				if(cmd == nullptr)
+				{
+					printf("\a");
+					continue;
+				}
+				break;
+			}
+
+			buf += ch;
+		}
 
 		while(true)
 		{
@@ -181,6 +208,35 @@ void Console::console()
 			else
 			{
 				// 输入 键
+			}
+
+			if(ch == '\r')
+			{
+				printf("\n");
+				break;
+			}
+
+			printf("%c", ch);
+			cPos++;
+		}
+
+		args.clear();
+
+		assert(cmd != nullptr);
+
+		try
+		{
+			cmd->excute(*this);
+		} catch(char* error)
+		{
+			print::error(error);
+		}
+	}
+}
+
+
+/*
+
 				if(!isalnum(ch) && ch != ' ' && ch != '_' && ch != '\r' && ch != '\b')
 				{
 					printf("\a");
@@ -217,6 +273,7 @@ void Console::console()
 						continue;
 					}
 
+					lPos.push_back(cPos);
 					inputValue = true;
 					arg = nullptr;
 					break;
@@ -230,17 +287,30 @@ void Console::console()
 								printf("\a");
 								continue;
 							}
-
+					
+					lPos.push_back(cPos);
 					inputValue = true;
-					arg = nullptr;
 					break;
 
 				case '\b':
-					if(inputSize > 0)
+					if(cPos > 0)
 					{
+						cPos--;
 						printf("\b \b");
+
+						// 回到上一个参数
+						if(cPos == lPos.back())
+						{
+							cPos = lPos.back();
+							key  = 
+							lPos.pop_back();
+							inputValue = true;
+							arg = nullptr;
+							continue;
+						}
+
 						key.pop_back();
-					} else 
+					} else
 					{
 						printf("\a");
 						continue;
@@ -249,70 +319,6 @@ void Console::console()
 				default:
 					key += ch;
 				}
-			}
-
-			if(ch == '\r')
-			{
-				printf("\n");
-				break;
-			}
-
-			printf("%c", ch);
-			inputSize++;
-		}
-
-		args.clear();
-
-		assert(cmd != nullptr);
-
-		try
-		{
-			cmd->excute(*this);
-		} catch(char* error)
-		{
-			print::error(error);
-		}
-	}
-}
-
-
-/*
-		case ' ':
-			if(inputString)
-				break;
-		case '\r':
-			if(inputValue)
-			{
-				value = buffer.substr(pos);
-				if()
-					arg.Long = stol(value);
-				else
-					arg.String = value;
-			}
-			break;
-
-		case '"':
-			if(!inputValue)
-				continue;
-
-			if(!inputString)
-			{
-				// 检查key对应的类型是不是string
-				inputString = true;
-			}
-			else
-			{
-				arg.String = buffer.substr(pos);
-				args.insert({key, arg});
-				inputString = false;
-			}
-			break;
-
-		case ':':
-			key				 = buffer.substr(pos);
-			pos				 = buffer.size();
-			inputValue = true;
-			break;
 */
 
 
