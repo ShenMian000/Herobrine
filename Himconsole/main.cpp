@@ -7,7 +7,7 @@
 
 
 
-map<string, Argument> args;
+map<string, string> args;
 
 #define DEBUG_
 #ifdef DEBUG

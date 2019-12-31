@@ -9,13 +9,11 @@
 
 
 Command::Command(
-		const string& name,
 		const string& desc,
 		const string& author,
 		Platform      platform,
 		License       license)
-	: name(name),
-	  desc(desc),
+	: desc(desc),
 	  author(author),
 	  platform(platform),
 	  license(license)
@@ -28,31 +26,6 @@ Command::~Command()
 }
 
 
-const string& Command::getName()
-{
-	return name;
-}
 
-
-const string& Command::getDescription()
-{
-	return desc;
-}
-
-
-const string& Command::getAuthor()
-{
-	return author;
-}
-
-Platform Command::getPlatform()
-{
-	return platform;
-}
-
-License Command::getLicense()
-{
-	return license;
-}
 
 

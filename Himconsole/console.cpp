@@ -123,21 +123,20 @@ void Console::console()
 		if (commandName == "exit")
 			return;
 
-		// ²éÕÒ²¢Ö´ÐÐÃüÁî
-		for(auto& cmd : command)
+		// Ö´ÐÐÃüÁî
+		auto cmd = commands[commandName];
+		try
 		{
-			if(cmd->getName() == commandName)
-			{
-				CheckSyntax(cmd);
-				cmd->excute(*this);
-				break;
-			}
+			cmd->excute(*this);
+		}
+		catch(char* error)
+		{
+			print::error(error);
+		}
 
 			CheckSyntax(cmd);
 
-			if(cmd == command.back())
-				print::error(local::ERROR_UNKNOWN_COMMAND);
-		}
+		// print::error(local::ERROR_UNKNOWN_COMMAND);
 	}
 }
 

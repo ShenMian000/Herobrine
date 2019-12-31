@@ -9,7 +9,7 @@ class ClearCommand : public Command
 {
 public:
 	ClearCommand()
-		: Command("clear", "清空命令行缓冲区", "Herobrine")
+		: Command("清空命令行缓冲区", "Herobrine")
 	{
 	}
 

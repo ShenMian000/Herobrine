@@ -37,11 +37,11 @@ public:
 	void console();
 
 private:
-	map<string, Argument> args;              // 参数
-	vector<Command*>      command;
-	deque<string>         history;           // 命令历史记录
-	size_t                historySize = 30;  // 最大命令历史记录数量
-	string                prompt;            // 命令行提示符
+	map<string, string>   args;             // 参数
+	map<string, Command*> commands;
+	deque<string>				  history;					// 命令历史记录
+	size_t							  historySize = 30; // 最大命令历史记录数量
+	string							  prompt;						// 命令行提示符
 
 	string       ReadLine();
 	void         SplitCmdToArg(const string& cmd);

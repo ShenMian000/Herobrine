@@ -10,9 +10,9 @@ class ExecCommand : public Command
 {
 public:
 	ExecCommand()
-		: Command("exec", "执行外部系统命令", "Herobrine")
+		: Command("执行外部系统命令", "Herobrine")
 	{
-		syntax.push_back({"command", Argument::Type::String});
+		syntax.insert({"command", Syntax(Syntax::Type::STRING, false, "要执行的命令")});
 	}
 
 	void excute(Console& console) override

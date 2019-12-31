@@ -9,7 +9,7 @@ class HistoryCommand : public Command
 {
 public:
 	HistoryCommand()
-		: Command("history", "显示命令历史纪录", "Herobrine")
+		: Command("显示命令历史纪录", "Herobrine")
 	{
 	}
 

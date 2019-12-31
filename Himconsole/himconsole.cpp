@@ -45,9 +45,9 @@ int main()
 	console.setPrompt("him");
 
 	console.addCommand(dynamic_cast<Command*>(new ClearCommand()));
+	console.addCommand(dynamic_cast<Command*>(new ExecCommand()));
 	console.addCommand(dynamic_cast<Command*>(new HelpCommand()));
 	console.addCommand(dynamic_cast<Command*>(new HistoryCommand()));
-	console.addCommand(dynamic_cast<Command*>(new ExecCommand()));
 
 	console.console();
 

@@ -9,9 +9,9 @@ class HelpCommand : public Command
 {
 public:
 	HelpCommand()
-		: Command("help", "显示命令帮助信息", "Herobrine")
+		: Command("显示命令帮助信息", "Herobrine")
 	{
-		syntax.push_back({"command", Argument::Type::String});
+		syntax.insert({"command", Syntax(Syntax::Type::STRING, true, "要显示帮助信息的命令")});
 	}
 
 	void excute(Console& console) override

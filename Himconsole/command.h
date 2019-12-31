@@ -9,6 +9,8 @@
 
 
 
+class  Console;
+
 // 运行平台
 enum class Platform
 {
@@ -28,24 +30,25 @@ enum class License
 	TIM,
 };
 
-struct Argument
-{
-	string value;
-
-	enum class Type
-	{
-		Int,     // 整型   long
-		String,  // 字符串 std::string
-	} type;
-};
-
+// 语法
 struct Syntax
 {
-	string         key;
-	Argument::Type type;
-};
+	enum class Type
+	{
+		INT,	 // 整型   long
+		STRING // 字符串 std::string
+	};
+	
+	Syntax(Type type, bool required, const string& desc, Syntax* compliance = nullptr)
+			: type(type), required(required), desc(desc), compliance(compliance)
+	{
+	}
 
-class  Console;
+	Type		type;
+	bool		required;
+	string  desc;
+	Syntax* compliance;
+};
 
 
 class Command
@@ -54,28 +57,24 @@ class Command
 
 public:
 	Command(
-		const string& name,
 		const string& desc,
 		const string& author,
 		Platform      platform = Platform::Common,
 		License       license  = License::Apache_2_0);
 	virtual ~Command();
 
-	const string& getName();
-	const string& getDescription();
-	const string& getAuthor();
-	Platform      getPlatform();
-	License       getLicense();
+	virtual void excute(Console&) = 0;
 
-	virtual void excute(Console&) = 0;  // 执行命令
+	const string& getDescription;
 
 protected:
-	string				 name;
-	string				 desc;
-	string				 author;
-	Platform			 platform;
-	License				 license;
-	vector<Syntax> syntax;
+	map<string, Syntax> syntax;
+
+private:
+	string	 desc;
+	string	 author;
+	Platform platform;
+	License	 license;
 };
 
 
