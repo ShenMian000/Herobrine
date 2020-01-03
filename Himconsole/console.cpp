@@ -66,28 +66,28 @@ size_t Console::getHistorySize()
 
 void Console::addCommand(Command* cmd)
 {
-	command.push_back(cmd);
-	command.shrink_to_fit();
+	commands.push_back(cmd);
+	commands.shrink_to_fit();
 }
 
 
 Command* Console::getCommand(const string& name)
 {
-	for(size_t i = 0; i < command.size(); i++)
-		if(command[i]->getName() == name)
-			return command[i];
+	for(size_t i = 0; i < commands.size(); i++)
+		if(commands[i]->getName() == name)
+			return commands[i];
 	return nullptr;
 }
 
 Command* Console::getCommand(size_t id)
 {
-	return command.at(id);
+	return commands.at(id);
 }
 
 
 size_t Console::getCommandSize()
 {
-	return command.size();
+	return commands.size();
 }
 
 
@@ -124,19 +124,13 @@ void Console::console()
 			return;
 
 		// 查找并执行命令
-		for(auto& cmd : command)
+		for(auto& cmd : commands)
 		{
-			if(cmd->getName() == commandName)
+			if(cmd.first == commandName)
 			{
-				CheckSyntax(cmd);
-				cmd->excute(*this);
+				cmd.second->excute(*this);
 				break;
 			}
-
-			CheckSyntax(cmd);
-
-			if(cmd == command.back())
-				print::error(local::ERROR_UNKNOWN_COMMAND);
 		}
 	}
 }
@@ -218,8 +212,8 @@ string Console::ReadLine()
 			Attribute::set(Attribute::fore::white);
 			Attribute::set(Attribute::mode::fore_bold);
 			
-			printf("%s", &(command[pPredict]->getName()[cmd.size()]));
-			cmd += &(command[pPredict]->getName()[cmd.size()]);
+			printf("%s", &(commands[pPredict]->getName()[cmd.size()]));
+			cmd += &(commands[pPredict]->getName()[cmd.size()]);
 
 			continue;
 		}
@@ -274,20 +268,6 @@ void Console::PrintPrompt()
 		printf(prompt.c_str());
 		Attribute::rest();
 		printf("> ");
-}
-
-
-void Console::SplitCmdToArg(const string& cmd)
-{
-}
-
-
-// 检查是参数是否合法
-bool Console::CheckSyntax(Command* cmd)
-{
-	// TODO: 不需要检测参数是否合法, 只需要在ReadLine里让用户无法输入错误的参数即可
-
-	return false;
 }
 
 
