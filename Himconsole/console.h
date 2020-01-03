@@ -28,12 +28,11 @@ public:
 
 	void          addCommand(const string& name, Command*);
 	Command*      getCommand(const string& name);
-	size_t        getCommandSize();
-	Command*      getCommandFirst();
-	Command*      getCommandNext();
+	const map<string, Command*>& getCommand();
 
 	void          setPrompt(const string&);
 
+	void run();
 	void console();
 
 private:

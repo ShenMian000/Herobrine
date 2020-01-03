@@ -41,7 +41,7 @@ int main()
 			" [Update Time: %-17.17s]\n",
 			__DATE__, __TIME__);
 
-	Console console;
+	Himconsole console;
 	console.setPrompt("him");
 
 	console.addCommand("clear",   dynamic_cast<Command*>(new ClearCommand()));
@@ -49,7 +49,7 @@ int main()
 	console.addCommand("help",    dynamic_cast<Command*>(new HelpCommand()));
 	console.addCommand("history", dynamic_cast<Command*>(new HistoryCommand()));
 
-	console.console();
+	console.run();
 
 	return 0;
 }

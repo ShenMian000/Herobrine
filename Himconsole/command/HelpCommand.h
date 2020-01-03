@@ -18,18 +18,15 @@ public:
 	{
 		if(console.getArgSize() == 0)
 		{
-			/*auto size = console.getCommandSize();
-			for(size_t i = 0; i < size; i++)
-			{
-				auto cmd = console.getCommand(i);
-				printf("%-15s %s\n", cmd->getName().c_str(), cmd->getDescription().c_str());
-			}*/
+			auto& cmds = console.getCommand();
+			for(auto& cmd : cmds)
+				printf("%-15s %s\n", cmd.first.c_str(), cmd.second->getDescription().c_str());
 		} else {
 			auto name = console.getStringArg("command");
 			auto cmd	= console.getCommand(name);
 			if(cmd == nullptr)
 				throw "Î´ÕÒµ½ÃüÁî";
-			printf("%s\n%s\n", name.c_str(), cmd->getDescription().c_str());
+			printf("%s\n\n%s\n", cmd->getDescription().c_str(), name.c_str());
 		}
 	}
 };

@@ -7,7 +7,7 @@
 #include <ctype.h>
 
 #ifdef OS_WIN
-	#include <conio.h>
+#include <conio.h>
 #endif
 
 
@@ -71,7 +71,7 @@ size_t Console::getHistorySize()
 void Console::addCommand(const string& name, Command* cmd)
 {
 	if(getCommand(name) != nullptr)
-		;	// TODO
+		; // TODO
 
 	commands.insert({name, cmd});
 }
@@ -86,27 +86,69 @@ Command* Console::getCommand(const string& name)
 }
 
 
-size_t Console::getCommandSize()
+const map<string, Command*>& Console::getCommand()
 {
-	return commands.size();
+	return commands;
+}
+
+
+
+enum class InputState
+{
+	CMD, // 输入命令
+	KEY, // 输入键
+	ARG	 // 输入值
+};
+
+void Console::run()
+{
+	InputState inputState = InputState::CMD;
+
+	while(true)
+	{
+		string buf;
+
+		PrintPrompt();
+
+		while(true)
+		{
+			char ch = GetChar();
+
+			switch(inputState)
+			{
+			case InputState::CMD:
+				break;
+
+			case InputState::KEY:
+				break;
+
+			case InputState::ARG:
+				break;
+			}
+
+			buf += ch;
+		}
+
+		buf.clear();
+	}
 }
 
 
 
 void Console::console()
 {
-	string				 key, value;
+	string key, value;
 
 	while(true)
 	{
 		Syntax*	 syntax = nullptr;
-		Command* cmd    = nullptr;
-		string*  arg    = nullptr;
-		
+		Command* cmd		= nullptr;
+		string*	 arg		= nullptr;
+
 		size_t				 cPos = 0; // 当前光标位置
 		vector<size_t> lPos;		 // 命令/参数结尾
 
-		size_t keySize   = 0;
+		size_t keySize = 0;
 
 		bool inputValue	 = false; // 正在输入值
 		bool inputString = false; // 正在输入字符串
@@ -119,7 +161,7 @@ void Console::console()
 		{
 			string buf;
 
-			char ch = _getch();
+			char ch = GetChar();
 
 			if(!isprint(ch))
 			{
@@ -143,7 +185,7 @@ void Console::console()
 
 		while(true)
 		{
-			char ch = _getch();
+			char ch = GetChar();
 
 			if(inputValue)
 			{
@@ -161,77 +203,78 @@ void Console::console()
 				switch(cmd->syntax[key].type)
 				{
 				case Syntax::Type::INT:
-				case Syntax::Type::LONG:
-					if(!isalnum(ch))
-					{
-						printf("\a");
-						continue;
-					}
-					break;
-
-				case Syntax::Type::FLOAT:
-				case Syntax::Type::DOUBLE:
-					if(!isalnum(ch) && ch != '.')
-					{
-						printf("\a");
-						continue;
-					}
-					break;
-
-				case Syntax::Type::STRING:
-					if(!isprint(ch))
-					{
-						printf("\a");
-						continue;
-					}
-					if(ch == '"')
-						if(!inputString)
-							inputString = true;
-						else
-							inputString = false;
-					break;
-
-				case Syntax::Type::OPTION:
-					if(!isalnum(ch) && ch != '_')
-					{
-						printf("\a");
-						continue;
-					}
-					break;
+			case Syntax::Type::LONG:
+				if(!isalnum(ch))
+				{
+					printf("\a");
+					continue;
 				}
+				break;
 
+			case Syntax::Type::FLOAT:
+			case Syntax::Type::DOUBLE:
+				if(!isalnum(ch) && ch != '.')
+				{
+					printf("\a");
+					continue;
+				}
+				break;
+
+			case Syntax::Type::STRING:
+				if(!isprint(ch))
+				{
+					printf("\a");
+					continue;
+				}
 				if(ch == '"')
-					break;
+					if(!inputString)
+						inputString = true;
+					else
+						inputString = false;
+				break;
 
-				arg += ch;
-			}
-			else
-			{
-				// 输入 键
-			}
-
-			if(ch == '\r')
-			{
-				printf("\n");
+			case Syntax::Type::OPTION:
+				if(!isalnum(ch) && ch != '_')
+				{
+					printf("\a");
+					continue;
+				}
 				break;
 			}
 
-			printf("%c", ch);
-			cPos++;
+			if(ch == '"')
+				break;
+
+			arg += ch;
+		}
+		else
+		{
+			// 输入 键
 		}
 
-		args.clear();
-
-		assert(cmd != nullptr);
-
-		try
+		if(ch == '\r')
 		{
-			cmd->excute(*this);
-		} catch(char* error)
-		{
-			print::error(error);
+			printf("\n");
+			break;
 		}
+
+		printf("%c", ch);
+		cPos++;
 	}
+
+	args.clear();
+
+	assert(cmd != nullptr);
+
+	try
+	{
+		cmd->excute(*this);
+	}
+	catch(char* error)
+	{
+		print::error(error);
+	}
+}
 }
 
 

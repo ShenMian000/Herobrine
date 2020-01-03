@@ -46,17 +46,13 @@ class Slave
 public:
 	Slave();
 
-	bool Load(const string& mod);      // 装载模块
-	bool Unload(const string& mod);    // 卸载模块
+	bool load(const string& mod);      // 装载模块
+	bool unload(const string& mod);    // 卸载模块
 
 private:
 	os_info    osInfo;                 // 系统信息
 	user_info  userInfo;               // 用户信息
 	map<id_t, module_info*> module;    // 已装载的模块
-
-	vector<id_t> userId;
-
-	void OnAccept();
 };
 
 
