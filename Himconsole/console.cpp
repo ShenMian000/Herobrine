@@ -95,18 +95,22 @@ const map<string, Command*>& Console::getCommand()
 
 enum class InputState
 {
-	CMD, // 输入命令
-	KEY, // 输入键
-	ARG	 // 输入值
+	CMD,		// 输入命令
+	KEY,		// 输入键
+	STRING, // 输入双引号
+	ARG 		// 输入值
 };
 
 void Console::run()
 {
-	InputState inputState = InputState::CMD;
+	InputState		 inputState = InputState::CMD;
+	Syntax*				 syntax			= nullptr;
+	vector<string> stack;
 
 	while(true)
 	{
-		string buf;
+		string	cmd, arg;
+		string* buf = &cmd;
 
 		PrintPrompt();
 
@@ -114,22 +118,78 @@ void Console::run()
 		{
 			char ch = GetChar();
 
+			switch(ch)
+			{
+			case '\r':
+				break;
+
+			case ':':
+				break;
+
+			case ' ':
+				break;
+
+			case '\b':
+				if(buf->size() > 0)
+				{
+					printf("\b \b");
+					buf->pop_back();
+				}
+				else if(inputState == InputState::CMD)
+				{
+					printf("\a");
+					continue;
+				}
+				else
+				{
+					if(stack.size() > 0)
+					{
+						if(inputState == InputState::KEY)
+						{
+							inputState = InputState::ARG;
+							buf				 = &args[stack.back()];
+						}
+						if(inputState == InputState::ARG)
+						{
+							inputState = InputState::CMD;
+							buf				 = &arg;
+							stack.pop_back();
+						}
+					}
+					else
+					{
+						printf("\a");
+						continue;
+					}
+				}
+				break;
+			}
+
 			switch(inputState)
 			{
 			case InputState::CMD:
+				if(!isalnum(ch))
+				{
+					printf("\a");
+					continue;
+				}
 				break;
 
 			case InputState::KEY:
+				if(!isalnum(ch))
+				{
+					printf("\a");
+					continue;
+				}
 				break;
 
 			case InputState::ARG:
 				break;
 			}
 
-			buf += ch;
+			printf("%c", ch);
+			buf += ch; // *buf
 		}
-
-		buf.clear();
 	}
 }
 
@@ -203,78 +263,78 @@ void Console::console()
 				switch(cmd->syntax[key].type)
 				{
 				case Syntax::Type::INT:
-			case Syntax::Type::LONG:
-				if(!isalnum(ch))
-				{
-					printf("\a");
-					continue;
-				}
-				break;
+				case Syntax::Type::LONG:
+					if(!isalnum(ch))
+					{
+						printf("\a");
+						continue;
+					}
+					break;
 
-			case Syntax::Type::FLOAT:
-			case Syntax::Type::DOUBLE:
-				if(!isalnum(ch) && ch != '.')
-				{
-					printf("\a");
-					continue;
-				}
-				break;
+				case Syntax::Type::FLOAT:
+				case Syntax::Type::DOUBLE:
+					if(!isalnum(ch) && ch != '.')
+					{
+						printf("\a");
+						continue;
+					}
+					break;
 
-			case Syntax::Type::STRING:
-				if(!isprint(ch))
-				{
-					printf("\a");
-					continue;
+				case Syntax::Type::STRING:
+					if(!isprint(ch))
+					{
+						printf("\a");
+						continue;
+					}
+					if(ch == '"')
+						if(!inputString)
+							inputString = true;
+						else
+							inputString = false;
+					break;
+
+				case Syntax::Type::OPTION:
+					if(!isalnum(ch) && ch != '_')
+					{
+						printf("\a");
+						continue;
+					}
+					break;
 				}
+
 				if(ch == '"')
-					if(!inputString)
-						inputString = true;
-					else
-						inputString = false;
-				break;
+					break;
 
-			case Syntax::Type::OPTION:
-				if(!isalnum(ch) && ch != '_')
-				{
-					printf("\a");
-					continue;
-				}
+				arg += ch;
+			}
+			else
+			{
+				// 输入 键
+			}
+
+			if(ch == '\r')
+			{
+				printf("\n");
 				break;
 			}
 
-			if(ch == '"')
-				break;
-
-			arg += ch;
+			printf("%c", ch);
+			cPos++;
 		}
-		else
+
+		args.clear();
+
+		assert(cmd != nullptr);
+
+		try
 		{
-			// 输入 键
+			cmd->excute(*this);
 		}
-
-		if(ch == '\r')
+		catch(char* error)
 		{
-			printf("\n");
-			break;
+			print::error(error);
 		}
-
-		printf("%c", ch);
-		cPos++;
 	}
-
-	args.clear();
-
-	assert(cmd != nullptr);
-
-	try
-	{
-		cmd->excute(*this);
-	}
-	catch(char* error)
-	{
-		print::error(error);
-	}
-}
 }
 
 

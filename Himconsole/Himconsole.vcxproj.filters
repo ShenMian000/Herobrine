@@ -65,6 +65,9 @@
     <ClInclude Include="command\ExecCommand.h">
       <Filter>头文件\command</Filter>
     </ClInclude>
+    <ClInclude Include="module.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="himconsole.cpp">
@@ -92,6 +95,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="localization.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="module.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
