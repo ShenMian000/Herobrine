@@ -14,7 +14,7 @@
 
 Console::Console()
 {
-	history.resize(historySize);
+	historys.resize(historySize);
 }
 
 
@@ -54,17 +54,12 @@ void Console::setPrompt(const string& prompt)
 void Console::setHistorySize(size_t size)
 {
 	historySize = size;
-	history.resize(historySize);
+	historys.resize(historySize);
 }
 
-const string& Console::getHistory(size_t id)
+const deque<string>& Console::getHistory()
 {
-	return history.at(id);
-}
-
-size_t Console::getHistorySize()
-{
-	return history.size();
+	return historys;
 }
 
 
@@ -93,14 +88,218 @@ const map<string, Command*>& Console::getCommand()
 
 
 
-enum class InputState
+// 输入状态, 当前在输入的部分
+enum class State
 {
-	CMD,		// 输入命令
-	KEY,		// 输入键
-	STRING, // 输入双引号
-	ARG 		// 输入值
+	COMMAND, // 输入命令
+	KEY,		 // 输入键
+	VALUE		 // 输入值
 };
 
+
+// 高亮信息
+struct Highlight
+{
+	struct Tuple
+	{
+		bool						isLight;
+		Attribute::fore fore;
+		// Attribute::back back;
+		Attribute::mode mode;
+	};
+
+	Tuple command;
+	Tuple key;
+	Tuple value;
+	Tuple string;
+	Tuple number;
+	Tuple delim;
+};
+
+
+void Console::run()
+{
+	while(true)
+	{
+		string	 buf;
+		Command* command = nullptr;
+
+		PrintPrompt();
+
+		while(true)
+		{
+			State					state = State::COMMAND;
+			size_t				pos		= 0;
+			const string* match = nullptr;
+
+			Highlight highlight;
+			highlight.command.fore = Attribute::fore::yellow;
+			highlight.command.mode = Attribute::mode::fore_bold;
+			highlight.key.fore		 = Attribute::fore::blue;
+			highlight.key.mode		 = Attribute::mode::fore_bold;
+
+			char ch = GetChar();
+
+
+			if(ch == '\r')
+			{
+				printf("\n");
+				break;
+			}
+
+
+			// 处理特殊字符
+			switch(ch)
+			{
+			case ' ':
+				switch(state)
+				{
+				case State::COMMAND:
+					if(command == nullptr)
+						continue;
+					state = State::VALUE;
+					buf.clear();
+					break;
+
+				case State::VALUE:
+					state = State::KEY;
+					buf.clear();
+					break;
+
+				case State::KEY:
+					continue;
+				}
+				break;
+
+			case ':':
+				break;
+
+			case '\b':
+				switch(state)
+				{
+				case State::COMMAND:
+					if(buf.empty())
+						continue;
+					printf("\b \b");
+					buf.pop_back();
+					break;
+
+				case State::KEY:
+					// 还原buf
+					break;
+				}
+
+			case '\t':
+				if(match == nullptr)
+					continue;
+				printf("%s", match->substr(buf.size(), pos - buf.size()).c_str());
+				buf += match->substr(buf.size(), pos - buf.size());
+				break;
+			}
+
+
+			// 输入合法性检查
+			switch(state)
+			{
+			case State::COMMAND:
+			case State::KEY:
+				if(!isalnum(ch))
+					continue;
+				break;
+
+			case State::VALUE:
+				break;
+			}
+
+
+			printf("%c", ch);
+			buf += ch;
+
+
+			// 高亮
+			switch(state)
+			{
+			case State::COMMAND:
+				command = getCommand(buf);
+				if(command != nullptr)
+				{
+					Attribute::set(highlight.command.fore);
+					Attribute::set(highlight.command.mode);
+				}
+				for(size_t i = 0; i < buf.size(); i++)
+					printf("\b \b");
+				printf("%s", buf.c_str());
+				Attribute::rest();
+				break;
+			}
+
+
+			vector<const string*> matchs;
+			switch(state)
+			{
+			case State::COMMAND:
+				for(auto& cmd : commands)
+					if(buf == cmd.first.substr(0, buf.size()))
+						matchs.push_back(&cmd.first);
+
+				if(matchs.size() == 0)
+				{
+					match = nullptr;
+					break;
+				}
+
+				match = matchs.back();
+				matchs.pop_back();
+
+				if(matchs.size() > 1)
+				{
+					pos			 = 0;
+					size_t i = commands.size();
+					while(true)
+					{
+						for(auto cmd : matchs)
+						{
+							if(cmd->size() <= i)
+								pos = i;
+							else if(match[i] != cmd[i])
+								pos = i;
+							break;
+						}
+						if(pos)
+							break;
+						i++;
+					}
+				}
+				else
+					pos = match->size() - 1;
+				break;
+
+			case State::KEY:
+				break;
+			}
+			matchs.clear();
+		}
+
+		buf.clear();
+
+		assert(command != nullptr);
+
+		try
+		{
+			command->excute(*this);
+		}
+		catch(const char* error)
+		{
+			print::error(error);
+
+			// 卸载出错的命令
+		}
+	}
+}
+
+
+
+/*
 void Console::run()
 {
 	InputState		 inputState = InputState::CMD;
@@ -192,6 +391,7 @@ void Console::run()
 		}
 	}
 }
+
 
 
 
@@ -336,7 +536,7 @@ void Console::console()
 		}
 	}
 }
-
+*/
 
 /*
 

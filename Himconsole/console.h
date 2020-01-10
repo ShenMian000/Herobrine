@@ -23,8 +23,7 @@ public:
 	size_t        getArgSize();
 
 	void          setHistorySize(size_t);
-	const string& getHistory(size_t);
-	size_t        getHistorySize();
+	const deque<string>& getHistory();
 
 	void          addCommand(const string& name, Command*);
 	Command*      getCommand(const string& name);
@@ -33,12 +32,11 @@ public:
 	void          setPrompt(const string&);
 
 	void run();
-	void console();
 
 private:
 	map<string, string>   args;             // 参数
 	map<string, Command*> commands;
-	deque<string>				  history;					// 命令历史记录
+	deque<string>				  historys;					// 命令历史记录
 	size_t							  historySize = 30; // 最大命令历史记录数量
 	string							  prompt;						// 命令行提示符
 

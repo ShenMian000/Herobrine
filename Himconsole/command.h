@@ -44,20 +44,22 @@ struct Syntax
 		OPTION  // СЎПо
 	};
 	
-	Syntax(Type type, const string& desc, bool required = true, Syntax* compliance = nullptr)
-		: type(type), desc(desc), required(required), compliance(compliance)
+	Syntax(Type type, const string& desc, bool required = true, bool show = true, Syntax* base_required = nullptr, Syntax* base_show = nullptr)
+			: type(type), desc(desc), required(required), show(show), base_required(base_required), base_show(base_show)
 	{
 	}
 
 	Syntax()
-		: type(Type::OPTION), required(true), compliance(nullptr)
+			: type(Type::OPTION), required(true), show(true), base_required(nullptr), base_show(nullptr)
 	{
 	}
 
 	Type		type;
 	string  desc;
 	bool		required;
-	Syntax* compliance;
+	bool		show;
+	Syntax* base_required;
+	Syntax* base_show;
 };
 
 
