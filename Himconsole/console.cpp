@@ -87,6 +87,17 @@ Command* Console::getCommand(const string& name)
 }
 
 
+Syntax* Console::getKey(const string& name)
+{
+	if(command == nullptr)
+		return nullptr;
+	auto res = command->syntax.find(name);
+	if(res == command->syntax.end())
+		return nullptr;
+	return &(res->second);
+}
+
+
 const map<string, Command*>& Console::getCommand()
 {
 	return commands;
@@ -139,25 +150,24 @@ auto GetMapKeyByValue(const T& map_, const decltype(map_.begin()->second)& value
 
 void Console::run()
 {
+	Highlight highlight;
+	highlight.command.fore = Attribute::fore::green;
+	highlight.command.mode = Attribute::mode::fore_bold;
+	highlight.key.fore		 = Attribute::fore::yellow;
+	highlight.key.mode		 = Attribute::mode::fore_bold;
+
 	while(true)
 	{
-		string	 buf;
-		Command* command = nullptr;
+		string					buf;
+		vector<Syntax*> keys;
+		State						state = State::COMMAND;
+		size_t					pos		= 0;
+		const string*		match = nullptr;
 
 		PrintPrompt();
 
 		while(true)
 		{
-			State					state = State::COMMAND;
-			size_t				pos		= 0;
-			const string* match = nullptr;
-
-			Highlight highlight;
-			highlight.command.fore = Attribute::fore::yellow;
-			highlight.command.mode = Attribute::mode::fore_bold;
-			highlight.key.fore		 = Attribute::fore::blue;
-			highlight.key.mode		 = Attribute::mode::fore_bold;
-
 			char ch = GetChar();
 
 
@@ -177,7 +187,7 @@ void Console::run()
 				case State::COMMAND:
 					if(command == nullptr)
 						continue;
-					state = State::VALUE;
+					state = State::KEY;
 					buf.clear();
 					break;
 
@@ -189,9 +199,11 @@ void Console::run()
 				case State::KEY:
 					continue;
 				}
-				break;
+				printf(" ");
+				continue;
 
 			case ':':
+				continue;
 				break;
 
 			case '\b':
@@ -205,7 +217,10 @@ void Console::run()
 					break;
 
 				case State::KEY:
-					// 还原buf
+					if(buf.empty())
+						; // 还原buf
+					printf("\b \b");
+					buf.pop_back();
 					break;
 				}
 				break;
@@ -232,12 +247,14 @@ void Console::run()
 						continue;
 					break;
 				}
-				printf("%c", ch);
-				buf += ch;
 			}
 
 
-			// 高亮
+			printf("%c", ch);
+			buf += ch;
+
+
+			// 识别关键字 并 高亮
 			switch(state)
 			{
 			case State::COMMAND:
@@ -246,6 +263,19 @@ void Console::run()
 				{
 					Attribute::set(highlight.command.fore);
 					Attribute::set(highlight.command.mode);
+				}
+				for(size_t i = 0; i < buf.size(); i++)
+					printf("\b \b");
+				printf("%s", buf.c_str());
+				Attribute::rest();
+				break;
+
+			case State::KEY:
+				key = getKey(buf);
+				if(key != nullptr)
+				{
+					Attribute::set(highlight.key.fore);
+					Attribute::set(highlight.key.mode);
 				}
 				for(size_t i = 0; i < buf.size(); i++)
 					printf("\b \b");
@@ -278,7 +308,7 @@ void Console::run()
 					for(auto i = buf.size(); pos; i++)
 					{
 						for(auto cmd : matchs)
-						if(cmd->size() <= i - 1 || (*cmd)[i] != (*match)[i])
+							if(cmd->size() <= i - 1 || (*cmd)[i] != (*match)[i])
 							{
 								pos = i - buf.size();
 								break;
@@ -317,24 +347,6 @@ void Console::run()
 	}
 }
 
-/*
-					pos			 = 0;
-					size_t i = 0;
-					matchs.pop_back();
-
-					while(true)
-					{
-						for(auto cmd : matchs)
-							if(cmd->size() >= i || match[i] != cmd[i])
-							{
-								pos = i;
-								break;
-							}
-						if(pos)
-							break;
-						i++;
-					}*/
-
 
 // 输出命令行提示符
 void Console::PrintPrompt()
@@ -363,330 +375,3 @@ inline int Console::GetChar()
 	return c;
 #endif
 }
-
-
-
-/*
-void Console::run()
-{
-	InputState		 inputState = InputState::CMD;
-	Syntax*				 syntax			= nullptr;
-	vector<string> stack;
-
-	while(true)
-	{
-		string	cmd, arg;
-		string* buf = &cmd;
-
-		PrintPrompt();
-
-		while(true)
-		{
-			char ch = GetChar();
-
-			switch(ch)
-			{
-			case '\r':
-				break;
-
-			case ':':
-				break;
-
-			case ' ':
-				break;
-
-			case '\b':
-				if(buf->size() > 0)
-				{
-					printf("\b \b");
-					buf->pop_back();
-				}
-				else if(inputState == InputState::CMD)
-				{
-					printf("\a");
-					continue;
-				}
-				else
-				{
-					if(stack.size() > 0)
-					{
-						if(inputState == InputState::KEY)
-						{
-							inputState = InputState::ARG;
-							buf				 = &args[stack.back()];
-						}
-						if(inputState == InputState::ARG)
-						{
-							inputState = InputState::CMD;
-							buf				 = &arg;
-							stack.pop_back();
-						}
-					}
-					else
-					{
-						printf("\a");
-						continue;
-					}
-				}
-				break;
-			}
-
-			switch(inputState)
-			{
-			case InputState::CMD:
-				if(!isalnum(ch))
-				{
-					printf("\a");
-					continue;
-				}
-				break;
-
-			case InputState::KEY:
-				if(!isalnum(ch))
-				{
-					printf("\a");
-					continue;
-				}
-				break;
-
-			case InputState::ARG:
-				break;
-			}
-
-			printf("%c", ch);
-			buf += ch; // *buf
-		}
-	}
-}
-
-
-
-
-void Console::console()
-{
-	string key, value;
-
-	while(true)
-	{
-		Syntax*	 syntax = nullptr;
-		Command* cmd		= nullptr;
-		string*	 arg		= nullptr;
-
-		size_t				 cPos = 0; // 当前光标位置
-		vector<size_t> lPos;		 // 命令/参数结尾
-
-		size_t keySize = 0;
-
-		bool inputValue	 = false; // 正在输入值
-		bool inputString = false; // 正在输入字符串
-
-		PrintPrompt();
-
-		// 输入 命令
-		// TODO(SMS): 此处是否要使用goto语句简化流程
-		while(true)
-		{
-			string buf;
-
-			char ch = GetChar();
-
-			if(!isprint(ch))
-			{
-				printf("\a");
-				continue;
-			}
-
-			if(ch == ' ' || ch == '\r')
-			{
-				cmd = getCommand(buf);
-				if(cmd == nullptr)
-				{
-					printf("\a");
-					continue;
-				}
-				break;
-			}
-
-			buf += ch;
-		}
-
-		while(true)
-		{
-			char ch = GetChar();
-
-			if(inputValue)
-			{
-				// 输入 值
-				if(arg == nullptr)
-					arg = &args[key];
-
-				if(ch == '\r' || (inputString == false && ch == ' '))
-				{
-					inputValue = false;
-					key.clear();
-					break;
-				}
-
-				switch(cmd->syntax[key].type)
-				{
-				case Syntax::Type::INT:
-				case Syntax::Type::LONG:
-					if(!isalnum(ch))
-					{
-						printf("\a");
-						continue;
-					}
-					break;
-
-				case Syntax::Type::FLOAT:
-				case Syntax::Type::DOUBLE:
-					if(!isalnum(ch) && ch != '.')
-					{
-						printf("\a");
-						continue;
-					}
-					break;
-
-				case Syntax::Type::STRING:
-					if(!isprint(ch))
-					{
-						printf("\a");
-						continue;
-					}
-					if(ch == '"')
-						if(!inputString)
-							inputString = true;
-						else
-							inputString = false;
-					break;
-
-				case Syntax::Type::OPTION:
-					if(!isalnum(ch) && ch != '_')
-					{
-						printf("\a");
-						continue;
-					}
-					break;
-				}
-
-				if(ch == '"')
-					break;
-
-				arg += ch;
-			}
-			else
-			{
-				// 输入 键
-			}
-
-			if(ch == '\r')
-			{
-				printf("\n");
-				break;
-			}
-
-			printf("%c", ch);
-			cPos++;
-		}
-
-		args.clear();
-
-		assert(cmd != nullptr);
-
-		try
-		{
-			cmd->excute(*this);
-		}
-		catch(char* error)
-		{
-			print::error(error);
-		}
-	}
-}
-*/
-
-/*
-
-				if(!isalnum(ch) && ch != ' ' && ch != '_' && ch != '\r' && ch != '\b')
-				{
-					printf("\a");
-					continue;
-				}
-
-				if(cmd == nullptr || ch == ' ' || ch == '\r')
-				{
-					cmd = getCommand(key);
-					if(cmd == nullptr)
-					{
-						if(key == "exit")
-							return;
-
-						printf("\a");
-						continue;
-					}
-				}
-
-				switch(ch)
-				{
-				case ' ':
-					// 是否连续输入两个空格
-					if(key.size() == 0)
-					{
-						printf("\a");
-						continue;
-					}
-
-					// 是否可以继续填写参数
-					if(cmd->syntax.size() <= args.size())
-					{
-						printf("\a");
-						continue;
-					}
-
-					lPos.push_back(cPos);
-					inputValue = true;
-					arg = nullptr;
-					break;
-
-				case '\r':
-					// 是否可以不填写任何参数(必填参数全部填写完毕)
-					if(cmd->syntax.size() != 0)
-						for(auto& s : cmd->syntax)
-							if(s.second.required == false)
-							{
-								printf("\a");
-								continue;
-							}
-					
-					lPos.push_back(cPos);
-					inputValue = true;
-					break;
-
-				case '\b':
-					if(cPos > 0)
-					{
-						cPos--;
-						printf("\b \b");
-
-						// 回到上一个参数
-						if(cPos == lPos.back())
-						{
-							cPos = lPos.back();
-							key  = 
-							lPos.pop_back();
-							inputValue = true;
-							arg = nullptr;
-							continue;
-						}
-
-						key.pop_back();
-					} else
-					{
-						printf("\a");
-						continue;
-					}
-
-				default:
-					key += ch;
-				}
-*/

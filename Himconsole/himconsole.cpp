@@ -24,7 +24,6 @@ Himconsole::~Himconsole()
 
 
 ///////////
-/**/
 int main()
 {
 	print::warn(local::WARN_DEBUG);
@@ -41,7 +40,7 @@ int main()
 			" [Update Time: %-17.17s]\n",
 			__DATE__, __TIME__);
 
-	Himconsole console;
+	Console console;
 	console.setPrompt("him");
 
 	console.addCommand("clear",   dynamic_cast<Command*>(new ClearCommand()));
@@ -55,7 +54,6 @@ int main()
 
 	return 0;
 }
-/**/
 ///////////
 
 

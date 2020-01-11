@@ -45,6 +45,12 @@ private:
 
 	virtual void PrintPrompt();
 	inline  int  GetChar();                   // 读入一个字符, 不回显
+
+	
+	Command* command = nullptr;
+	Syntax*	 key		 = nullptr;
+
+	Syntax*	 getKey(const string& name);
 };
 
 
