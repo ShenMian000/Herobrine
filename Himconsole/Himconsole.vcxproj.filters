@@ -21,12 +21,6 @@
     <Filter Include="头文件\command">
       <UniqueIdentifier>{b260bcac-0ed1-4670-b8a1-9837d8d6a2d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="其他文件\doc">
-      <UniqueIdentifier>{dd1ebaf0-9356-44f2-8a38-ebd0c360b3c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="其他文件\doc\开发者手册">
-      <UniqueIdentifier>{56d11ca1-98e2-403a-a4c5-5eae7530863c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="slave.h">
@@ -110,9 +104,6 @@
   <ItemGroup>
     <None Include="README.zh-CN.md">
       <Filter>其他文件</Filter>
-    </None>
-    <None Include="doc\开发者手册\编码规范.md">
-      <Filter>其他文件\doc\开发者手册</Filter>
     </None>
   </ItemGroup>
 </Project>

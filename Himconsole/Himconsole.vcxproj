@@ -123,7 +123,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="doc\开发者手册\编码规范.md" />
     <None Include="README.zh-CN.md" />
   </ItemGroup>
   <ItemGroup>
