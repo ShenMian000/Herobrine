@@ -120,13 +120,11 @@ struct Highlight
 	struct Tuple
 	{
 		Attribute::fore fore;
-		// Attribute::back back;
 		Attribute::mode mode;
 	};
 
 	Tuple command;
 	Tuple key;
-	Tuple value;
 	Tuple string;
 	Tuple number;
 	Tuple delim;
@@ -146,6 +144,12 @@ auto GetMapKeyByValue(const T& map_, const decltype(map_.begin()->second)& value
 	}
 	return iter->first;
 }
+
+
+// TODO(SMS):
+//   语法分析, 而不是直接用command->syntax整个容器中的内容
+//   跨State回退
+//   命令历史
 
 
 void Console::run()
@@ -172,6 +176,12 @@ void Console::run()
 		{
 			char ch = GetChar();
 
+			// 清除补全提示
+			for(size_t i = 0; i < pos; i++)
+				printf(" ");
+			for(size_t i = 0; i < pos; i++)
+				printf("\b \b");
+
 
 			if(ch == '\r')
 			{
@@ -179,6 +189,14 @@ void Console::run()
 					*arg = buf;
 				printf("\n");
 				break;
+			}
+
+
+			if(inputString && isprint(ch))
+			{
+				printf("%c", ch);
+				buf += ch;
+				continue;
 			}
 
 
@@ -196,11 +214,6 @@ void Console::run()
 					break;
 
 				case State::VALUE:
-					if(inputString)
-					{
-						buf += ch;
-						break;
-					}
 					*arg	= buf;
 					state = State::KEY;
 					buf.clear();
@@ -227,11 +240,20 @@ void Console::run()
 				case State::COMMAND:
 					if(buf.empty())
 						continue;
+
 					printf("\b \b");
 					buf.pop_back();
 					break;
 
 				case State::KEY:
+					if(buf.empty())
+						; // 还原buf
+
+					printf("\b \b");
+					buf.pop_back();
+					break;
+
+				case State::VALUE:
 					if(buf.empty())
 						; // 还原buf
 					printf("\b \b");
@@ -249,6 +271,8 @@ void Console::run()
 
 			default:
 				// 输入合法性检查
+				if(ch < -1 || ch > 255)
+					continue;
 				switch(state)
 				{
 				case State::COMMAND:
@@ -326,6 +350,7 @@ void Console::run()
 			}
 
 
+			// TODO(SMS): 存在大量冗余代码, 可以合并
 			vector<const string*> matchs;
 			switch(state)
 			{
@@ -346,21 +371,69 @@ void Console::run()
 				{
 					matchs.pop_back();
 					pos = 0;
-					for(auto i = buf.size(); pos; i++)
+					bool flag = false;
+					for(auto i = buf.size();; i++)
 					{
 						for(auto cmd : matchs)
 							if(cmd->size() <= i - 1 || (*cmd)[i] != (*match)[i])
 							{
 								pos = i - buf.size();
+								flag = true;
 								break;
 							}
+						if(flag)
+							break;
 					}
 				}
 				else
 					pos = match->size() - buf.size();
+
+				Attribute::set(Attribute::fore::gray);
+				printf("%s", match->substr(buf.size(), pos).c_str());
+				for(size_t i = 0; i < pos; i++)
+					printf("\b");
+				Attribute::rest();
 				break;
 
 			case State::KEY:
+				for(auto& cmd : command->syntax)
+					if(buf == cmd.first.substr(0, buf.size()))
+						matchs.push_back(&cmd.first);
+
+				if(matchs.size() == 0)
+				{
+					match = nullptr;
+					break;
+				}
+
+				match = matchs.back();
+
+				if(matchs.size() > 1)
+				{
+					matchs.pop_back();
+					pos				= 0;
+					bool flag = false;
+					for(auto i = buf.size();; i++)
+					{
+						for(auto cmd : matchs)
+							if(cmd->size() <= i - 1 || (*cmd)[i] != (*match)[i])
+							{
+								pos	 = i - buf.size();
+								flag = true;
+								break;
+							}
+						if(flag)
+							break;
+					}
+				}
+				else
+					pos = match->size() - buf.size();
+
+				Attribute::set(Attribute::fore::gray);
+				printf("%s", match->substr(buf.size(), pos).c_str());
+				for(size_t i = 0; i < pos; i++)
+					printf("\b");
+				Attribute::rest();
 				break;
 			}
 			matchs.clear();
