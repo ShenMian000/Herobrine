@@ -23,11 +23,12 @@ enum class Platform
 enum class License
 {
 	Apache_2_0,
-	BSD,
+	BSD_2_Clause,
+	BSD_3_Clause,
 	GPL_3_0,
-	MPL_2_0,
 	LGPL_3_0,
-	TIM,
+	MPL_2_0,
+	TIM
 };
 
 // Óï·¨

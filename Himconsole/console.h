@@ -17,24 +17,24 @@ public:
 	Console();
 	virtual ~Console();
 
-	const string& getStringArg(const string& key);
-	int           getIntArg(const string& key);
-	long          getLongArg(const string& key);
-	size_t        getArgSize();
+	void run();
+
+	const string& getStringArg(const string& key) const;
+	int						getIntArg(const string& key) const;
+	long					getLongArg(const string& key) const;
+	size_t				getArgSize() const;
 
 	void setHistorySize(size_t);
-	void addHistory();
+	void addHistory() const;
 
 	void		 addCommand(const string& name, Command*);
 	void		 delCommand(const string& name);
-	Command* getCommand(const string& name);
+	Command* getCommand(const string& name) const;
 
-	const map<string, Command*>& getCommand();
-	const deque<string>&				 getHistory();
+	const map<string, Command*>& getCommand() const;
+	const deque<string>&				 getHistory() const;
 
-	void          setPrompt(const string&);
-
-	void run();
+	void setPrompt(const string&);
 
 private:
 	map<string, string>   args;             // ²ÎÊý
@@ -50,7 +50,7 @@ private:
 	Command* command = nullptr;
 	Syntax*	 key		 = nullptr;
 
-	Syntax*	 getKey(const string& name);
+	Syntax* getKey(const string& name) const;
 };
 
 

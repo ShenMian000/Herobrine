@@ -12,11 +12,11 @@ namespace local
 
 /*
  语言(Language)
- LANG_ZH_CH 中文简体
+ LANG_ZH_CN 中文简体
  LANG_ZH_TW 中文繁體
  LANG_EN    English
  */
-#define LANG_EN
+#define LANG_ZH_CN
 
 extern const char* WARN_DEBUG;
 extern const char* ERROR_UNKNOWN_COMMAND;

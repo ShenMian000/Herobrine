@@ -23,23 +23,23 @@ Console::~Console()
 }
 
 
-size_t Console::getArgSize()
+size_t Console::getArgSize() const
 {
 	return args.size();
 }
 
 
-const string& Console::getStringArg(const string& key)
+const string& Console::getStringArg(const string& key) const
 {
 	return args.at(key);
 }
 
-int Console::getIntArg(const string& key)
+int Console::getIntArg(const string& key) const
 {
 	return stoi(args.at(key));
 }
 
-long Console::getLongArg(const string& key)
+long Console::getLongArg(const string& key) const
 {
 	return stol(args.at(key));
 }
@@ -57,7 +57,7 @@ void Console::setHistorySize(size_t size)
 	historys.resize(historySize);
 }
 
-const deque<string>& Console::getHistory()
+const deque<string>& Console::getHistory() const
 {
 	return historys;
 }
@@ -78,7 +78,7 @@ void Console::delCommand(const string& name)
 }
 
 
-Command* Console::getCommand(const string& name)
+Command* Console::getCommand(const string& name) const
 {
 	auto res = commands.find(name);
 	if(res == commands.end())
@@ -87,7 +87,7 @@ Command* Console::getCommand(const string& name)
 }
 
 
-Syntax* Console::getKey(const string& name)
+Syntax* Console::getKey(const string& name) const
 {
 	if(command == nullptr)
 		return nullptr;
@@ -98,7 +98,7 @@ Syntax* Console::getKey(const string& name)
 }
 
 
-const map<string, Command*>& Console::getCommand()
+const map<string, Command*>& Console::getCommand() const
 {
 	return commands;
 }
@@ -160,9 +160,11 @@ void Console::run()
 	{
 		string					buf;
 		vector<Syntax*> keys;
-		State						state = State::COMMAND;
-		size_t					pos		= 0;
-		const string*		match = nullptr;
+		State						state				= State::COMMAND;
+		string*					arg					= nullptr;
+		size_t					pos					= 0;
+		const string*		match				= nullptr;
+		bool						inputString = false;
 
 		PrintPrompt();
 
@@ -173,6 +175,8 @@ void Console::run()
 
 			if(ch == '\r')
 			{
+				if(state == State::VALUE)
+					*arg = buf;
 				printf("\n");
 				break;
 			}
@@ -192,6 +196,12 @@ void Console::run()
 					break;
 
 				case State::VALUE:
+					if(inputString)
+					{
+						buf += ch;
+						break;
+					}
+					*arg	= buf;
 					state = State::KEY;
 					buf.clear();
 					break;
@@ -203,8 +213,13 @@ void Console::run()
 				continue;
 
 			case ':':
+				if(state != State::KEY || key == nullptr)
+					continue;
+				printf(":");
+				arg		= &args[buf];
+				state = State::VALUE;
+				buf.clear();
 				continue;
-				break;
 
 			case '\b':
 				switch(state)
@@ -243,15 +258,41 @@ void Console::run()
 					break;
 
 				case State::VALUE:
-					if(false)
-						continue;
+					switch(key->type)
+					{
+					case Syntax::Type::STRING:
+						if(!isprint(ch))
+							continue;
+						if(ch == '"')
+						{
+							if(!inputString)
+								inputString = true;
+							else
+								inputString = false;
+						}
+						break;
+
+					case Syntax::Type::INT:
+						if(!isdigit(ch))
+							continue;
+						break;
+
+					case Syntax::Type::FLOAT:
+					case Syntax::Type::DOUBLE:
+						if(!isdigit(ch) && ch != '.')
+							continue;
+						break;
+					}
 					break;
 				}
 			}
 
 
-			printf("%c", ch);
-			buf += ch;
+			if(isprint(ch))
+			{
+				printf("%c", ch);
+				buf += ch;
+			}
 
 
 			//  ∂±πÿº¸◊÷ ≤¢ ∏ﬂ¡¡
@@ -340,9 +381,9 @@ void Console::run()
 		{
 			print::error("∑¢…˙¥ÌŒÛ");
 
-			string cmd = GetMapKeyByValue(commands, command);
-			print::info("–∂‘ÿ√¸¡Ó: " + cmd);
-			delCommand(cmd);
+			string strCmd = GetMapKeyByValue(commands, command);
+			print::info("–∂‘ÿ√¸¡Ó: " + strCmd);
+			delCommand(strCmd);
 		}
 	}
 }
