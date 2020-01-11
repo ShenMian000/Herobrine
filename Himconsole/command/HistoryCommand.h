@@ -9,7 +9,7 @@ class HistoryCommand : public Command
 {
 public:
 	HistoryCommand()
-		: Command("显示命令历史纪录", "Herobrine")
+			: Command("显示命令历史纪录", "Herobrine")
 	{
 	}
 
@@ -20,8 +20,10 @@ public:
 		size_t i = 1;
 
 		for(auto& h : history)
+		{
+			if(h.empty())
+				break;
 			printf("%3zu %s\n", i++, h.c_str());
+		}
 	}
 };
-
-

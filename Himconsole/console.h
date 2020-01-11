@@ -22,12 +22,15 @@ public:
 	long          getLongArg(const string& key);
 	size_t        getArgSize();
 
-	void          setHistorySize(size_t);
-	const deque<string>& getHistory();
+	void setHistorySize(size_t);
+	void addHistory();
 
-	void          addCommand(const string& name, Command*);
-	Command*      getCommand(const string& name);
+	void		 addCommand(const string& name, Command*);
+	void		 delCommand(const string& name);
+	Command* getCommand(const string& name);
+
 	const map<string, Command*>& getCommand();
+	const deque<string>&				 getHistory();
 
 	void          setPrompt(const string&);
 

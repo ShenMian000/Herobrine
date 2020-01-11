@@ -49,6 +49,8 @@ int main()
 	console.addCommand("help",    dynamic_cast<Command*>(new HelpCommand()));
 	console.addCommand("history", dynamic_cast<Command*>(new HistoryCommand()));
 
+	console.addCommand("exit", dynamic_cast<Command*>(new ClearCommand()));
+
 	console.run();
 
 	return 0;

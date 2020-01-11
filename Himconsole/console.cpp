@@ -72,6 +72,12 @@ void Console::addCommand(const string& name, Command* cmd)
 }
 
 
+void Console::delCommand(const string& name)
+{
+	commands.erase(name);
+}
+
+
 Command* Console::getCommand(const string& name)
 {
 	auto res = commands.find(name);
@@ -102,7 +108,6 @@ struct Highlight
 {
 	struct Tuple
 	{
-		bool						isLight;
 		Attribute::fore fore;
 		// Attribute::back back;
 		Attribute::mode mode;
@@ -115,6 +120,21 @@ struct Highlight
 	Tuple number;
 	Tuple delim;
 };
+
+
+template <typename T>
+auto GetMapKeyByValue(const T& map_, const decltype(map_.begin()->second)& value) -> decltype(map_.begin()->first)
+{
+	auto iter = std::find_if(map_.begin(), map_.end(), [value](const auto& item) {
+		return (item.second == value);
+	});
+
+	if(iter == map_.end())
+	{
+		return decltype(map_.begin()->first)();
+	}
+	return iter->first;
+}
 
 
 void Console::run()
@@ -188,32 +208,33 @@ void Console::run()
 					// 还原buf
 					break;
 				}
+				break;
 
 			case '\t':
 				if(match == nullptr)
 					continue;
-				printf("%s", match->substr(buf.size(), pos - buf.size()).c_str());
-				buf += match->substr(buf.size(), pos - buf.size());
+				printf("%s", match->substr(buf.size(), pos).c_str());
+				buf += match->substr(buf.size(), pos);
 				break;
+
+			default:
+				// 输入合法性检查
+				switch(state)
+				{
+				case State::COMMAND:
+				case State::KEY:
+					if(!isalnum(ch))
+						continue;
+					break;
+
+				case State::VALUE:
+					if(false)
+						continue;
+					break;
+				}
+				printf("%c", ch);
+				buf += ch;
 			}
-
-
-			// 输入合法性检查
-			switch(state)
-			{
-			case State::COMMAND:
-			case State::KEY:
-				if(!isalnum(ch))
-					continue;
-				break;
-
-			case State::VALUE:
-				break;
-			}
-
-
-			printf("%c", ch);
-			buf += ch;
 
 
 			// 高亮
@@ -249,29 +270,23 @@ void Console::run()
 				}
 
 				match = matchs.back();
-				matchs.pop_back();
 
 				if(matchs.size() > 1)
 				{
-					pos			 = 0;
-					size_t i = commands.size();
-					while(true)
+					matchs.pop_back();
+					pos = 0;
+					for(auto i = buf.size(); pos; i++)
 					{
 						for(auto cmd : matchs)
-						{
-							if(cmd->size() <= i)
-								pos = i;
-							else if(match[i] != cmd[i])
-								pos = i;
-							break;
-						}
-						if(pos)
-							break;
-						i++;
+						if(cmd->size() <= i - 1 || (*cmd)[i] != (*match)[i])
+							{
+								pos = i - buf.size();
+								break;
+							}
 					}
 				}
 				else
-					pos = match->size() - 1;
+					pos = match->size() - buf.size();
 				break;
 
 			case State::KEY:
@@ -282,19 +297,71 @@ void Console::run()
 
 		buf.clear();
 
-		assert(command != nullptr);
-
 		try
 		{
+			assert(command != nullptr);
 			command->excute(*this);
 		}
 		catch(const char* error)
 		{
 			print::error(error);
+		}
+		catch(...)
+		{
+			print::error("发生错误");
 
-			// 卸载出错的命令
+			string cmd = GetMapKeyByValue(commands, command);
+			print::info("卸载命令: " + cmd);
+			delCommand(cmd);
 		}
 	}
+}
+
+/*
+					pos			 = 0;
+					size_t i = 0;
+					matchs.pop_back();
+
+					while(true)
+					{
+						for(auto cmd : matchs)
+							if(cmd->size() >= i || match[i] != cmd[i])
+							{
+								pos = i;
+								break;
+							}
+						if(pos)
+							break;
+						i++;
+					}*/
+
+
+// 输出命令行提示符
+void Console::PrintPrompt()
+{
+	printf("\n");
+	Attribute::set(Attribute::mode::underline);
+	printf(prompt.c_str());
+	Attribute::rest();
+	printf("> ");
+}
+
+
+// 读入一个字符, 不回显
+inline int Console::GetChar()
+{
+#ifdef OS_WIN
+	return _getch();
+#endif
+
+#ifdef OS_LINUX
+	system("stty -echo");
+	system("stty -icanon");
+	char c = getchar();
+	system("stty icanon");
+	system("stty echo");
+	return c;
+#endif
 }
 
 
@@ -623,32 +690,3 @@ void Console::console()
 					key += ch;
 				}
 */
-
-
-// 输出命令行提示符
-void Console::PrintPrompt()
-{
-	printf("\n");
-	Attribute::set(Attribute::mode::underline);
-	printf(prompt.c_str());
-	Attribute::rest();
-	printf("> ");
-}
-
-
-// 读入一个字符, 不回显
-inline int Console::GetChar()
-{
-#ifdef OS_WIN
-	return _getch();
-#endif
-
-#ifdef OS_LINUX
-	system("stty -echo");
-	system("stty -icanon");
-	char c = getchar();
-	system("stty icanon");
-	system("stty echo");
-	return c;
-#endif
-}
