@@ -14,7 +14,6 @@
 
 Console::Console()
 {
-	historys.resize(historySize);
 }
 
 
@@ -57,11 +56,21 @@ void Console::setHistorySize(size_t size)
 	historys.resize(historySize);
 }
 
-const deque<string>& Console::getHistory() const
+/*
+void Console::addHistory(const vector<string>& bufs) const
+{
+	while(historys.size() >= historySize)
+		historys.pop_back();
+	historys.push_front(bufs);
+}
+*/
+
+/*
+const deque<vector<string>>& Console::getHistory() const
 {
 	return historys;
 }
-
+*/
 
 void Console::addCommand(const string& name, Command* cmd)
 {
@@ -131,24 +140,8 @@ struct Highlight
 };
 
 
-template <typename T>
-auto GetMapKeyByValue(const T& map_, const decltype(map_.begin()->second)& value) -> decltype(map_.begin()->first)
-{
-	auto iter = std::find_if(map_.begin(), map_.end(), [value](const auto& item) {
-		return (item.second == value);
-	});
-
-	if(iter == map_.end())
-	{
-		return decltype(map_.begin()->first)();
-	}
-	return iter->first;
-}
-
-
 // TODO(SMS):
 //   语法分析, 而不是直接用command->syntax整个容器中的内容
-//   跨State回退
 //   命令历史
 
 
@@ -159,16 +152,18 @@ void Console::run()
 	highlight.command.mode = Attribute::mode::fore_bold;
 	highlight.key.fore		 = Attribute::fore::yellow;
 	highlight.key.mode		 = Attribute::mode::fore_bold;
+	highlight.delim.fore	 = Attribute::fore::white;
+	highlight.delim.mode	 = Attribute::mode::fore_bold;
 
 	while(true)
 	{
-		string					buf;
-		vector<Syntax*> keys;
-		State						state				= State::COMMAND;
-		string*					arg					= nullptr;
-		size_t					pos					= 0;
-		const string*		match				= nullptr;
-		bool						inputString = false;
+		string				 buf;
+		vector<string> buffers;
+		State					 state			 = State::COMMAND;
+		string*				 arg				 = nullptr;
+		size_t				 pos				 = 0;
+		const string*	 match			 = nullptr;
+		bool					 inputString = false;
 
 		PrintPrompt();
 
@@ -177,26 +172,34 @@ void Console::run()
 			char ch = GetChar();
 
 			// 清除补全提示
-			for(size_t i = 0; i < pos; i++)
+			for(size_t i = 0; i <= pos; i++)
 				printf(" ");
-			for(size_t i = 0; i < pos; i++)
+			for(size_t i = 0; i <= pos; i++)
 				printf("\b \b");
+
+
+			// FIXME(SMS): 回退时'"'是影身的
+			/*if(inputString && isprint(ch))
+			{
+				if(ch == '"')
+				{
+					printf("\"");
+					inputString = false;
+					continue;
+				}
+				printf("%c", ch);
+				buf += ch;
+				continue;
+			}*/
 
 
 			if(ch == '\r')
 			{
+				buffers.push_back(buf);
 				if(state == State::VALUE)
 					*arg = buf;
 				printf("\n");
 				break;
-			}
-
-
-			if(inputString && isprint(ch))
-			{
-				printf("%c", ch);
-				buf += ch;
-				continue;
 			}
 
 
@@ -209,11 +212,13 @@ void Console::run()
 				case State::COMMAND:
 					if(command == nullptr)
 						continue;
+					buffers.push_back(buf);
 					state = State::KEY;
 					buf.clear();
 					break;
 
 				case State::VALUE:
+					buffers.push_back(buf);
 					*arg	= buf;
 					state = State::KEY;
 					buf.clear();
@@ -228,7 +233,13 @@ void Console::run()
 			case ':':
 				if(state != State::KEY || key == nullptr)
 					continue;
+
+				Attribute::set(highlight.delim.fore);
+				Attribute::set(highlight.delim.mode);
 				printf(":");
+				Attribute::rest();
+
+				buffers.push_back(buf);
 				arg		= &args[buf];
 				state = State::VALUE;
 				buf.clear();
@@ -240,26 +251,35 @@ void Console::run()
 				case State::COMMAND:
 					if(buf.empty())
 						continue;
-
-					printf("\b \b");
 					buf.pop_back();
 					break;
 
 				case State::KEY:
 					if(buf.empty())
-						; // 还原buf
-
-					printf("\b \b");
-					buf.pop_back();
+					{
+						buf = buffers.back();
+						buffers.pop_back();
+						if(buffers.size() == 0)
+							state = State::COMMAND;
+						else
+							state = State::VALUE;
+					}
+					else
+						buf.pop_back();
 					break;
 
 				case State::VALUE:
 					if(buf.empty())
-						; // 还原buf
-					printf("\b \b");
-					buf.pop_back();
+					{
+						buf = buffers.back();
+						buffers.pop_back();
+						state = State::KEY;
+					}
+					else
+						buf.pop_back();
 					break;
 				}
+				printf("\b \b");
 				break;
 
 			case '\t':
@@ -287,13 +307,13 @@ void Console::run()
 					case Syntax::Type::STRING:
 						if(!isprint(ch))
 							continue;
-						if(ch == '"')
-						{
-							if(!inputString)
+						/*if(ch == '"')
+							if(buf.size() == 0)
+							{
+								printf("\"");
 								inputString = true;
-							else
-								inputString = false;
-						}
+							}
+							continue;*/
 						break;
 
 					case Syntax::Type::INT:
@@ -350,7 +370,7 @@ void Console::run()
 			}
 
 
-			// TODO(SMS): 存在大量冗余代码, 可以合并
+			// TODO(SMS): 存在大量冗余代码, 可以消除
 			vector<const string*> matchs;
 			switch(state)
 			{
@@ -370,14 +390,14 @@ void Console::run()
 				if(matchs.size() > 1)
 				{
 					matchs.pop_back();
-					pos = 0;
+					pos				= 0;
 					bool flag = false;
 					for(auto i = buf.size();; i++)
 					{
 						for(auto cmd : matchs)
 							if(cmd->size() <= i - 1 || (*cmd)[i] != (*match)[i])
 							{
-								pos = i - buf.size();
+								pos	 = i - buf.size();
 								flag = true;
 								break;
 							}
@@ -439,7 +459,7 @@ void Console::run()
 			matchs.clear();
 		}
 
-		buf.clear();
+		historys.push_back(buffers);
 
 		try
 		{
@@ -452,12 +472,14 @@ void Console::run()
 		}
 		catch(...)
 		{
-			print::error("发生错误");
-
-			string strCmd = GetMapKeyByValue(commands, command);
-			print::info("卸载命令: " + strCmd);
-			delCommand(strCmd);
+			print::error("捕获异常");
+			print::info("卸载命令: " + buffers.front());
+			delCommand(buffers.front());
 		}
+
+		buf.clear();
+		buffers.clear();
+		args.clear();
 	}
 }
 

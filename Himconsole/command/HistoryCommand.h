@@ -17,6 +17,7 @@ public:
 	{
 		auto& history = console.getHistory();
 
+		/*
 		size_t i = 1;
 
 		for(auto& h : history)
@@ -25,5 +26,6 @@ public:
 				break;
 			printf("%3zu %s\n", i++, h.c_str());
 		}
+		*/
 	}
 };
