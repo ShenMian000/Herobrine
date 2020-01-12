@@ -53,7 +53,6 @@ void Console::setPrompt(const string& prompt)
 void Console::setHistorySize(size_t size)
 {
 	historySize = size;
-	historys.resize(historySize);
 }
 
 /*
@@ -178,26 +177,26 @@ void Console::run()
 				printf("\b \b");
 
 
-			// FIXME(SMS): 回退时'"'是影身的
-			/*if(inputString && isprint(ch))
+			if(inputString && isprint(ch))
 			{
 				if(ch == '"')
-				{
-					printf("\"");
 					inputString = false;
-					continue;
-				}
 				printf("%c", ch);
 				buf += ch;
 				continue;
-			}*/
+			}
 
 
 			if(ch == '\r')
 			{
 				buffers.push_back(buf);
 				if(state == State::VALUE)
-					*arg = buf;
+				{
+					if(buf.front() == '"')
+						*arg = buf.substr(1, buf.size() - 2);
+					else
+						*arg = buf;
+				}
 				printf("\n");
 				break;
 			}
@@ -219,7 +218,10 @@ void Console::run()
 
 				case State::VALUE:
 					buffers.push_back(buf);
-					*arg	= buf;
+					if(buf.front() == '"')
+						*arg = buf.substr(1, buf.size() - 2);
+					else
+						*arg = buf;
 					state = State::KEY;
 					buf.clear();
 					break;
@@ -307,13 +309,8 @@ void Console::run()
 					case Syntax::Type::STRING:
 						if(!isprint(ch))
 							continue;
-						/*if(ch == '"')
-							if(buf.size() == 0)
-							{
-								printf("\"");
-								inputString = true;
-							}
-							continue;*/
+						if(ch == '"' && buf.size() == 0)
+							inputString = true;
 						break;
 
 					case Syntax::Type::INT:
@@ -458,8 +455,6 @@ void Console::run()
 			}
 			matchs.clear();
 		}
-
-		historys.push_back(buffers);
 
 		try
 		{

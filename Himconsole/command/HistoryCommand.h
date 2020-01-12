@@ -15,9 +15,9 @@ public:
 
 	void excute(Console& console) override
 	{
+		/*
 		auto& history = console.getHistory();
 
-		/*
 		size_t i = 1;
 
 		for(auto& h : history)
