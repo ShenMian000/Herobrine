@@ -14,6 +14,12 @@
 
 Console::Console()
 {
+	highlight.command.fore = Attribute::fore::green;
+	highlight.command.mode = Attribute::mode::fore_bold;
+	highlight.key.fore		 = Attribute::fore::yellow;
+	highlight.key.mode		 = Attribute::mode::fore_bold;
+	highlight.delim.fore	 = Attribute::fore::white;
+	highlight.delim.mode	 = Attribute::mode::fore_bold;
 }
 
 
@@ -55,14 +61,14 @@ void Console::setHistorySize(size_t size)
 	historySize = size;
 }
 
-/*
-void Console::addHistory(const vector<string>& bufs) const
+
+/*void Console::addHistory(const vector<string>& buffers) const
 {
 	while(historys.size() >= historySize)
 		historys.pop_back();
-	historys.push_front(bufs);
-}
-*/
+
+	historys.push_front(buffers);
+}*/
 
 /*
 const deque<vector<string>>& Console::getHistory() const
@@ -106,6 +112,43 @@ Syntax* Console::getKey(const string& name) const
 }
 
 
+void Console::HighlightCommand(const string& cmd)
+{
+	command = getCommand(cmd);
+	if(command != nullptr)
+	{
+		Attribute::set(highlight.command.fore);
+		Attribute::set(highlight.command.mode);
+	}
+	for(size_t i = 0; i < cmd.size(); i++)
+		printf("\b \b");
+	printf("%s", cmd.c_str());
+	Attribute::rest();
+}
+
+void Console::HighlightKey(const string& key_)
+{
+	key = getKey(key_);
+	if(key != nullptr)
+	{
+		Attribute::set(highlight.key.fore);
+		Attribute::set(highlight.key.mode);
+	}
+	for(size_t i = 0; i < key_.size(); i++)
+		printf("\b \b");
+	printf("%s", key_.c_str());
+	Attribute::rest();
+}
+
+void Console::HighlightDelim()
+{
+	Attribute::set(highlight.delim.fore);
+	Attribute::set(highlight.delim.mode);
+	printf(":");
+	Attribute::rest();
+}
+
+
 const map<string, Command*>& Console::getCommand() const
 {
 	return commands;
@@ -122,23 +165,6 @@ enum class State
 };
 
 
-// 高亮信息
-struct Highlight
-{
-	struct Tuple
-	{
-		Attribute::fore fore;
-		Attribute::mode mode;
-	};
-
-	Tuple command;
-	Tuple key;
-	Tuple string;
-	Tuple number;
-	Tuple delim;
-};
-
-
 // TODO(SMS):
 //   语法分析, 而不是直接用command->syntax整个容器中的内容
 //   命令历史
@@ -146,14 +172,6 @@ struct Highlight
 
 void Console::run()
 {
-	Highlight highlight;
-	highlight.command.fore = Attribute::fore::green;
-	highlight.command.mode = Attribute::mode::fore_bold;
-	highlight.key.fore		 = Attribute::fore::yellow;
-	highlight.key.mode		 = Attribute::mode::fore_bold;
-	highlight.delim.fore	 = Attribute::fore::white;
-	highlight.delim.mode	 = Attribute::mode::fore_bold;
-
 	while(true)
 	{
 		string				 buf;
@@ -235,12 +253,7 @@ void Console::run()
 			case ':':
 				if(state != State::KEY || key == nullptr)
 					continue;
-
-				Attribute::set(highlight.delim.fore);
-				Attribute::set(highlight.delim.mode);
-				printf(":");
-				Attribute::rest();
-
+				HighlightDelim();
 				buffers.push_back(buf);
 				arg		= &args[buf];
 				state = State::VALUE;
@@ -340,29 +353,11 @@ void Console::run()
 			switch(state)
 			{
 			case State::COMMAND:
-				command = getCommand(buf);
-				if(command != nullptr)
-				{
-					Attribute::set(highlight.command.fore);
-					Attribute::set(highlight.command.mode);
-				}
-				for(size_t i = 0; i < buf.size(); i++)
-					printf("\b \b");
-				printf("%s", buf.c_str());
-				Attribute::rest();
+				HighlightCommand(buf);
 				break;
 
 			case State::KEY:
-				key = getKey(buf);
-				if(key != nullptr)
-				{
-					Attribute::set(highlight.key.fore);
-					Attribute::set(highlight.key.mode);
-				}
-				for(size_t i = 0; i < buf.size(); i++)
-					printf("\b \b");
-				printf("%s", buf.c_str());
-				Attribute::rest();
+				HighlightKey(buf);
 				break;
 			}
 

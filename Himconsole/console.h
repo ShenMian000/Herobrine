@@ -34,23 +34,36 @@ public:
 	void setPrompt(const string&);
 
 	const map<string, Command*>& getCommand() const;
-	const deque<vector<string>>& getHistory() const;
+	const deque<string>& getHistory() const;
 
 private:
 	map<string, string>   args;             // 参数
 	map<string, Command*> commands;
-	// deque<vector<string>> historys;					// 命令历史记录
+	deque<string>					historys;					// 命令历史记录
 	size_t								historySize = 30; // 最大命令历史记录数量
-	string							  prompt;						// 命令行提示符
-
-	virtual void PrintPrompt();
-	inline  int  GetChar();                   // 读入一个字符, 不回显
+	string								prompt;						// 命令行提示符
 
 	
-	Command* command = nullptr;
-	Syntax*	 key		 = nullptr;
+	Command*	command = nullptr;
+	Syntax*		key			= nullptr;
 
-	Syntax* getKey(const string& name) const;
+	virtual void PrintPrompt();
+	inline  int  GetChar();                 // 读入一个字符, 不回显
+	Syntax*			 getKey(const string& name) const;
+
+
+	// 高亮
+	struct
+	{
+		struct
+		{
+			Attribute::fore fore;
+			Attribute::mode mode;
+		} command, key, delim, string, number;
+	} highlight;
+	void HighlightCommand(const string& cmd);
+	void HighlightKey(const string& key);
+	void HighlightDelim();
 };
 
 
