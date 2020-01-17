@@ -90,6 +90,8 @@ private:
 	const Platform platform;
 	const License	 license;
 
+	map<const string, const string> str;
+
 	virtual void excute(Console&) = 0;
 };
 

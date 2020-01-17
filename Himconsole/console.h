@@ -44,8 +44,8 @@ private:
 	string								prompt;						// 命令行提示符
 
 	
-	Command*	command = nullptr;
-	Syntax*		key			= nullptr;
+	Command*	pCommand = nullptr;
+	Syntax*		pKey			= nullptr;
 
 	virtual void PrintPrompt();
 	inline  int  GetChar();                 // 读入一个字符, 不回显

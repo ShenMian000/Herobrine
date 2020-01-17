@@ -79,8 +79,7 @@ const deque<vector<string>>& Console::getHistory() const
 
 void Console::addCommand(const string& name, Command* cmd)
 {
-	if(getCommand(name) != nullptr)
-		; // TODO
+	assert(getCommand(name) == nullptr);
 
 	commands.insert({name, cmd});
 }
@@ -103,9 +102,10 @@ Command* Console::getCommand(const string& name) const
 
 Syntax* Console::getKey(const string& name) const
 {
-	assert(command != nullptr);
-	auto res = command->syntax.find(name);
-	if(res == command->syntax.end())
+	assert(pCommand != nullptr);
+
+	auto res = pCommand->syntax.find(name);
+	if(res == pCommand->syntax.end())
 		return nullptr;
 	return &(res->second);
 }
@@ -113,8 +113,8 @@ Syntax* Console::getKey(const string& name) const
 
 void Console::HighlightCommand(const string& cmd)
 {
-	command = getCommand(cmd);
-	if(command != nullptr)
+	pCommand = getCommand(cmd);
+	if(pCommand != nullptr)
 	{
 		Attribute::set(highlight.command.fore);
 		Attribute::set(highlight.command.mode);
@@ -125,17 +125,16 @@ void Console::HighlightCommand(const string& cmd)
 	Attribute::rest();
 }
 
-void Console::HighlightKey(const string& key_)
+void Console::HighlightKey(const string& key)
 {
-	key = getKey(key_);
-	if(key != nullptr)
+	if(pKey != nullptr)
 	{
 		Attribute::set(highlight.key.fore);
 		Attribute::set(highlight.key.mode);
 	}
-	for(size_t i = 0; i < key_.size(); i++)
+	for(size_t i = 0; i < key.size(); i++)
 		printf("\b \b");
-	printf("%s", key_.c_str());
+	printf("%s", key.c_str());
 	Attribute::rest();
 }
 
@@ -179,6 +178,7 @@ void Console::run()
 		string*				 arg				 = nullptr;
 		size_t				 pos				 = 0;
 		const string*	 match			 = nullptr;
+		const string*	 newMatch		 = nullptr;
 		bool					 inputString = false;
 
 		PrintPrompt();
@@ -186,12 +186,6 @@ void Console::run()
 		while(true)
 		{
 			char ch = GetChar();
-
-			// 清除补全提示
-			for(size_t i = 0; i <= pos; i++)
-				printf(" ");
-			for(size_t i = 0; i <= pos; i++)
-				printf("\b \b");
 
 
 			if(inputString && isprint(ch))
@@ -206,11 +200,19 @@ void Console::run()
 
 			if(ch == '\r' || ch == '\n')
 			{
-				buffers.push_back(buf);
+				if(state == State::COMMAND || state == State::KEY)
+					continue;
 				if(state == State::VALUE)
 				{
+					if(buf.size() == 0)
+						continue;
+
 					if(buf.front() == '"')
+					{
+						if(buf.back() != '"')
+							continue;
 						*arg = buf.substr(1, buf.size() - 2);
+					}
 					else
 						*arg = buf;
 				}
@@ -226,7 +228,7 @@ void Console::run()
 				switch(state)
 				{
 				case State::COMMAND:
-					if(command == nullptr)
+					if(pCommand == nullptr)
 						continue;
 					buffers.push_back(buf);
 					state = State::KEY;
@@ -250,7 +252,7 @@ void Console::run()
 				continue;
 
 			case ':':
-				if(state != State::KEY || key == nullptr)
+				if(state != State::KEY || pKey == nullptr)
 					continue;
 				HighlightDelim();
 				buffers.push_back(buf);
@@ -316,7 +318,7 @@ void Console::run()
 					break;
 
 				case State::VALUE:
-					switch(key->type)
+					switch(pKey->type)
 					{
 					case Syntax::Type::STRING:
 						if(!isprint(ch))
@@ -356,6 +358,7 @@ void Console::run()
 				break;
 
 			case State::KEY:
+				pKey = getKey(buf);
 				HighlightKey(buf);
 				break;
 			}
@@ -372,11 +375,28 @@ void Console::run()
 
 				if(matchs.size() == 0)
 				{
+					// 清除补全提示
+					for(size_t i = 0; i <= pos; i++)
+						printf(" ");
+					for(size_t i = 0; i <= pos; i++)
+						printf("\b \b");
+
 					match = nullptr;
 					break;
 				}
 
-				match = matchs.back();
+				newMatch = matchs.back();
+
+				if(newMatch != match)
+				{
+					// 清除补全提示
+					for(size_t i = 0; i <= pos; i++)
+						printf(" ");
+					for(size_t i = 0; i <= pos; i++)
+						printf("\b \b");
+
+					match = newMatch;
+				}
 
 				if(matchs.size() > 1)
 				{
@@ -407,17 +427,34 @@ void Console::run()
 				break;
 
 			case State::KEY:
-				for(auto& cmd : command->syntax)
+				for(auto& cmd : pCommand->syntax)
 					if(buf == cmd.first.substr(0, buf.size()))
 						matchs.push_back(&cmd.first);
 
 				if(matchs.size() == 0)
 				{
+					// 清除补全提示
+					for(size_t i = 0; i <= pos; i++)
+						printf(" ");
+					for(size_t i = 0; i <= pos; i++)
+						printf("\b \b");
+
 					match = nullptr;
 					break;
 				}
 
-				match = matchs.back();
+				newMatch = matchs.back();
+
+				if(newMatch != match)
+				{
+					// 清除补全提示
+					for(size_t i = 0; i <= pos; i++)
+						printf(" ");
+					for(size_t i = 0; i <= pos; i++)
+						printf("\b \b");
+
+					match = newMatch;
+				}
 
 				if(matchs.size() > 1)
 				{
@@ -452,8 +489,8 @@ void Console::run()
 
 		try
 		{
-			assert(command != nullptr);
-			command->excute(*this);
+			assert(pCommand != nullptr);
+			pCommand->excute(*this);
 		}
 		catch(const char* error)
 		{
@@ -461,9 +498,11 @@ void Console::run()
 		}
 		catch(...)
 		{
+			auto& cmd = buffers.front();
+
 			print::error("捕获异常");
-			print::info("卸载命令: " + buffers.front());
-			delCommand(buffers.front());
+			print::info("卸载命令: " + cmd);
+			delCommand(cmd);
 		}
 
 		buf.clear();

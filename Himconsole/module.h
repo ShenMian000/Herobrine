@@ -15,6 +15,8 @@ class Module : public Command
 public:
 	virtual void execute(Slave&) = 0;
 
+	static void loadModuleInDir(const string&);
+
 private:
 };
 
