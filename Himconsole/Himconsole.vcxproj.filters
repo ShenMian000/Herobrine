@@ -105,7 +105,7 @@
     <None Include="README.zh-CN.md">
       <Filter>其他文件</Filter>
     </None>
-    <None Include="Makefile">
+    <None Include="makefile">
       <Filter>其他文件</Filter>
     </None>
   </ItemGroup>

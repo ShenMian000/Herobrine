@@ -123,7 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="Makefile" />
+    <None Include="makefile" />
     <None Include="README.zh-CN.md" />
   </ItemGroup>
   <ItemGroup>
