@@ -40,6 +40,8 @@ struct module_info
 	string license;  // 许可证
 };
 
+typedef uint module_id_t;
+
 
 class Slave
 {
@@ -52,7 +54,7 @@ public:
 private:
 	os_info    osInfo;                 // 系统信息
 	user_info  userInfo;               // 用户信息
-	map<id_t, module_info*> module;    // 已装载的模块
+	map<module_id_t, module_info*> module;    // 已装载的模块
 };
 
 

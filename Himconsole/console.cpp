@@ -103,8 +103,7 @@ Command* Console::getCommand(const string& name) const
 
 Syntax* Console::getKey(const string& name) const
 {
-	if(command == nullptr)
-		return nullptr;
+	assert(command != nullptr);
 	auto res = command->syntax.find(name);
 	if(res == command->syntax.end())
 		return nullptr;
@@ -205,7 +204,7 @@ void Console::run()
 			}
 
 
-			if(ch == '\r')
+			if(ch == '\r' || ch == '\n')
 			{
 				buffers.push_back(buf);
 				if(state == State::VALUE)

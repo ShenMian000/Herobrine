@@ -10,6 +10,8 @@
 
 
 
+typedef ulong slave_id_t;
+
 class Himconsole : public Console
 {
 public:
@@ -19,7 +21,7 @@ public:
 	const Slave& getSlave();
 
 private:
-	map<id_t, Slave*> slave;
+	map<slave_id_t, Slave*> slave;
 };
 
 
