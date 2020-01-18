@@ -13,8 +13,8 @@
 class AutoComplete
 {
 public:
-	AutoComplete(Console*);
-
+	explicit AutoComplete(Console*);
+	
 	void run();
 
 	void printPrompt();

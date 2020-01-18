@@ -13,7 +13,7 @@
 
 
 Console::Console()
-		: highlight(this), autoComplete(this)
+		: highlight(this), autoComplete(this), state(State::COMMAND)
 {
 }
 

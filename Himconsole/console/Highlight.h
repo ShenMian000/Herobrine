@@ -15,7 +15,7 @@ class Highlight
 {
 public:
 	Highlight();
-	Highlight(Console*);
+	explicit Highlight(Console*);
 
 	void run();
 
