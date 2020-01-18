@@ -5,9 +5,9 @@
 #include "himconsole.h"
 
 #include "console/command/ClearCommand.h"
+#include "console/command/ExecCommand.h"
 #include "console/command/HelpCommand.h"
 #include "console/command/HistoryCommand.h"
-#include "console/command/ExecCommand.h"
 
 #include "localization.h"
 
@@ -24,6 +24,37 @@ Himconsole::~Himconsole()
 
 
 ///////////
+
+class ListenCommand : public Command
+{
+public:
+	ListenCommand()
+			: Command("¼àÌýÖ¸¶¨µØÖ·ºÍ¶Ë¿Ú", "[TEST]")
+	{
+		syntax.insert({"ip",   {Syntax::Type::STRING, "¼àÌýµØÖ·", false}});
+		syntax.insert({"port", {Syntax::Type::INT,    "¼àÌý¶Ë¿Ú", false}});
+	}
+
+	void excute(Console& console) override
+	{
+	}
+};
+
+class KeyscanCommand : public Command
+{
+public:
+	KeyscanCommand()
+			: Command("»÷¼üÐáÌ½", "[TEST]")
+	{
+		syntax.insert({"start", {Syntax::Type::OPTION, "¿ªÊ¼ÐáÌ½", true}});
+		syntax.insert({"stop",  {Syntax::Type::OPTION, "½áÊøÐáÌ½", true}});
+	}
+
+	void excute(Console& console) override
+	{
+	}
+};
+
 int main()
 {
 	print::warn(local::WARN_DEBUG);
@@ -43,20 +74,19 @@ int main()
 	Console console;
 	console.setPrompt("him");
 
-	console.addCommand("clear",   dynamic_cast<Command*>(new ClearCommand()));
-	console.addCommand("exec",    dynamic_cast<Command*>(new ExecCommand()));
-	console.addCommand("help",    dynamic_cast<Command*>(new HelpCommand()));
+	console.addCommand("clear", dynamic_cast<Command*>(new ClearCommand()));
+	console.addCommand("exec", dynamic_cast<Command*>(new ExecCommand()));
+	console.addCommand("help", dynamic_cast<Command*>(new HelpCommand()));
 	console.addCommand("history", dynamic_cast<Command*>(new HistoryCommand()));
+	console.addCommand("listen", dynamic_cast<Command*>(new ListenCommand()));
+	console.addCommand("keyscan", dynamic_cast<Command*>(new KeyscanCommand()));
+
 
 	console.run();
 
 	return 0;
 }
 ///////////
-
-
-
-
 
 
 

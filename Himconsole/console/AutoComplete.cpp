@@ -29,9 +29,9 @@ void AutoComplete::run()
 		break;
 
 	case Console::State::KEY:
-		for(auto& cmd : console->pCommand->getSyntax())
-			if(console->buf == cmd.first.substr(0, console->buf.size()))
-				matchs.push_back(&cmd.first);
+		for(auto& syntax : console->pCommand->getSyntax())
+			if(syntax.second.show && console->buf == syntax.first.substr(0, console->buf.size()))
+				matchs.push_back(&syntax.first);
 		break;
 	}
 
@@ -92,13 +92,11 @@ void AutoComplete::cleanPrompt()
 
 
 // ²¹È«
-bool AutoComplete::complete()
+void AutoComplete::complete()
 {
 	if(match == nullptr)
-		return false;
+		return;
 	printf("%s", match->substr(console->buf.size(), pos).c_str());
 	console->buf += match->substr(console->buf.size(), pos);
-	return true;
+	return;
 }
-
-

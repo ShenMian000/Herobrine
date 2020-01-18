@@ -190,10 +190,11 @@ void Console::run()
 
 				case State::VALUE:
 					buffers.push_back(buf);
-					if(buf.front() == '"')
-						*arg = buf.substr(1, buf.size() - 2);
-					else
-						*arg = buf;
+					if(buf.size() >= 2)
+						if(buf.front() == '"')
+							*arg = buf.substr(1, buf.size() - 2);
+						else
+							*arg = buf;
 					state = State::KEY;
 					buf.clear();
 					break;
@@ -209,10 +210,10 @@ void Console::run()
 					continue;
 				state = State::DELIM;
 				highlight.run();
+				arg = &args[buf];
 				buffers.push_back(buf);
-				arg		= &args[buf];
-				state = State::VALUE;
 				buf.clear();
+				state = State::VALUE;
 				continue;
 
 			case '\b':
@@ -253,19 +254,21 @@ void Console::run()
 				break;
 
 			case '\t':
-				if(autoComplete.complete())
-					if(state == State::KEY)
+				autoComplete.complete();
+				if(state == Console::State::KEY)
+				{
+					pKey = getKey(buf);
+					highlight.run();
+					if(pKey != nullptr && pKey->type != Syntax::Type::OPTION)
 					{
-						// ×Ô¶¯Ìí¼Ó':'
-						pKey = getKey(buf);
-						highlight.run();
 						state = State::DELIM;
 						highlight.run();
+						arg = &args[buf];
 						buffers.push_back(buf);
-						arg		= &args[buf];
-						state = State::VALUE;
 						buf.clear();
+						state = State::VALUE;
 					}
+				}
 				break;
 
 			default:

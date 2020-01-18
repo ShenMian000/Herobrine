@@ -20,7 +20,7 @@ public:
 	void printPrompt();
 	void cleanPrompt();
 
-	bool complete();
+	void complete();
 
 private:
 	Console*					 console;

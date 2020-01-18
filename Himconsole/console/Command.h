@@ -46,12 +46,12 @@ struct Syntax
 	};
 	
 	Syntax(Type type, const string& desc, bool required = true, bool show = true, Syntax* base_required = nullptr, Syntax* base_show = nullptr)
-			: type(type), desc(desc), required(required), show(show), base_required(base_required), base_show(base_show)
+			: type(type), desc(desc), required(required), show(show), required_next(base_required), show_next(base_show)
 	{
 	}
 
 	Syntax()
-			: type(Type::OPTION), required(true), show(true), base_required(nullptr), base_show(nullptr)
+			: type(Type::OPTION), required(true), show(true), required_next(nullptr), show_next(nullptr)
 	{
 	}
 
@@ -59,8 +59,8 @@ struct Syntax
 	string  desc;
 	bool		required;
 	bool		show;
-	Syntax* base_required;
-	Syntax* base_show;
+	Syntax* required_next;
+	Syntax* show_next;
 };
 
 
