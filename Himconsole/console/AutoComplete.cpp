@@ -92,12 +92,13 @@ void AutoComplete::cleanPrompt()
 
 
 // ²¹È«
-void AutoComplete::complete()
+bool AutoComplete::complete()
 {
 	if(match == nullptr)
-		return;
+		return false;
 	printf("%s", match->substr(console->buf.size(), pos).c_str());
 	console->buf += match->substr(console->buf.size(), pos);
+	return true;
 }
 
 

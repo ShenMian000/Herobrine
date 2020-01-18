@@ -253,7 +253,19 @@ void Console::run()
 				break;
 
 			case '\t':
-				autoComplete.complete();
+				if(autoComplete.complete())
+					if(state == State::KEY)
+					{
+						// ×Ô¶¯Ìí¼Ó':'
+						pKey = getKey(buf);
+						highlight.run();
+						state = State::DELIM;
+						highlight.run();
+						buffers.push_back(buf);
+						arg		= &args[buf];
+						state = State::VALUE;
+						buf.clear();
+					}
 				break;
 
 			default:
