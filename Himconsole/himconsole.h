@@ -5,7 +5,7 @@
 #ifndef HIMCONSOLE_H_
 #define HIMCONSOLE_H_
 
-#include "console.h"
+#include "console/console.h"
 #include "slave.h"
 
 

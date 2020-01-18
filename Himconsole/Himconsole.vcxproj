@@ -129,11 +129,14 @@
   <ItemGroup>
     <ClInclude Include="attribute.h" />
     <ClInclude Include="command.h" />
-    <ClInclude Include="command\ClearCommand.h" />
-    <ClInclude Include="command\ExecCommand.h" />
-    <ClInclude Include="command\HelpCommand.h" />
-    <ClInclude Include="command\HistoryCommand.h" />
-    <ClInclude Include="console.h" />
+    <ClInclude Include="console\AutoComplete.h" />
+    <ClInclude Include="console\Command.h" />
+    <ClInclude Include="console\command\ClearCommand.h" />
+    <ClInclude Include="console\command\ExecCommand.h" />
+    <ClInclude Include="console\command\HelpCommand.h" />
+    <ClInclude Include="console\command\HistoryCommand.h" />
+    <ClInclude Include="console\Console.h" />
+    <ClInclude Include="console\Highlight.h" />
     <ClInclude Include="database\mysql\mysql.h" />
     <ClInclude Include="database\mysql\result.h" />
     <ClInclude Include="himconsole.h" />
@@ -145,8 +148,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="attribute.cpp" />
-    <ClCompile Include="command.cpp" />
-    <ClCompile Include="console.cpp" />
+    <ClCompile Include="console\AutoComplete.cpp" />
+    <ClCompile Include="console\command.cpp" />
+    <ClCompile Include="console\console.cpp" />
+    <ClCompile Include="console\Highlight.cpp" />
     <ClCompile Include="database\mysql\mysql.cpp" />
     <ClCompile Include="database\mysql\result.cpp" />
     <ClCompile Include="himconsole.cpp" />

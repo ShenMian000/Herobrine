@@ -4,7 +4,7 @@
 
 #include "command.h"
 #include "console.h"
-#include "localization.h"
+#include "../localization.h"
 
 
 
@@ -34,6 +34,11 @@ const string& Command::getDescription()
 const string& Command::getAuthor()
 {
 	return author;
+}
+
+const map<string, Syntax>& Command::getSyntax()
+{
+	return syntax;
 }
 
 Platform Command::getPlatform()

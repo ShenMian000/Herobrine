@@ -18,8 +18,14 @@
     <Filter Include="其他文件">
       <UniqueIdentifier>{220926b8-aa53-4e72-8fda-90f0e938e956}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\command">
-      <UniqueIdentifier>{b260bcac-0ed1-4670-b8a1-9837d8d6a2d5}</UniqueIdentifier>
+    <Filter Include="头文件\console">
+      <UniqueIdentifier>{23b1fe27-2a20-4958-b24b-12abc3d0dce0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\console\command">
+      <UniqueIdentifier>{e965ebf2-1f2e-4e7d-adf1-9e46517f0c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\console">
+      <UniqueIdentifier>{d64618e1-3199-479a-9f0c-be781c104e0d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -47,26 +53,35 @@
     <ClInclude Include="command.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="console.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="localization.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="command\ClearCommand.h">
-      <Filter>头文件\command</Filter>
-    </ClInclude>
-    <ClInclude Include="command\HelpCommand.h">
-      <Filter>头文件\command</Filter>
-    </ClInclude>
-    <ClInclude Include="command\HistoryCommand.h">
-      <Filter>头文件\command</Filter>
-    </ClInclude>
-    <ClInclude Include="command\ExecCommand.h">
-      <Filter>头文件\command</Filter>
-    </ClInclude>
     <ClInclude Include="module.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="console\command\ClearCommand.h">
+      <Filter>头文件\console\command</Filter>
+    </ClInclude>
+    <ClInclude Include="console\command\ExecCommand.h">
+      <Filter>头文件\console\command</Filter>
+    </ClInclude>
+    <ClInclude Include="console\command\HelpCommand.h">
+      <Filter>头文件\console\command</Filter>
+    </ClInclude>
+    <ClInclude Include="console\command\HistoryCommand.h">
+      <Filter>头文件\console\command</Filter>
+    </ClInclude>
+    <ClInclude Include="console\AutoComplete.h">
+      <Filter>头文件\console</Filter>
+    </ClInclude>
+    <ClInclude Include="console\Highlight.h">
+      <Filter>头文件\console</Filter>
+    </ClInclude>
+    <ClInclude Include="console\Command.h">
+      <Filter>头文件\console</Filter>
+    </ClInclude>
+    <ClInclude Include="console\Console.h">
+      <Filter>头文件\console</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -88,17 +103,23 @@
     <ClCompile Include="database\mysql\result.cpp">
       <Filter>源文件\database</Filter>
     </ClCompile>
-    <ClCompile Include="console.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="command.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="localization.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="module.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="console\command.cpp">
+      <Filter>源文件\console</Filter>
+    </ClCompile>
+    <ClCompile Include="console\console.cpp">
+      <Filter>源文件\console</Filter>
+    </ClCompile>
+    <ClCompile Include="console\AutoComplete.cpp">
+      <Filter>源文件\console</Filter>
+    </ClCompile>
+    <ClCompile Include="console\Highlight.cpp">
+      <Filter>源文件\console</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

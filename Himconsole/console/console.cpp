@@ -3,7 +3,7 @@
 // 命令行
 
 #include "console.h"
-#include "localization.h"
+#include "../localization.h"
 #include <ctype.h>
 
 #ifdef OS_WIN
@@ -13,13 +13,8 @@
 
 
 Console::Console()
+		: highlight(this), autoComplete(this)
 {
-	highlight.command.fore = Attribute::fore::green;
-	highlight.command.mode = Attribute::mode::fore_bold;
-	highlight.key.fore		 = Attribute::fore::yellow;
-	highlight.key.mode		 = Attribute::mode::fore_bold;
-	highlight.delim.fore	 = Attribute::fore::white;
-	highlight.delim.mode	 = Attribute::mode::fore_bold;
 }
 
 
@@ -99,7 +94,6 @@ Command* Console::getCommand(const string& name) const
 	return res->second;
 }
 
-
 Syntax* Console::getKey(const string& name) const
 {
 	assert(pCommand != nullptr);
@@ -111,56 +105,12 @@ Syntax* Console::getKey(const string& name) const
 }
 
 
-void Console::HighlightCommand(const string& cmd)
-{
-	pCommand = getCommand(cmd);
-	if(pCommand != nullptr)
-	{
-		Attribute::set(highlight.command.fore);
-		Attribute::set(highlight.command.mode);
-	}
-	for(size_t i = 0; i < cmd.size(); i++)
-		printf("\b \b");
-	printf("%s", cmd.c_str());
-	Attribute::rest();
-}
-
-void Console::HighlightKey(const string& key)
-{
-	if(pKey != nullptr)
-	{
-		Attribute::set(highlight.key.fore);
-		Attribute::set(highlight.key.mode);
-	}
-	for(size_t i = 0; i < key.size(); i++)
-		printf("\b \b");
-	printf("%s", key.c_str());
-	Attribute::rest();
-}
-
-void Console::HighlightDelim()
-{
-	Attribute::set(highlight.delim.fore);
-	Attribute::set(highlight.delim.mode);
-	printf(":");
-	Attribute::rest();
-}
-
 
 const map<string, Command*>& Console::getCommand() const
 {
 	return commands;
 }
 
-
-
-// 输入状态, 当前在输入的部分
-enum class State
-{
-	COMMAND, // 输入命令
-	KEY,		 // 输入键
-	VALUE		 // 输入值
-};
 
 
 // TODO(SMS):
@@ -172,14 +122,10 @@ void Console::run()
 {
 	while(true)
 	{
-		string				 buf;
 		vector<string> buffers;
-		State					 state			 = State::COMMAND;
 		string*				 arg				 = nullptr;
-		size_t				 pos				 = 0;
-		const string*	 match			 = nullptr;
-		const string*	 newMatch		 = nullptr;
 		bool					 inputString = false;
+		state											 = State::COMMAND;
 
 		PrintPrompt();
 
@@ -200,8 +146,15 @@ void Console::run()
 
 			if(ch == '\r' || ch == '\n')
 			{
-				if(state == State::COMMAND || state == State::KEY)
+				if(state == State::KEY)
 					continue;
+				if(state == State::COMMAND)
+				{
+					pCommand = getCommand(buf);
+					if(pCommand == nullptr)
+						continue;
+					// TODO: 检查是否已填全部必选参数
+				}
 				if(state == State::VALUE)
 				{
 					if(buf.size() == 0)
@@ -254,7 +207,8 @@ void Console::run()
 			case ':':
 				if(state != State::KEY || pKey == nullptr)
 					continue;
-				HighlightDelim();
+				state = State::DELIM;
+				highlight.run();
 				buffers.push_back(buf);
 				arg		= &args[buf];
 				state = State::VALUE;
@@ -299,10 +253,7 @@ void Console::run()
 				break;
 
 			case '\t':
-				if(match == nullptr)
-					continue;
-				printf("%s", match->substr(buf.size(), pos).c_str());
-				buf += match->substr(buf.size(), pos);
+				autoComplete.complete();
 				break;
 
 			default:
@@ -349,142 +300,17 @@ void Console::run()
 				buf += ch;
 			}
 
-
-			// 识别关键字 并 高亮
-			switch(state)
-			{
-			case State::COMMAND:
-				HighlightCommand(buf);
-				break;
-
-			case State::KEY:
+			// 识别关键字
+			if(state == State::COMMAND)
+				pCommand = getCommand(buf);
+			else if(state == State::KEY)
 				pKey = getKey(buf);
-				HighlightKey(buf);
-				break;
-			}
 
+			// 关键字高亮
+			highlight.run();
 
-			// TODO(SMS): 存在大量冗余代码, 可以消除
-			vector<const string*> matchs;
-			switch(state)
-			{
-			case State::COMMAND:
-				for(auto& cmd : commands)
-					if(buf == cmd.first.substr(0, buf.size()))
-						matchs.push_back(&cmd.first);
-
-				if(matchs.size() == 0)
-				{
-					// 清除补全提示
-					for(size_t i = 0; i <= pos; i++)
-						printf(" ");
-					for(size_t i = 0; i <= pos; i++)
-						printf("\b \b");
-
-					match = nullptr;
-					break;
-				}
-
-				newMatch = matchs.back();
-
-				if(newMatch != match)
-				{
-					// 清除补全提示
-					for(size_t i = 0; i <= pos; i++)
-						printf(" ");
-					for(size_t i = 0; i <= pos; i++)
-						printf("\b \b");
-
-					match = newMatch;
-				}
-
-				if(matchs.size() > 1)
-				{
-					matchs.pop_back();
-					pos				= 0;
-					bool flag = false;
-					for(auto i = buf.size();; i++)
-					{
-						for(auto cmd : matchs)
-							if(cmd->size() <= i - 1 || (*cmd)[i] != (*match)[i])
-							{
-								pos	 = i - buf.size();
-								flag = true;
-								break;
-							}
-						if(flag)
-							break;
-					}
-				}
-				else
-					pos = match->size() - buf.size();
-
-				Attribute::set(Attribute::fore::gray);
-				printf("%s", match->substr(buf.size(), pos).c_str());
-				for(size_t i = 0; i < pos; i++)
-					printf("\b");
-				Attribute::rest();
-				break;
-
-			case State::KEY:
-				for(auto& cmd : pCommand->syntax)
-					if(buf == cmd.first.substr(0, buf.size()))
-						matchs.push_back(&cmd.first);
-
-				if(matchs.size() == 0)
-				{
-					// 清除补全提示
-					for(size_t i = 0; i <= pos; i++)
-						printf(" ");
-					for(size_t i = 0; i <= pos; i++)
-						printf("\b \b");
-
-					match = nullptr;
-					break;
-				}
-
-				newMatch = matchs.back();
-
-				if(newMatch != match)
-				{
-					// 清除补全提示
-					for(size_t i = 0; i <= pos; i++)
-						printf(" ");
-					for(size_t i = 0; i <= pos; i++)
-						printf("\b \b");
-
-					match = newMatch;
-				}
-
-				if(matchs.size() > 1)
-				{
-					matchs.pop_back();
-					pos				= 0;
-					bool flag = false;
-					for(auto i = buf.size();; i++)
-					{
-						for(auto cmd : matchs)
-							if(cmd->size() <= i - 1 || (*cmd)[i] != (*match)[i])
-							{
-								pos	 = i - buf.size();
-								flag = true;
-								break;
-							}
-						if(flag)
-							break;
-					}
-				}
-				else
-					pos = match->size() - buf.size();
-
-				Attribute::set(Attribute::fore::gray);
-				printf("%s", match->substr(buf.size(), pos).c_str());
-				for(size_t i = 0; i < pos; i++)
-					printf("\b");
-				Attribute::rest();
-				break;
-			}
-			matchs.clear();
+			// 自动完成
+			autoComplete.run();
 		}
 
 		try

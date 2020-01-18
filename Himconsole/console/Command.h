@@ -5,7 +5,7 @@
 #ifndef COMMAND_H_
 #define COMMAND_H_
 
-#include "include.h"
+#include "../include.h"
 
 
 
@@ -76,10 +76,11 @@ public:
 		License       license  = License::Apache_2_0);
 	virtual ~Command();
 
-	const string& getDescription();
-	const string& getAuthor();
-	Platform      getPlatform();
-	License       getLicense();
+	const string&							 getDescription();
+	const string&							 getAuthor();
+	const map<string, Syntax>& getSyntax();
+	Platform									 getPlatform();
+	License										 getLicense();
 
 protected:
 	map<string, Syntax> syntax;

@@ -4,10 +4,10 @@
 
 #include "himconsole.h"
 
-#include "command/ClearCommand.h"
-#include "command/HelpCommand.h"
-#include "command/HistoryCommand.h"
-#include "command/ExecCommand.h"
+#include "console/command/ClearCommand.h"
+#include "console/command/HelpCommand.h"
+#include "console/command/HistoryCommand.h"
+#include "console/command/ExecCommand.h"
 
 #include "localization.h"
 
