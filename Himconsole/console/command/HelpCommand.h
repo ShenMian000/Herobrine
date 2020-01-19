@@ -38,18 +38,18 @@ public:
 				case Syntax::Type::LONG:
 				case Syntax::Type::FLOAT:
 				case Syntax::Type::DOUBLE:
-					Attribute::set(Attribute::fore::blue);
-					Attribute::set(Attribute::mode::fore_bold);
+					Attribute::set(Attribute::Fore::blue);
+					Attribute::set(Attribute::Mode::fore_bold);
 					break;
 
 				case Syntax::Type::STRING:
-					Attribute::set(Attribute::fore::yellow);
-					Attribute::set(Attribute::mode::fore_bold);
+					Attribute::set(Attribute::Fore::yellow);
+					Attribute::set(Attribute::Mode::fore_bold);
 					break;
 
 				case Syntax::Type::OPTION:
-					Attribute::set(Attribute::fore::white);
-					Attribute::set(Attribute::mode::fore_bold);
+					Attribute::set(Attribute::Fore::white);
+					Attribute::set(Attribute::Mode::fore_bold);
 					break;
 				}
 				if(syntax.second.required)

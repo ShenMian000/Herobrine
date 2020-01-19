@@ -149,8 +149,8 @@
   <ItemGroup>
     <ClCompile Include="attribute.cpp" />
     <ClCompile Include="console\AutoComplete.cpp" />
-    <ClCompile Include="console\command.cpp" />
-    <ClCompile Include="console\console.cpp" />
+    <ClCompile Include="console\Command.cpp" />
+    <ClCompile Include="console\Console.cpp" />
     <ClCompile Include="console\Highlight.cpp" />
     <ClCompile Include="database\mysql\mysql.cpp" />
     <ClCompile Include="database\mysql\result.cpp" />

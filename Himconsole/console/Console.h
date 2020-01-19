@@ -41,12 +41,22 @@ public:
 	const map<std::string, Command*>& getCommand() const;
 	const deque<std::string>&					getHistory() const;
 
+	// 输入状态, 当前在输入的部分
+	enum class State
+	{
+		COMMAND, // 输入命令
+		KEY,		 // 输入键
+		DELIM,	 // 输入分隔符
+		VALUE		 // 输入值
+	};
+
 private:
 	map<std::string, std::string> args; // 参数
 	map<std::string, Command*>		commands;
 	deque<std::string>						historys;					// 命令历史记录
 	size_t												historySize = 30; // 最大命令历史记录数量
 	std::string										prompt;						// 命令行提示符
+	State													state;
 	AutoComplete									autoComplete;
 	Highlight											highlight;
 
@@ -59,15 +69,8 @@ private:
 	virtual void PrintPrompt();
 	inline int	 GetChar(); // 读入一个字符, 不回显
 	Syntax*			 getKey(const std::string& name) const;
-
-	// 输入状态, 当前在输入的部分
-	enum class State
-	{
-		COMMAND, // 输入命令
-		KEY,		 // 输入键
-		DELIM,   // 输入分隔符
-		VALUE		 // 输入值
-	} state;
+	bool						isFilled(const Syntax*);
+	vector<Syntax*> filled;
 };
 
 

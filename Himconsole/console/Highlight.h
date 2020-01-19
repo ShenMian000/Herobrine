@@ -19,12 +19,12 @@ public:
 
 	void run();
 
-	void setCommandFore(Attribute::fore);
-	void setCommandMode(Attribute::mode);
-	void setKeyFore(Attribute::fore);
-	void setKeyMode(Attribute::mode);
-	void setDelimFore(Attribute::fore);
-	void setDelimMode(Attribute::mode);
+	void setCommandFore(Attribute::Fore);
+	void setCommandMode(Attribute::Mode);
+	void setKeyFore(Attribute::Fore);
+	void setKeyMode(Attribute::Mode);
+	void setDelimFore(Attribute::Fore);
+	void setDelimMode(Attribute::Mode);
 
 private:
 	Console* console;
@@ -32,8 +32,8 @@ private:
 	{
 		struct
 		{
-			Attribute::fore fore;
-			Attribute::mode mode;
+			Attribute::Fore fore;
+			Attribute::Mode mode;
 		} command, key, delim, string, number;
 	} color;
 };

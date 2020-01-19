@@ -109,16 +109,16 @@
     <ClCompile Include="module.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="console\command.cpp">
-      <Filter>源文件\console</Filter>
-    </ClCompile>
-    <ClCompile Include="console\console.cpp">
-      <Filter>源文件\console</Filter>
-    </ClCompile>
     <ClCompile Include="console\AutoComplete.cpp">
       <Filter>源文件\console</Filter>
     </ClCompile>
     <ClCompile Include="console\Highlight.cpp">
+      <Filter>源文件\console</Filter>
+    </ClCompile>
+    <ClCompile Include="console\Console.cpp">
+      <Filter>源文件\console</Filter>
+    </ClCompile>
+    <ClCompile Include="console\Command.cpp">
       <Filter>源文件\console</Filter>
     </ClCompile>
   </ItemGroup>

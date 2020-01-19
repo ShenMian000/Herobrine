@@ -15,37 +15,33 @@ AutoComplete::AutoComplete(Console* console)
 }
 
 
-// 寻找匹配项
 void AutoComplete::run()
 {
-	vector<const string*> matchs;
-
 	switch(console->state)
 	{
 	case Console::State::COMMAND:
-		for(auto& cmd : console->commands)
-			if(console->buf == cmd.first.substr(0, console->buf.size()))
-				matchs.push_back(&cmd.first);
+		MatchCommand(console->buf);
 		break;
 
 	case Console::State::KEY:
-		for(auto& syntax : console->pCommand->getSyntax())
-			if(syntax.second.show && console->buf == syntax.first.substr(0, console->buf.size()))
-				matchs.push_back(&syntax.first);
+		MatchArgument(console->buf);
 		break;
+
+	default:
+		return;
 	}
 
 	if(matchs.size() == 0)
 	{
-		cleanPrompt();
-		match = nullptr;
+		CleanPrompt();
+		matched = nullptr;
 		return;
 	}
 	auto newMatch = matchs.back();
-	if(newMatch != match)
+	if(newMatch != matched)
 	{
-		cleanPrompt();
-		match = newMatch;
+		CleanPrompt();
+		matched = newMatch;
 	}
 	if(matchs.size() > 1)
 	{
@@ -55,7 +51,7 @@ void AutoComplete::run()
 		for(auto i = console->buf.size();; i++)
 		{
 			for(auto cmd : matchs)
-				if(cmd->size() <= i - 1 || (*cmd)[i] != (*match)[i])
+				if(cmd->size() <= i - 1 || (*cmd)[i] != (*matched)[i])
 				{
 					pos	 = i - console->buf.size();
 					flag = true;
@@ -66,23 +62,23 @@ void AutoComplete::run()
 		}
 	}
 	else
-		pos = match->size() - console->buf.size();
-	printPrompt();
+		pos = matched->size() - console->buf.size();
+	PrintPrompt();
 }
 
 
 // 输出补全提示
-void AutoComplete::printPrompt()
+void AutoComplete::PrintPrompt()
 {
-	Attribute::set(Attribute::fore::gray);
-	printf("%s", match->substr(console->buf.size(), pos).c_str());
+	Attribute::set(Attribute::Fore::gray);
+	printf("%s", matched->substr(console->buf.size(), pos).c_str());
 	for(size_t i = 0; i < pos; i++)
 		printf("\b");
 	Attribute::rest();
 }
 
 // 清除补全提示
-void AutoComplete::cleanPrompt()
+void AutoComplete::CleanPrompt()
 {
 	for(size_t i = 0; i <= pos; i++)
 		printf(" ");
@@ -91,12 +87,33 @@ void AutoComplete::cleanPrompt()
 }
 
 
+// 查找命令匹配项
+void AutoComplete::MatchCommand(const string& cmd)
+{
+	matchs.clear();
+
+	for(auto& i : console->commands)
+		if(cmd == i.first.substr(0, cmd.size()))
+			matchs.push_back(&i.first);
+}
+
+// 查找参数匹配项
+void AutoComplete::MatchArgument(const string& arg)
+{
+	matchs.clear();
+
+	for(auto& syntax : console->pCommand->getSyntax())
+		if(!console->isFilled(&syntax.second) && arg == syntax.first.substr(0, arg.size()))
+			matchs.push_back(&syntax.first);
+}
+
+
 // 补全
 void AutoComplete::complete()
 {
-	if(match == nullptr)
+	if(matched == nullptr)
 		return;
-	printf("%s", match->substr(console->buf.size(), pos).c_str());
-	console->buf += match->substr(console->buf.size(), pos);
+	printf("%s", matched->substr(console->buf.size(), pos).c_str());
+	console->buf += matched->substr(console->buf.size(), pos);
 	return;
 }

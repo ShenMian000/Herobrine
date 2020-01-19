@@ -10,23 +10,23 @@
 Highlight::Highlight()
 		: console(nullptr)
 {
-	color.command.fore = Attribute::fore::green;
-	color.command.mode = Attribute::mode::fore_bold;
-	color.key.fore		 = Attribute::fore::yellow;
-	color.key.mode		 = Attribute::mode::fore_bold;
-	color.delim.fore	 = Attribute::fore::white;
-	color.delim.mode	 = Attribute::mode::fore_bold;
+	color.command.fore = Attribute::Fore::green;
+	color.command.mode = Attribute::Mode::fore_bold;
+	color.key.fore		 = Attribute::Fore::yellow;
+	color.key.mode		 = Attribute::Mode::fore_bold;
+	color.delim.fore	 = Attribute::Fore::white;
+	color.delim.mode	 = Attribute::Mode::fore_bold;
 }
 
 Highlight::Highlight(Console* console)
 		: console(console)
 {
-	color.command.fore = Attribute::fore::green;
-	color.command.mode = Attribute::mode::fore_bold;
-	color.key.fore		 = Attribute::fore::yellow;
-	color.key.mode		 = Attribute::mode::fore_bold;
-	color.delim.fore	 = Attribute::fore::white;
-	color.delim.mode	 = Attribute::mode::fore_bold;
+	color.command.fore = Attribute::Fore::green;
+	color.command.mode = Attribute::Mode::fore_bold;
+	color.key.fore		 = Attribute::Fore::yellow;
+	color.key.mode		 = Attribute::Mode::fore_bold;
+	color.delim.fore	 = Attribute::Fore::white;
+	color.delim.mode	 = Attribute::Mode::fore_bold;
 }
 
 
@@ -63,32 +63,32 @@ void Highlight::run()
 }
 
 
-void Highlight::setCommandFore(Attribute::fore attr)
+void Highlight::setCommandFore(Attribute::Fore attr)
 {
 	color.command.fore = attr;
 }
 
-void Highlight::setCommandMode(Attribute::mode attr)
+void Highlight::setCommandMode(Attribute::Mode attr)
 {
 	color.command.mode = attr;
 }
 
-void Highlight::setKeyFore(Attribute::fore attr)
+void Highlight::setKeyFore(Attribute::Fore attr)
 {
 	color.key.fore = attr;
 }
 
-void Highlight::setKeyMode(Attribute::mode attr)
+void Highlight::setKeyMode(Attribute::Mode attr)
 {
 	color.key.mode = attr;
 }
 
-void Highlight::setDelimFore(Attribute::fore attr)
+void Highlight::setDelimFore(Attribute::Fore attr)
 {
 	color.delim.fore = attr;
 }
 
-void Highlight::setDelimMode(Attribute::mode attr)
+void Highlight::setDelimMode(Attribute::Mode attr)
 {
 	color.delim.mode = attr;
 }

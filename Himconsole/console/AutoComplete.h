@@ -17,15 +17,19 @@ public:
 	
 	void run();
 
-	void printPrompt();
-	void cleanPrompt();
-
 	void complete();
 
 private:
-	Console*					 console;
-	const std::string* match = nullptr;
-	size_t						 pos;
+	Console*							console;
+	const std::string*		matched = nullptr;
+	vector<const string*> matchs;
+	size_t								pos;
+
+	void PrintPrompt();
+	void CleanPrompt();
+
+	void MatchCommand(const string& cmd);
+	void MatchArgument(const string& arg);
 };
 
 

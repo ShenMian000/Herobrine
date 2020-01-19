@@ -133,7 +133,6 @@ void Console::run()
 		{
 			char ch = GetChar();
 
-
 			if(inputString && isprint(ch))
 			{
 				if(ch == '"')
@@ -142,7 +141,6 @@ void Console::run()
 				buf += ch;
 				continue;
 			}
-
 
 			if(ch == '\r' || ch == '\n')
 			{
@@ -172,7 +170,6 @@ void Console::run()
 				printf("\n");
 				break;
 			}
-
 
 			// ´¦ÀíÌØÊâ×Ö·û
 			switch(ch)
@@ -308,7 +305,6 @@ void Console::run()
 				}
 			}
 
-
 			if(isprint(ch))
 			{
 				printf("%c", ch);
@@ -357,7 +353,7 @@ void Console::run()
 void Console::PrintPrompt()
 {
 	printf("\n");
-	Attribute::set(Attribute::mode::underline);
+	Attribute::set(Attribute::Mode::underline);
 	printf(prompt.c_str());
 	Attribute::rest();
 	printf("> ");
@@ -379,4 +375,10 @@ inline int Console::GetChar()
 	system("stty echo");
 	return c;
 #endif
+}
+
+
+bool Console::isFilled(const Syntax* pSyntax)
+{
+	return std::any_of(filled.begin(), filled.end(), [pSyntax](Syntax* i) { return i == pSyntax; });
 }

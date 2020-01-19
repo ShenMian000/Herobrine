@@ -13,7 +13,7 @@ WORD   Attribute::defAttr;
 WORD   Attribute::attr;
 
 // 设置前景属性
-void Attribute::set(fore attr_)
+void Attribute::set(Fore attr_)
 {
 	attr &= 0xf0;
 	attr |= (WORD)attr_;
@@ -22,7 +22,7 @@ void Attribute::set(fore attr_)
 
 
 // 设置背景属性
-void Attribute::set(back attr_)
+void Attribute::set(Back attr_)
 {
 	attr &= 0x0f;
 	attr |= (WORD)attr_;
@@ -31,7 +31,7 @@ void Attribute::set(back attr_)
 
 
 // 设置共同属性
-void Attribute::set(mode attr_)
+void Attribute::set(Mode attr_)
 {
 	attr |= (WORD)attr_;
 	SetConsoleTextAttribute(hStdOut, attr);
