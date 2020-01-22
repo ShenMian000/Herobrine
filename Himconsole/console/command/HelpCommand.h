@@ -9,7 +9,7 @@ class HelpCommand : public Command
 {
 public:
 	HelpCommand()
-			: Command("显示命令帮助信息", "Herobrine")
+			: Command("显示命令帮助信息", "Herobrine", Platform::Common, License::Apache_2_0)
 	{
 		addSyntax("command", {Syntax::Type::STRING, "要显示帮助信息的命令", true});
 	}

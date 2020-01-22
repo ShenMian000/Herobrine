@@ -9,7 +9,7 @@ class HistoryCommand : public Command
 {
 public:
 	HistoryCommand()
-			: Command("显示命令历史纪录", "Herobrine")
+			: Command("显示命令历史纪录", "Herobrine", Platform::Common, License::Apache_2_0)
 	{
 	}
 

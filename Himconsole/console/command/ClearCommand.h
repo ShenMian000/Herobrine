@@ -9,7 +9,7 @@ class ClearCommand : public Command
 {
 public:
 	ClearCommand()
-		: Command("清空命令行缓冲区", "Herobrine")
+			: Command("清空命令行缓冲区", "Herobrine", Platform::Common, License::Apache_2_0)
 	{
 	}
 

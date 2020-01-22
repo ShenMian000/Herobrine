@@ -15,8 +15,10 @@ class  Console;
 enum class Platform
 {
 	Common,
+	Windows,
 	Windows_XP,
 	Windows_10,
+	Linux
 };
 
 // 开源协议类型
@@ -69,21 +71,21 @@ class Command
 
 public:
 	Command(
-		const string& desc,
-		const string& author,
-		Platform      platform = Platform::Common,
-		License       license  = License::Apache_2_0);
+			const std::string& desc,
+			const string&			 author,
+			Platform					 platform,
+			License						 license);
 	virtual ~Command();
 
-	const string& getDescription() const;
-	const string& getAuthor() const;
-	Platform			getPlatform() const;
-	License				getLicense() const;
+	const std::string& getDescription() const;
+	const std::string& getAuthor() const;
+	Platform					 getPlatform() const;
+	License						 getLicense() const;
 
-	const map<const string, const Syntax>& getSyntax() const;
+	const map<const std::string, const Syntax>& getSyntax() const;
 
 protected:
-	void addSyntax(const string&, const Syntax);
+	void addSyntax(const std::string&, const Syntax);
 
 private:
 	const string	 desc;
@@ -91,8 +93,8 @@ private:
 	const Platform platform;
 	const License	 license;
 
-	map<const string, const Syntax> syntax;
-	map<const string, const string> str;
+	map<const std::string, const Syntax>			syntax;
+	map<const std::string, const std::string> trans; // 翻译
 
 	virtual void excute(Console&) = 0;
 };

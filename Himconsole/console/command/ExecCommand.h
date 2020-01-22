@@ -19,7 +19,7 @@ class ExecCommand : public Command
 {
 public:
 	ExecCommand()
-		: Command("执行外部系统命令", "Herobrine")
+			: Command("执行外部系统命令", "Herobrine", Platform::Common, License::Apache_2_0)
 	{
 		addSyntax("command", {Syntax::Type::STRING, "要执行的命令", false});
 	}

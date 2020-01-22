@@ -16,7 +16,7 @@ enum class State;
 class AutoComplete
 {
 public:
-	AutoComplete(Console*);
+	explicit AutoComplete(Console*);
 
 	void run(State, const string&, const Command*);
 	void complete(string&);
