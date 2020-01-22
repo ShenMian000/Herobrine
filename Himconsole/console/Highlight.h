@@ -11,13 +11,15 @@
 
 
 
+enum class State;
+
 class Highlight
 {
 public:
 	Highlight();
 	explicit Highlight(Console*);
 
-	void run();
+	void run(State, const std::string&, const Command*, const Syntax*);
 
 	void setCommandFore(Attribute::Fore);
 	void setCommandMode(Attribute::Mode);
@@ -27,7 +29,6 @@ public:
 	void setDelimMode(Attribute::Mode);
 
 private:
-	Console* console;
 	struct
 	{
 		struct
@@ -36,6 +37,7 @@ private:
 			Attribute::Mode mode;
 		} command, key, delim, string, number;
 	} color;
+	Console* console;
 };
 
 

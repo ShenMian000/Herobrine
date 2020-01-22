@@ -24,8 +24,6 @@ enum class State
 
 class Console
 {
-	friend class Highlight;
-
 public:
 	Console();
 	virtual ~Console();

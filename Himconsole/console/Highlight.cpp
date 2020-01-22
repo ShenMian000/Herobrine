@@ -31,19 +31,19 @@ Highlight::Highlight(Console* console)
 
 
 // ¸ßÁÁ¹Ø¼ü×Ö
-void Highlight::run()
+void Highlight::run(State state, const string& str, const Command* pCmd, const Syntax* pKey)
 {
-	switch(console->state)
+	switch(state)
 	{
 	case State::COMMAND:
-		if(console->pCommand == nullptr)
+		if(pCmd == nullptr)
 			break;
 		Attribute::set(color.command.fore);
 		Attribute::set(color.command.mode);
 		break;
 
 	case State::KEY:
-		if(console->pKey == nullptr)
+		if(pKey == nullptr)
 			break;
 		Attribute::set(color.key.fore);
 		Attribute::set(color.key.mode);
@@ -56,9 +56,9 @@ void Highlight::run()
 		Attribute::rest();
 		return;
 	}
-	for(size_t i = 0; i < console->buf.size(); i++)
+	for(size_t i = 0; i < str.size(); i++)
 		printf("\b \b");
-	printf("%s", console->buf.c_str());
+	printf("%s", str.c_str());
 	Attribute::rest();
 }
 

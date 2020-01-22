@@ -206,7 +206,7 @@ void Console::run()
 				if(state != State::KEY || pKey == nullptr)
 					continue;
 				state = State::DELIM;
-				highlight.run();
+				highlight.run(state, buf, pCommand, pKey);
 				arg = &args[buf];
 				buffers.push_back(buf);
 				buf.clear();
@@ -255,11 +255,11 @@ void Console::run()
 				if(state == State::KEY)
 				{
 					pKey = getKey(buf);
-					highlight.run();
+					highlight.run(state, buf, pCommand, pKey);
 					if(pKey != nullptr && pKey->type != Syntax::Type::OPTION)
 					{
 						state = State::DELIM;
-						highlight.run();
+						highlight.run(state, buf, pCommand, pKey);
 						arg = &args[buf];
 						buffers.push_back(buf);
 						buf.clear();
@@ -318,7 +318,7 @@ void Console::run()
 				pKey = getKey(buf);
 
 			// 关键字高亮
-			highlight.run();
+			highlight.run(state, buf, pCommand, pKey);
 
 			// 自动完成
 			autoComplete.run(state, buf, pCommand);
