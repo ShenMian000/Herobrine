@@ -26,29 +26,36 @@ Command::~Command()
 }
 
 
-const string& Command::getDescription()
+const string& Command::getDescription() const
 {
 	return desc;
 }
 
-const string& Command::getAuthor()
+const string& Command::getAuthor() const
 {
 	return author;
 }
 
-const map<string, Syntax>& Command::getSyntax()
+const map<const string, const Syntax>& Command::getSyntax() const
 {
 	return syntax;
 }
 
-Platform Command::getPlatform()
+Platform Command::getPlatform() const
 {
 	return platform;
 }
 
-License Command::getLicense()
+License Command::getLicense() const
 {
 	return license;
+}
+
+
+// 添加参数语法
+void Command::addSyntax(const string& name, const Syntax syntax)
+{
+	this->syntax.insert({name, syntax});
 }
 
 

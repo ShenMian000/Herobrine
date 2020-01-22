@@ -94,7 +94,7 @@ Command* Console::getCommand(const string& name) const
 	return res->second;
 }
 
-Syntax* Console::getKey(const string& name) const
+const Syntax* Console::getKey(const string& name) const
 {
 	assert(pCommand != nullptr);
 
@@ -251,8 +251,8 @@ void Console::run()
 				break;
 
 			case '\t':
-				autoComplete.complete();
-				if(state == Console::State::KEY)
+				autoComplete.complete(buf);
+				if(state == State::KEY)
 				{
 					pKey = getKey(buf);
 					highlight.run();
@@ -321,7 +321,7 @@ void Console::run()
 			highlight.run();
 
 			// 自动完成
-			autoComplete.run();
+			autoComplete.run(state, buf, pCommand);
 		}
 
 		try

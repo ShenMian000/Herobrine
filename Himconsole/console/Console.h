@@ -13,9 +13,17 @@
 
 
 
+// 输入状态, 当前在输入的部分
+enum class State
+{
+	COMMAND, // 输入命令
+	KEY,		 // 输入键
+	DELIM,	 // 输入分隔符
+	VALUE		 // 输入值
+};
+
 class Console
 {
-	friend class AutoComplete;
 	friend class Highlight;
 
 public:
@@ -41,15 +49,6 @@ public:
 	const map<std::string, Command*>& getCommand() const;
 	const deque<std::string>&					getHistory() const;
 
-	// 输入状态, 当前在输入的部分
-	enum class State
-	{
-		COMMAND, // 输入命令
-		KEY,		 // 输入键
-		DELIM,	 // 输入分隔符
-		VALUE		 // 输入值
-	};
-
 private:
 	map<std::string, std::string> args; // 参数
 	map<std::string, Command*>		commands;
@@ -64,11 +63,11 @@ private:
 
 
 	Command* pCommand = nullptr;
-	Syntax*	 pKey			= nullptr;
+	const Syntax*	 pKey			= nullptr;
 
 	virtual void PrintPrompt();
 	inline int	 GetChar(); // 读入一个字符, 不回显
-	Syntax*			 getKey(const std::string& name) const;
+	const Syntax*		getKey(const std::string& name) const;
 	bool						isFilled(const Syntax*);
 	vector<Syntax*> filled;
 };

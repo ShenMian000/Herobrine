@@ -31,8 +31,8 @@ public:
 	ListenCommand()
 			: Command("监听指定地址和端口", "[TEST]")
 	{
-		syntax.insert({"ip",   {Syntax::Type::STRING, "监听地址", false}});
-		syntax.insert({"port", {Syntax::Type::INT,    "监听端口", false}});
+		addSyntax("ip",   {Syntax::Type::STRING, "监听地址", false});
+		addSyntax("port", {Syntax::Type::INT, "监听端口", false});
 	}
 
 	void excute(Console& console) override
@@ -46,8 +46,8 @@ public:
 	KeyscanCommand()
 			: Command("击键嗅探", "[TEST]")
 	{
-		syntax.insert({"start", {Syntax::Type::OPTION, "开始嗅探", true}});
-		syntax.insert({"stop",  {Syntax::Type::OPTION, "结束嗅探", true}});
+		addSyntax("start", {Syntax::Type::OPTION, "开始嗅探", true});
+		addSyntax("stop",  {Syntax::Type::OPTION, "结束嗅探", true});
 	}
 
 	void excute(Console& console) override

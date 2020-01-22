@@ -3,33 +3,35 @@
 // 自动完成
 
 #include "../include.h"
-#include "Console.h"
 
 #ifndef AUTO_COMPLETE_H_
 #define AUTO_COMPLETE_H_
 
 
 
+class Console;
+class Command;
+enum class State;
+
 class AutoComplete
 {
 public:
-	explicit AutoComplete(Console*);
-	
-	void run();
+	AutoComplete(Console*);
 
-	void complete();
+	void run(State, const string&, const Command*);
+	void complete(string&);
 
 private:
-	Console*							console;
-	const std::string*		matched = nullptr;
+	size_t								pos		= 0;
+	const std::string*		match = nullptr;
 	vector<const string*> matchs;
-	size_t								pos;
+	Console&							console;
 
-	void PrintPrompt();
+	void PrintPrompt(const string&);
 	void CleanPrompt();
 
-	void MatchCommand(const string& cmd);
-	void MatchArgument(const string& arg);
+	void MatchCommand(const string&);
+	void MatchArgument(const Command*, const string&);
 };
 
 

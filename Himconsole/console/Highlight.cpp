@@ -35,21 +35,21 @@ void Highlight::run()
 {
 	switch(console->state)
 	{
-	case Console::State::COMMAND:
+	case State::COMMAND:
 		if(console->pCommand == nullptr)
 			break;
 		Attribute::set(color.command.fore);
 		Attribute::set(color.command.mode);
 		break;
 
-	case Console::State::KEY:
+	case State::KEY:
 		if(console->pKey == nullptr)
 			break;
 		Attribute::set(color.key.fore);
 		Attribute::set(color.key.mode);
 		break;
 
-	case Console::State::DELIM:
+	case State::DELIM:
 		Attribute::set(color.delim.fore);
 		Attribute::set(color.delim.mode);
 		printf(":");

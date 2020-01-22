@@ -75,14 +75,15 @@ public:
 		License       license  = License::Apache_2_0);
 	virtual ~Command();
 
-	const string&							 getDescription();
-	const string&							 getAuthor();
-	const map<string, Syntax>& getSyntax();
-	Platform									 getPlatform();
-	License										 getLicense();
+	const string& getDescription() const;
+	const string& getAuthor() const;
+	Platform			getPlatform() const;
+	License				getLicense() const;
+
+	const map<const string, const Syntax>& getSyntax() const;
 
 protected:
-	map<string, Syntax> syntax;
+	void addSyntax(const string&, const Syntax);
 
 private:
 	const string	 desc;
@@ -90,6 +91,7 @@ private:
 	const Platform platform;
 	const License	 license;
 
+	map<const string, const Syntax> syntax;
 	map<const string, const string> str;
 
 	virtual void excute(Console&) = 0;
