@@ -29,7 +29,7 @@ class ListenCommand : public Command
 {
 public:
 	ListenCommand()
-			: Command("监听指定地址和端口", "[TEST]")
+			: Command("监听指定地址和端口", "[TEST]", Platform::Common, License::Apache_2_0)
 	{
 		addSyntax("ip",   {Syntax::Type::STRING, "监听地址", false});
 		addSyntax("port", {Syntax::Type::INT, "监听端口", false});
@@ -44,7 +44,7 @@ class KeyscanCommand : public Command
 {
 public:
 	KeyscanCommand()
-			: Command("击键嗅探", "[TEST]")
+			: Command("击键嗅探", "[TEST]", Platform::Windows, License::Apache_2_0)
 	{
 		addSyntax("start", {Syntax::Type::OPTION, "开始嗅探", true});
 		addSyntax("stop",  {Syntax::Type::OPTION, "结束嗅探", true});
@@ -57,7 +57,7 @@ public:
 
 int main()
 {
-	print::warn(local::WARN_DEBUG);
+	Print::warn(local::WARN_DEBUG);
 	printf(
 			"  __      __    __\n"
 			" |  |    |  |  |__|   __________\n"

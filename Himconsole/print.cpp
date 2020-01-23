@@ -2,14 +2,11 @@
 // License(Apache-2.0)
 // 
 
-#include "print.h"
+#include "Print.h"
 
 
 
-namespace print
-{
-
-void info(const string& str)
+void Print::info(const string& str)
 {
 	Attribute::set(Attribute::Fore::blue);
 	Attribute::set(Attribute::Mode::fore_bold);
@@ -18,7 +15,7 @@ void info(const string& str)
 	puts(str.c_str());
 }
 
-void good(const string& str)
+void Print::good(const string& str)
 {
 	Attribute::set(Attribute::Fore::green);
 	Attribute::set(Attribute::Mode::fore_bold);
@@ -27,7 +24,7 @@ void good(const string& str)
 	puts(str.c_str());
 }
 
-void error(const string& str)
+void Print::error(const string& str)
 {
 	Attribute::set(Attribute::Fore::red);
 	Attribute::set(Attribute::Mode::fore_bold);
@@ -36,7 +33,7 @@ void error(const string& str)
 	puts(str.c_str());
 }
 
-void warn(const string& str)
+void Print::warn(const string& str)
 {
 	Attribute::set(Attribute::Fore::yellow);
 	Attribute::set(Attribute::Mode::fore_bold);
@@ -44,5 +41,3 @@ void warn(const string& str)
 	Attribute::rest();
 	puts(str.c_str());
 }
-
-} // namespace print

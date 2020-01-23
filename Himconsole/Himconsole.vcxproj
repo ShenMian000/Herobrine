@@ -128,7 +128,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="attribute.h" />
-    <ClInclude Include="command.h" />
     <ClInclude Include="console\AutoComplete.h" />
     <ClInclude Include="console\Command.h" />
     <ClInclude Include="console\command\ClearCommand.h" />
@@ -157,7 +156,7 @@
     <ClCompile Include="himconsole.cpp" />
     <ClCompile Include="localization.cpp" />
     <ClCompile Include="module.cpp" />
-    <ClCompile Include="print.cpp" />
+    <ClCompile Include="Print.cpp" />
     <ClCompile Include="slave.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

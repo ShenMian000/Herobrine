@@ -331,14 +331,14 @@ void Console::run()
 		}
 		catch(const char* error)
 		{
-			print::error(error);
+			Print::error(error);
 		}
 		catch(...)
 		{
 			auto& cmd = buffers.front();
 
-			print::error("≤∂ªÒ“Ï≥£");
-			print::info("–∂‘ÿ√¸¡Ó: " + cmd);
+			Print::error("≤∂ªÒ“Ï≥£");
+			Print::info("–∂‘ÿ√¸¡Ó: " + cmd);
 			delCommand(cmd);
 		}
 

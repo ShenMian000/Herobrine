@@ -1,6 +1,6 @@
 // Copyright 2019 SMS
 // License(Apache-2.0)
-// 
+//
 
 #ifndef PRINT_H_
 #define PRINT_H_
@@ -9,15 +9,14 @@
 
 
 
-namespace print
+class Print
 {
-
-void info(const string&);
-void good(const string&);
-void error(const string&);
-void warn(const string&);
-
-}
+public:
+	static void info(const string&);
+	static void good(const string&);
+	static void error(const string&);
+	static void warn(const string&);
+};
 
 
 

@@ -50,9 +50,6 @@
     <ClInclude Include="database\mysql\result.h">
       <Filter>头文件\database</Filter>
     </ClInclude>
-    <ClInclude Include="command.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="localization.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -91,9 +88,6 @@
     <ClCompile Include="attribute.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="print.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="slave.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -120,6 +114,9 @@
     </ClCompile>
     <ClCompile Include="console\Command.cpp">
       <Filter>源文件\console</Filter>
+    </ClCompile>
+    <ClCompile Include="Print.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
