@@ -75,7 +75,8 @@ public:
 			const string&			 author,
 			Platform					 platform,
 			License						 license);
-	virtual ~Command();
+
+	virtual void excute(Console&) = 0;
 
 	const std::string& getDescription() const;
 	const std::string& getAuthor() const;
@@ -95,8 +96,6 @@ private:
 
 	map<const std::string, const Syntax>			syntax;
 	map<const std::string, const std::string> trans; // З­вы
-
-	virtual void excute(Console&) = 0;
 };
 
 

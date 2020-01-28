@@ -21,11 +21,6 @@ Command::Command(
 }
 
 
-Command::~Command()
-{
-}
-
-
 const string& Command::getDescription() const
 {
 	return desc;
@@ -35,12 +30,6 @@ const string& Command::getAuthor() const
 {
 	return author;
 }
-
-const map<const string, const Syntax>& Command::getSyntax() const
-{
-	return syntax;
-}
-
 Platform Command::getPlatform() const
 {
 	return platform;
@@ -49,6 +38,11 @@ Platform Command::getPlatform() const
 License Command::getLicense() const
 {
 	return license;
+}
+
+const map<const string, const Syntax>& Command::getSyntax() const
+{
+	return syntax;
 }
 
 
