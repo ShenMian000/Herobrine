@@ -35,14 +35,14 @@ public:
 	long							 getLongArg(const std::string& key) const;
 	size_t						 getArgSize() const;
 
-	void setHistorySize(size_t);
-	void addHistory(const vector<std::string>&) const;
-
 	void		 addCommand(const std::string& name, Command*);
 	void		 delCommand(const std::string& name);
 	Command* getCommand(const std::string& name) const;
 
 	void setPrompt(const std::string&);
+
+	void setHistorySize(size_t);
+	void addHistory(const vector<std::string>&) const;
 
 	const map<std::string, Command*>& getCommand() const;
 	const deque<std::string>&					getHistory() const;
@@ -60,11 +60,11 @@ private:
 	string												buf;
 
 
-	Command* pCommand = nullptr;
-	const Syntax*	 pKey			= nullptr;
+	Command*			pCommand = nullptr;
+	const Syntax* pKey		 = nullptr;
 
-	virtual void PrintPrompt();
-	inline int	 GetChar(); // 读入一个字符, 不回显
+	virtual void		PrintPrompt();
+	inline int			GetChar(); // 读入一个字符, 不回显
 	const Syntax*		getKey(const std::string& name) const;
 	bool						isFilled(const Syntax*);
 	vector<Syntax*> filled;
