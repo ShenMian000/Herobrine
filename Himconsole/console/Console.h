@@ -16,10 +16,10 @@
 // 输入状态, 当前在输入的部分
 enum class State
 {
-	COMMAND, // 输入命令
-	KEY,		 // 输入键
-	DELIM,	 // 输入分隔符
-	VALUE		 // 输入值
+	COMMAND,
+	KEY,
+	DELIM,
+	VALUE
 };
 
 class Console

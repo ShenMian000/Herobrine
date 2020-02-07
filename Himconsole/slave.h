@@ -12,24 +12,32 @@
 
 struct user_info
 {
+	uint	 uid;
 	string name;
-	enum privilege
-	{
-	};
+	string email;
 };
 
-struct os_info
+
+struct system_info
 {
+	string osName;
+	string language;
+	string computer;
+	enum
+	{
+		x64,
+		x86
+	} architecture;
 };
+
 
 class Slave
 {
 public:
-	Slave();
 
 private:
-	user_info userInfo;
-	os_info		osInfo;
+	user_info									 userInfo;
+	system_info								 osInfo;
 	map<const string, Module*> modules;
 };
 
