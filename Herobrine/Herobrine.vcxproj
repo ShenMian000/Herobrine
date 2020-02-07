@@ -79,7 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>D:\ProgramData\Programming\Boost;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\ProgramData\Programming\Boost\lib</LibraryPath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(WindowsSDK_LibraryPath_x64);D:\ProgramData\Programming\Boost\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(IncludePath);D:\ProgramData\Programming\Boost;</IncludePath>
@@ -141,6 +141,7 @@
     <None Include="README.zh-CN.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Herobrine.cpp" />
     <ClCompile Include="keyscan.cpp" />
   </ItemGroup>
   <ItemGroup>
