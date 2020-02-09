@@ -4,7 +4,38 @@
 
 #include "slave.h"
 
+using namespace boost;
 
+
+
+Slave::Slave(asio::ip::tcp::socket& sock)
+		: sock(sock)
+{
+}
+
+
+// 发送数据
+void Slave::sendAsync(const string& buf)
+{
+}
+
+// 接收数据
+void Slave::recvAsync(string& buf)
+{
+}
+
+
+// 获取 IP地址
+const std::string& Slave::getIpAddress()
+{
+	return sock.remote_endpoint().address().to_string();
+}
+
+
+// 更新基本信息
+void Slave::update()
+{
+}
 
 /*
 // 装载模块

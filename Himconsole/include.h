@@ -18,6 +18,10 @@ typedef unsigned long  ulong;
 #include <assert.h>
 
 
+// C++ Boost¿â
+#include <boost/asio.hpp>
+
+
 // C++ ±ê×¼¿â
 #include <thread>
 using std::thread;

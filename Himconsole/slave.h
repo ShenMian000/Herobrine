@@ -12,17 +12,17 @@
 
 struct user_info
 {
-	uint	 uid;
-	string name;
-	string email;
+	uint				uid;
+	std::string name;
+	std::string email;
 };
 
 
 struct system_info
 {
-	string osName;
-	string language;
-	string computer;
+	std::string osName;
+	std::string language;
+	std::string computer;
 	enum
 	{
 		x64,
@@ -34,11 +34,20 @@ struct system_info
 class Slave
 {
 public:
+	Slave(boost::asio::ip::tcp::socket&);
+
+	void sendAsync(const std::string&);
+	void recvAsync(std::string&);
+
+	const std::string& getIpAddress();
+
+	void update();
 
 private:
-	user_info									 userInfo;
-	system_info								 osInfo;
-	map<const string, Module*> modules;
+	boost::asio::ip::tcp::socket&		sock;
+	user_info												userInfo;
+	system_info											osInfo;
+	map<const std::string, Module*> modules;
 };
 
 

@@ -69,7 +69,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>D:\ProgramData\Programming\boost;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>D:\ProgramData\Programming\boost\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -143,6 +146,7 @@
     <ClInclude Include="localization.h" />
     <ClInclude Include="module.h" />
     <ClInclude Include="print.h" />
+    <ClInclude Include="Server.h" />
     <ClInclude Include="slave.h" />
     <ClInclude Include="_slave.h" />
   </ItemGroup>
@@ -158,6 +162,7 @@
     <ClCompile Include="localization.cpp" />
     <ClCompile Include="module.cpp" />
     <ClCompile Include="Print.cpp" />
+    <ClCompile Include="Server.cpp" />
     <ClCompile Include="slave.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

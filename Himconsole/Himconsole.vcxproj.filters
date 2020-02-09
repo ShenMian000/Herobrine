@@ -83,6 +83,9 @@
     <ClInclude Include="slave.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="himconsole.cpp">
@@ -119,6 +122,9 @@
       <Filter>源文件\console</Filter>
     </ClCompile>
     <ClCompile Include="Print.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

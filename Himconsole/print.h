@@ -16,6 +16,9 @@ public:
 	static void good(const string&);
 	static void error(const string&);
 	static void warn(const string&);
+
+private:
+	static std::mutex mutex;
 };
 
 
