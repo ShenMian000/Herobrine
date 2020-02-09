@@ -144,9 +144,12 @@
   <ItemGroup>
     <ClCompile Include="Herobrine.cpp" />
     <ClCompile Include="keyscan.cpp" />
+    <ClCompile Include="Session.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Client.h" />
     <ClInclude Include="include.h" />
+    <ClInclude Include="Session.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

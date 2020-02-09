@@ -68,7 +68,7 @@ int main()
 	console.addCommand("help",    dynamic_cast<Command*>(new HelpCommand()));
 	console.addCommand("history", dynamic_cast<Command*>(new HistoryCommand()));
 
-	server.run();
+	server.listen();
 	console.run();
 
 	return 0;

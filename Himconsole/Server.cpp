@@ -14,13 +14,14 @@ using namespace boost;
 Server::Server(ushort port)
 		: acceptor(ios, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port))
 {
-	ios.run();
 }
 
 
 // 开始
-void Server::run()
+void Server::listen()
 {
+	Print::info("开始监听: " + acceptor.local_endpoint().address().to_string() + ":" + to_string(acceptor.local_endpoint().port()));
+
 	Listen();
 }
 
@@ -31,7 +32,7 @@ void Server::OnAccept(const system::error_code& err, socket_ptr sock)
 	if(err)
 		return;
 
-	Print::good("新客户端接入");
+	Print::good("客户端接入: " + sock->remote_endpoint().address().to_string() + ":" + to_string(sock->remote_endpoint().port()));
 
 	// 添加新客户端
 	Slave slave(*sock);

@@ -20,9 +20,18 @@
     <ClCompile Include="Herobrine.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Session.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
