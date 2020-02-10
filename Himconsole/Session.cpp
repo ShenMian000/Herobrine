@@ -3,13 +3,17 @@
 // 被控端
 
 #include "Session.h"
+#include "Server.h"
+#include <boost/asio.hpp>
+#include <boost/bind.hpp>
 
+using std::string;
 using namespace boost;
 
 
 
-Session::Session(asio::ip::tcp::socket& sock)
-		: sock(sock)
+Session::Session(asio::io_service& ios)
+		: sock(ios)
 {
 }
 
@@ -17,18 +21,39 @@ Session::Session(asio::ip::tcp::socket& sock)
 // 发送数据
 void Session::send(const string& buf)
 {
+	//asio::async_write(sock, asio::buffer(buf),
+	//	boost::bind(&Session::OnSend, this, asio::placeholders::error));
 }
+
+// 回调: 发送完成后
+void Session::OnSend()
+{
+}
+
 
 // 接收数据
 void Session::recv(string& buf)
+{
+	//asio::async_read(sock, asio::buffer(buf),
+	//	boost::bind(&Session::OnRecv, this, asio::placeholders::error, asio::placeholders::bytes_transferred));
+}
+
+// 回调: 可以接收时
+void Session::OnRecv()
 {
 }
 
 
 // 获取 IP地址
-const std::string& Session::getIpAddress()
+const string& Session::ipAddress() const
 {
 	return sock.remote_endpoint().address().to_string();
+}
+
+// 获取 端口
+ushort Session::port() const
+{
+	return sock.remote_endpoint().port();
 }
 
 
@@ -36,6 +61,20 @@ const std::string& Session::getIpAddress()
 void Session::update()
 {
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 // 装载模块

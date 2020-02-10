@@ -6,7 +6,7 @@
 #define HIMCONSOLE_H_
 
 #include "console/Console.h"
-#include "slave.h"
+#include "Session.h"
 
 
 

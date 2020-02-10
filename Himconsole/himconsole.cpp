@@ -4,13 +4,12 @@
 
 #include "himconsole.h"
 #include "Server.h"
+#include "localization.h"
 
 #include "console/command/ClearCommand.h"
 #include "console/command/ExecCommand.h"
 #include "console/command/HelpCommand.h"
 #include "console/command/HistoryCommand.h"
-
-#include "localization.h"
 
 
 
@@ -44,7 +43,7 @@ public:
 
 int main()
 {
-	Print::warn(local::WARN_DEBUG);
+	print::warn(local::WARN_DEBUG);
 	printf(
 			"  __      __    __\n"
 			" |  |    |  |  |__|   __________\n"
@@ -68,7 +67,7 @@ int main()
 	console.addCommand("help",    dynamic_cast<Command*>(new HelpCommand()));
 	console.addCommand("history", dynamic_cast<Command*>(new HistoryCommand()));
 
-	server.listen();
+	server.run();
 	console.run();
 
 	return 0;

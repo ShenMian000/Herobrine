@@ -3,7 +3,7 @@
 //
 
 #include "Server.h"
-#include "slave.h"
+#include "Session.h"
 #include <boost/bind.hpp>
 #include "print.h"
 
@@ -17,12 +17,16 @@ Server::Server(ushort port)
 }
 
 
-// 开始
-void Server::listen()
+// 开始异步通信
+void Server::run()
 {
-	Print::info("开始监听: " + acceptor.local_endpoint().address().to_string() + ":" + to_string(acceptor.local_endpoint().port()));
+	ios.run();
 
-	Listen();
+
+
+	print::info("开始监听: " + acceptor.local_endpoint().address().to_string() + ":" + to_string(acceptor.local_endpoint().port()));
+
+	Accept();
 }
 
 
@@ -32,17 +36,17 @@ void Server::OnAccept(const system::error_code& err, socket_ptr sock)
 	if(err)
 		return;
 
-	Print::good("客户端接入: " + sock->remote_endpoint().address().to_string() + ":" + to_string(sock->remote_endpoint().port()));
+	print::good("客户端接入: " + sock->remote_endpoint().address().to_string() + ":" + to_string(sock->remote_endpoint().port()));
 
 	// 添加新客户端
-	Session slave(*sock);
+	Session session(ios);
 
-	Listen();
+	Accept();
 }
 
 
 // 异步监听
-void Server::Listen()
+void Server::Accept()
 {
 	socket_ptr sock(new asio::ip::tcp::socket(ios));
 	acceptor.async_accept(*sock, boost::bind(&Server::OnAccept, this, asio::placeholders::error, sock));

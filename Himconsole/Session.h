@@ -6,9 +6,11 @@
 #define SLAVE_H_
 
 #include "include.h"
-#include "module.h"
 
 
+
+class Server;
+class Module;
 
 struct user_info
 {
@@ -17,10 +19,9 @@ struct user_info
 	std::string email;
 };
 
-
 struct system_info
 {
-	std::string osName;
+	std::string os;
 	std::string language;
 	std::string computer;
 	enum
@@ -33,21 +34,27 @@ struct system_info
 
 class Session
 {
+	friend class Server;
+
 public:
-	Session(boost::asio::ip::tcp::socket&);
+	Session(boost::asio::io_service&);
 
 	void send(const std::string&);
 	void recv(std::string&);
 
-	const std::string& getIpAddress();
-
 	void update();
 
+	const std::string& ipAddress() const;
+	ushort						 port() const;
+
 private:
-	boost::asio::ip::tcp::socket&		sock;
-	user_info												userInfo;
-	system_info											osInfo;
-	map<const std::string, Module*> modules;
+	void OnSend();
+	void OnRecv();
+
+	boost::asio::ip::tcp::socket sock;
+	user_info										 userInfo;
+	system_info									 osInfo;
+	map<std::string, Module*>		 modules;
 };
 
 

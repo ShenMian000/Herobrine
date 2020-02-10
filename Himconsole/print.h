@@ -9,7 +9,7 @@
 
 
 
-class Print
+class print
 {
 public:
 	static void info(const string&);

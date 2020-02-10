@@ -11,12 +11,12 @@ class Server
 public:
 	Server(ushort port);
 
-	void listen();
+	void run();
 
 private:
 	typedef boost::shared_ptr<boost::asio::ip::tcp::socket> socket_ptr;
 
-	void Listen();
+	void Accept();
 	void OnAccept(const boost::system::error_code&, socket_ptr);
 
 	boost::asio::io_service				 ios;
