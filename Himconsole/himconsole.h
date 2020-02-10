@@ -18,10 +18,10 @@ public:
 	Himconsole();
 	~Himconsole();
 
-	const Slave& getSlave();
+	const Session& getSlave();
 
 private:
-	map<slave_id_t, Slave*> slave;
+	map<slave_id_t, Session*> slave;
 };
 
 

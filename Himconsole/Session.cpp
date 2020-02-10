@@ -2,38 +2,38 @@
 // License(Apache-2.0)
 // 被控端
 
-#include "slave.h"
+#include "Session.h"
 
 using namespace boost;
 
 
 
-Slave::Slave(asio::ip::tcp::socket& sock)
+Session::Session(asio::ip::tcp::socket& sock)
 		: sock(sock)
 {
 }
 
 
 // 发送数据
-void Slave::sendAsync(const string& buf)
+void Session::send(const string& buf)
 {
 }
 
 // 接收数据
-void Slave::recvAsync(string& buf)
+void Session::recv(string& buf)
 {
 }
 
 
 // 获取 IP地址
-const std::string& Slave::getIpAddress()
+const std::string& Session::getIpAddress()
 {
 	return sock.remote_endpoint().address().to_string();
 }
 
 
 // 更新基本信息
-void Slave::update()
+void Session::update()
 {
 }
 

@@ -43,10 +43,10 @@ struct module_info
 typedef uint module_id_t;
 
 
-class Slave
+class Session
 {
 public:
-	Slave();
+	Session();
 
 	bool load(const string& mod);      // ×°ÔØÄ£¿é
 	bool unload(const string& mod);    // Ğ¶ÔØÄ£¿é

@@ -147,7 +147,7 @@
     <ClInclude Include="module.h" />
     <ClInclude Include="print.h" />
     <ClInclude Include="Server.h" />
-    <ClInclude Include="slave.h" />
+    <ClInclude Include="Session.h" />
     <ClInclude Include="_slave.h" />
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +163,7 @@
     <ClCompile Include="module.cpp" />
     <ClCompile Include="Print.cpp" />
     <ClCompile Include="Server.cpp" />
-    <ClCompile Include="slave.cpp" />
+    <ClCompile Include="Session.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

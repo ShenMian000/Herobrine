@@ -80,10 +80,10 @@
     <ClInclude Include="_slave.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="slave.h">
+    <ClInclude Include="Server.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Server.h">
+    <ClInclude Include="Session.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -92,9 +92,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="attribute.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="slave.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="database\mysql\mysql.cpp">
@@ -125,6 +122,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Server.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Session.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -31,13 +31,13 @@ struct system_info
 };
 
 
-class Slave
+class Session
 {
 public:
-	Slave(boost::asio::ip::tcp::socket&);
+	Session(boost::asio::ip::tcp::socket&);
 
-	void sendAsync(const std::string&);
-	void recvAsync(std::string&);
+	void send(const std::string&);
+	void recv(std::string&);
 
 	const std::string& getIpAddress();
 
