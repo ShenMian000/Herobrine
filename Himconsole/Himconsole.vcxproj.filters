@@ -118,13 +118,13 @@
     <ClCompile Include="console\Command.cpp">
       <Filter>源文件\console</Filter>
     </ClCompile>
-    <ClCompile Include="Print.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Server.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Session.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="print.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

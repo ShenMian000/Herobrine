@@ -6,9 +6,9 @@
 
 
 
-std::mutex Print::mutex;
+std::mutex print::mutex;
 
-void Print::info(const string& str)
+void print::info(const string& str)
 {
 	mutex.lock();
 	Attribute::set(Attribute::Fore::blue);
@@ -19,7 +19,7 @@ void Print::info(const string& str)
 	mutex.unlock();
 }
 
-void Print::good(const string& str)
+void print::good(const string& str)
 {
 	mutex.lock();
 	Attribute::set(Attribute::Fore::green);
@@ -30,7 +30,7 @@ void Print::good(const string& str)
 	mutex.unlock();
 }
 
-void Print::error(const string& str)
+void print::error(const string& str)
 {
 	mutex.lock();
 	Attribute::set(Attribute::Fore::red);
@@ -41,7 +41,7 @@ void Print::error(const string& str)
 	mutex.unlock();
 }
 
-void Print::warn(const string& str)
+void print::warn(const string& str)
 {
 	mutex.lock();
 	Attribute::set(Attribute::Fore::yellow);

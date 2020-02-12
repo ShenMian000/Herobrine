@@ -4,9 +4,11 @@
 
 #include "Server.h"
 #include "Session.h"
-#include <boost/bind.hpp>
 #include "print.h"
+#include <thread>
+#include <boost/bind.hpp>
 
+using std::thread;
 using namespace boost;
 
 
@@ -20,13 +22,9 @@ Server::Server(ushort port)
 // 开始异步通信
 void Server::run()
 {
-	ios.run();
-
-
+	Accept();
 
 	print::info("开始监听: " + acceptor.local_endpoint().address().to_string() + ":" + to_string(acceptor.local_endpoint().port()));
-
-	Accept();
 }
 
 

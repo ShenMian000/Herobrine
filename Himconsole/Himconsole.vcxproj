@@ -161,7 +161,7 @@
     <ClCompile Include="himconsole.cpp" />
     <ClCompile Include="localization.cpp" />
     <ClCompile Include="module.cpp" />
-    <ClCompile Include="Print.cpp" />
+    <ClCompile Include="print.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Session.cpp" />
   </ItemGroup>

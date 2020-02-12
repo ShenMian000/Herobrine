@@ -43,7 +43,6 @@ public:
 
 int main()
 {
-	print::warn(local::WARN_DEBUG);
 	printf(
 			"  __      __    __\n"
 			" |  |    |  |  |__|   __________\n"
@@ -67,7 +66,6 @@ int main()
 	console.addCommand("help",    dynamic_cast<Command*>(new HelpCommand()));
 	console.addCommand("history", dynamic_cast<Command*>(new HistoryCommand()));
 
-	server.run();
 	console.run();
 
 	return 0;
