@@ -27,6 +27,9 @@
     <Filter Include="源文件\console">
       <UniqueIdentifier>{d64618e1-3199-479a-9f0c-be781c104e0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\command">
+      <UniqueIdentifier>{50636756-1289-42e0-8f1e-600c2499a986}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include.h">
@@ -77,14 +80,14 @@
     <ClInclude Include="console\Console.h">
       <Filter>头文件\console</Filter>
     </ClInclude>
-    <ClInclude Include="_slave.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Server.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Session.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="command\ListenCommand.h">
+      <Filter>头文件\command</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

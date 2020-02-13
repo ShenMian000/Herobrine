@@ -10,6 +10,7 @@
 #include "console/command/ExecCommand.h"
 #include "console/command/HelpCommand.h"
 #include "console/command/HistoryCommand.h"
+#include "command/ListenCommand.h"
 
 
 
@@ -24,22 +25,6 @@ Himconsole::~Himconsole()
 
 
 ///////////
-/*
-class ListenCommand : public Command
-{
-public:
-	ListenCommand()
-			: Command("监听指定地址和端口", "[TEST]", Platform::Common, License::Apache_2_0)
-	{
-		addSyntax("ip",   {Syntax::Type::STRING, "监听地址", false});
-		addSyntax("port", {Syntax::Type::INT, "监听端口", false});
-	}
-
-	void excute(Console& console) override
-	{
-	}
-};
-*/
 
 int main()
 {
@@ -57,7 +42,6 @@ int main()
 			__DATE__, __TIME__);
 
 	Console console;
-	Server	server(25565);
 
 	console.setPrompt("him");
 
@@ -65,6 +49,7 @@ int main()
 	console.addCommand("exec",    dynamic_cast<Command*>(new ExecCommand()));
 	console.addCommand("help",    dynamic_cast<Command*>(new HelpCommand()));
 	console.addCommand("history", dynamic_cast<Command*>(new HistoryCommand()));
+	console.addCommand("listen",  dynamic_cast<Command*>(new ListenCommand()));
 
 	console.run();
 

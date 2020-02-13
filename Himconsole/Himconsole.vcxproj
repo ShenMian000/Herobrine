@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="attribute.h" />
+    <ClInclude Include="command\ListenCommand.h" />
     <ClInclude Include="console\AutoComplete.h" />
     <ClInclude Include="console\Command.h" />
     <ClInclude Include="console\command\ClearCommand.h" />
@@ -148,7 +149,6 @@
     <ClInclude Include="print.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Session.h" />
-    <ClInclude Include="_slave.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="attribute.cpp" />

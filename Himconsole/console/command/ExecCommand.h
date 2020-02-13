@@ -24,12 +24,12 @@ public:
 		addSyntax("command", {Syntax::Type::STRING, "要执行的命令", false});
 	}
 
-	void excute(Console& console) override
+	void excute(Console& c) override
 	{
 		char	buf[1024];
 		FILE* pipe;
 			
-		pipe = popen(console.getStringArg("command").c_str(), "r");
+		pipe = popen(c.getStringArg("command").c_str(), "r");
 
 		if(pipe == NULL)
 			throw "无法打开管道";

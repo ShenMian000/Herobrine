@@ -3,9 +3,9 @@
 // 自动完成
 
 #include "AutoComplete.h"
-#include "Console.h"
-#include "Command.h"
 #include "../attribute.h"
+#include "Command.h"
+#include "Console.h"
 
 using std::string;
 
@@ -39,32 +39,55 @@ void AutoComplete::run(State state, const string& str, const Command* pCmd)
 		match = nullptr;
 		return;
 	}
-	auto newMatch = matchs.back();
-	if(newMatch != match)
+	if(matchs.size() == 1)
 	{
-		CleanPrompt();
-		match = newMatch;
+		auto newMatch = matchs.front();
+		if(newMatch != match)
+		{
+			CleanPrompt();
+			match = newMatch;
+		}
+		pos = match->size() - str.size();
 	}
 	if(matchs.size() > 1)
 	{
+		// 提示所有匹配项最后相同的位置
+		// TODO: 此处代码存在缺陷
+
+		CleanPrompt();
+		pos		= 0;
+		match = matchs.back();
+		matchs.pop_back();
+		int i = 0;
+		bool flag = false;
+		while(!flag)
+		{
+			for(auto m : matchs)
+				if(m->size() <= i || (*match)[i] != (*m)[i])
+				{
+					pos = i - str.size();
+					flag = true;
+					break;
+				}
+			i++;
+		}
+
+		/*CleanPrompt();
 		matchs.pop_back();
 		pos				= 0;
 		bool flag = false;
-		for(auto i = str.size();; i++)
+		for(auto i = str.size(); !flag; i++)
 		{
 			for(auto cmd : matchs)
 				if(cmd->size() <= i - 1 || (*cmd)[i] != (*match)[i])
 				{
-					pos	 = i - str.size();
+					pos  = i - str.size();
 					flag = true;
 					break;
 				}
-			if(flag)
-				break;
-		}
+		}*/
 	}
-	else
-		pos = match->size() - str.size();
+
 	PrintPrompt(str);
 
 	matchs.clear();
@@ -95,6 +118,8 @@ void AutoComplete::CleanPrompt()
 // 查找命令匹配项
 void AutoComplete::MatchCommand(const string& str)
 {
+	if(str.size() == 0)
+		return;
 	for(auto& i : console.getCommand())
 		if(str == i.first.substr(0, str.size()))
 			matchs.push_back(&i.first);

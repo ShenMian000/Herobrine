@@ -13,7 +13,7 @@ public:
 	{
 	}
 
-	void excute(Console& console) override
+	void excute(Console& c) override
 	{
 		/*
 		auto& history = console.getHistory();
