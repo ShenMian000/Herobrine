@@ -71,21 +71,6 @@ void AutoComplete::run(State state, const string& str, const Command* pCmd)
 				}
 			i++;
 		}
-
-		/*CleanPrompt();
-		matchs.pop_back();
-		pos				= 0;
-		bool flag = false;
-		for(auto i = str.size(); !flag; i++)
-		{
-			for(auto cmd : matchs)
-				if(cmd->size() <= i - 1 || (*cmd)[i] != (*match)[i])
-				{
-					pos  = i - str.size();
-					flag = true;
-					break;
-				}
-		}*/
 	}
 
 	PrintPrompt(str);

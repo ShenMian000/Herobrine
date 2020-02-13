@@ -144,17 +144,19 @@ void Console::run()
 
 			if(ch == '\r' || ch == '\n')
 			{
-				if(state == State::KEY)
-					continue;
-				if(state == State::COMMAND)
+				switch(state)
 				{
+				case State::KEY:
+					continue;
+
+				case State::COMMAND:
 					pCommand = getCommand(buf);
 					if(pCommand == nullptr)
 						continue;
 					// TODO: 检查是否已填全部必选参数
-				}
-				if(state == State::VALUE)
-				{
+					break;
+
+				case State::VALUE:
 					if(buf.size() == 0)
 						continue;
 
@@ -166,6 +168,7 @@ void Console::run()
 					}
 					else
 						*arg = buf;
+					break;
 				}
 				printf("\n");
 				break;
