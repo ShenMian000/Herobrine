@@ -1,9 +1,10 @@
 
 #include "Console.h"
+#include "print.h"
 
 int main()
 {
-	Console& console = Console::getInstance();
+	Console console;
 	console.setPrompt("him> ");
 	console.run();
 

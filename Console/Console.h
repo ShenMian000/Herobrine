@@ -13,8 +13,6 @@ class Command;
 class Console
 {
 public:
-	static Console& getInstance();
-
 	void run();
 
 	void addCommand(const std::string&, Command*);
@@ -22,8 +20,6 @@ public:
 	void setPrompt(const std::string&);
 	
 private:
-	Console();
-	static Console*										 instance;
 	std::string												 prompt;
 	std::map<std::string, std::string> args;
 	std::map<std::string, Command*>		 commands;

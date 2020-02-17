@@ -10,23 +10,23 @@
 Highlight::Highlight()
 		: console(nullptr)
 {
-	color.command.fore = Attribute::Fore::green;
-	color.command.mode = Attribute::Mode::fore_bold;
-	color.key.fore		 = Attribute::Fore::yellow;
-	color.key.mode		 = Attribute::Mode::fore_bold;
-	color.delim.fore	 = Attribute::Fore::white;
-	color.delim.mode	 = Attribute::Mode::fore_bold;
+	color.command.fore = attribute::fore::green;
+	color.command.mode = attribute::mode::fore_bold;
+	color.key.fore		 = attribute::fore::yellow;
+	color.key.mode		 = attribute::mode::fore_bold;
+	color.delim.fore	 = attribute::fore::white;
+	color.delim.mode	 = attribute::mode::fore_bold;
 }
 
 Highlight::Highlight(Console* console)
 		: console(console)
 {
-	color.command.fore = Attribute::Fore::green;
-	color.command.mode = Attribute::Mode::fore_bold;
-	color.key.fore		 = Attribute::Fore::yellow;
-	color.key.mode		 = Attribute::Mode::fore_bold;
-	color.delim.fore	 = Attribute::Fore::white;
-	color.delim.mode	 = Attribute::Mode::fore_bold;
+	color.command.fore = attribute::fore::green;
+	color.command.mode = attribute::mode::fore_bold;
+	color.key.fore		 = attribute::fore::yellow;
+	color.key.mode		 = attribute::mode::fore_bold;
+	color.delim.fore	 = attribute::fore::white;
+	color.delim.mode	 = attribute::mode::fore_bold;
 }
 
 
@@ -38,57 +38,57 @@ void Highlight::run(State state, const string& str, const Command* pCmd, const S
 	case State::COMMAND:
 		if(pCmd == nullptr)
 			break;
-		Attribute::set(color.command.fore);
-		Attribute::set(color.command.mode);
+		attribute::set(color.command.fore);
+		attribute::set(color.command.mode);
 		break;
 
 	case State::KEY:
 		if(pKey == nullptr)
 			break;
-		Attribute::set(color.key.fore);
-		Attribute::set(color.key.mode);
+		attribute::set(color.key.fore);
+		attribute::set(color.key.mode);
 		break;
 
 	case State::DELIM:
-		Attribute::set(color.delim.fore);
-		Attribute::set(color.delim.mode);
+		attribute::set(color.delim.fore);
+		attribute::set(color.delim.mode);
 		printf(":");
-		Attribute::rest();
+		attribute::rest();
 		return;
 	}
 	for(size_t i = 0; i < str.size(); i++)
 		printf("\b \b");
 	printf("%s", str.c_str());
-	Attribute::rest();
+	attribute::rest();
 }
 
 
-void Highlight::setCommandFore(Attribute::Fore attr)
+void Highlight::setCommandFore(attribute::fore attr)
 {
 	color.command.fore = attr;
 }
 
-void Highlight::setCommandMode(Attribute::Mode attr)
+void Highlight::setCommandMode(attribute::mode attr)
 {
 	color.command.mode = attr;
 }
 
-void Highlight::setKeyFore(Attribute::Fore attr)
+void Highlight::setKeyFore(attribute::fore attr)
 {
 	color.key.fore = attr;
 }
 
-void Highlight::setKeyMode(Attribute::Mode attr)
+void Highlight::setKeyMode(attribute::mode attr)
 {
 	color.key.mode = attr;
 }
 
-void Highlight::setDelimFore(Attribute::Fore attr)
+void Highlight::setDelimFore(attribute::fore attr)
 {
 	color.delim.fore = attr;
 }
 
-void Highlight::setDelimMode(Attribute::Mode attr)
+void Highlight::setDelimMode(attribute::mode attr)
 {
 	color.delim.mode = attr;
 }

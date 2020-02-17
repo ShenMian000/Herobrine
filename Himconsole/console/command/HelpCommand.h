@@ -38,25 +38,25 @@ public:
 				case Syntax::Type::LONG:
 				case Syntax::Type::FLOAT:
 				case Syntax::Type::DOUBLE:
-					Attribute::set(Attribute::Fore::blue);
-					Attribute::set(Attribute::Mode::fore_bold);
+					attribute::set(attribute::fore::blue);
+					attribute::set(attribute::mode::fore_bold);
 					break;
 
 				case Syntax::Type::STRING:
-					Attribute::set(Attribute::Fore::yellow);
-					Attribute::set(Attribute::Mode::fore_bold);
+					attribute::set(attribute::fore::yellow);
+					attribute::set(attribute::mode::fore_bold);
 					break;
 
 				case Syntax::Type::OPTION:
-					Attribute::set(Attribute::Fore::white);
-					Attribute::set(Attribute::Mode::fore_bold);
+					attribute::set(attribute::fore::white);
+					attribute::set(attribute::mode::fore_bold);
 					break;
 				}
 				if(syntax.second.required)
 					printf("  %-15s ", syntax.first.c_str());
 				else
 					printf("  %-15s ", (syntax.first + '*').c_str());
-				Attribute::rest();
+				attribute::rest();
 				printf("%-30s\n", syntax.second.desc.c_str());
 			}
 			printf("\n");

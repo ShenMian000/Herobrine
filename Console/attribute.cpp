@@ -74,8 +74,10 @@ WinAttributeInit winAttributeInit;
 
 #ifdef OS_LINUX
 
+#include <stdio.h>
+
 // 设置前景属性
-void Attribute::set(fore attr)
+void attribute::set(fore attr)
 {
 	switch(attr)
 	{
@@ -119,7 +121,7 @@ void Attribute::set(fore attr)
 
 
 // 设置背景属性
-void Attribute::set(back attr)
+void attribute::set(back attr)
 {
 	switch(attr)
 	{
@@ -163,7 +165,7 @@ void Attribute::set(back attr)
 
 
 // 设置共同属性
-void Attribute::set(mode attr)
+void attribute::set(mode attr)
 {
 	switch(attr)
 	{
@@ -183,7 +185,7 @@ void Attribute::set(mode attr)
 
 
 // 还原到默认属性
-void Attribute::rest()
+void attribute::rest()
 {
 	printf("\33[0m");
 }

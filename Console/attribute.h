@@ -5,7 +5,7 @@
 #ifndef ATTRIBUTE_H_
 #define ATTRIBUTE_H_
 
-#include "include.h"
+#define OS_WIN
 
 #ifdef OS_WIN
 	#include <windows.h>
@@ -26,7 +26,7 @@ public:
 		purple = 0x05,
 		yellow = 0x06,
 		white  = 0x07,
-		gray   = 0x08,
+		gray   = 0x08
 	};
 
 	enum class back
@@ -39,14 +39,14 @@ public:
 		purple = 0x50,
 		yellow = 0x60,
 		white  = 0x70,
-		gray   = 0x80,
+		gray   = 0x80
 	};
 
 	enum class mode
 	{
 		underline = 0x8000,
 		fore_bold = 0x0008,
-		back_bold = 0x0080,
+		back_bold = 0x0080
 	};
 
 	static void set(fore);

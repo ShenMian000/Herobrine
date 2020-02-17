@@ -1,17 +1,15 @@
 // Copyright 2019 SMS
 // License(Apache-2.0)
 
-/*
- 单例模式
- 线程不安全
- */
-
 #include "Console.h"
+#include "Command.h"
 #include <assert.h>
 
 #include <conio.h>
 
 using std::string;
+
+
 
 // 输入状态
 // 当前正在输入的内容
@@ -19,9 +17,7 @@ enum class InputState
 {
 	Command,
 	Key,
-	String,
-	Integer,
-	Floating
+	Value
 };
 
 // 引号使用情况
@@ -34,35 +30,36 @@ enum class QuotationMark
 
 
 
-Console* Console::instance = nullptr;
-
-
-Console::Console()
-{
-}
-
-
-Console& Console::getInstance()
-{
-	if(instance == nullptr)
-		instance = new Console();
-	return *instance;
-}
-
-
 // 开启命令行
 void Console::run()
 {
 	while(true)
 	{
-		InputState		state					= InputState::Command;
-		QuotationMark quotationMark = QuotationMark::None;
+		string					 buf;
+		Command*				 pCommand			 = nullptr;
+		Command::Syntax* pSyntax			 = nullptr;
+		InputState			 state				 = InputState::Command;
+		QuotationMark		 quotationMark = QuotationMark::None;
 
 		printf(prompt.c_str());
 
 		while(true)
 		{
-			char c = getch();
+			char c = _getch();
+
+			// 输入结束
+			if(c == '\r' || c == '\n')
+				if(state == InputState::Command ||
+					 state == InputState::Key && buf.size() == 0)
+				{
+					// 检查参数是否填写完整
+				}
+				else
+					continue;
+
+			// 过滤非法字符
+			if(!isprint(c))
+				continue;
 
 			switch(state)
 			{
@@ -72,15 +69,54 @@ void Console::run()
 			case InputState::Key:
 				break;
 
-			case InputState::String:
-				break;
+			case InputState::Value:
+				switch(pSyntax->type)
+				{
+				case Command::Syntax::Type::String:
+					switch(quotationMark)
+					{
+					case QuotationMark::None:
+						if(c == '\'')
+							quotationMark = QuotationMark::Single;
+						else if(c == '\"')
+							quotationMark = QuotationMark::Double;
+						buf += c;
+						break;
 
-			case InputState::Integer:
-				break;
+					case QuotationMark::Single:
+						if(c != '\'')
+							continue;
+						quotationMark = QuotationMark::None;
+						state					= InputState::Key;
+						break;
 
-			case InputState::Floating:
-				break;
+					case QuotationMark::Double:
+						if(c != '\"')
+							continue;
+						quotationMark = QuotationMark::None;
+						state					= InputState::Key;
+						break;
+					}
+					break;
+
+				case Command::Syntax::Type::Int:
+					break;
+
+				case Command::Syntax::Type::Float:
+					break;
+				}
 			}
+
+			printf("%c", c);
+		}
+
+		// 执行命令
+		assert(pCommand != nullptr);
+		try
+		{
+		}
+		catch(...)
+		{
 		}
 	}
 }

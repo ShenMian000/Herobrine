@@ -82,11 +82,11 @@ void AutoComplete::run(State state, const string& str, const Command* pCmd)
 // 输出补全提示
 void AutoComplete::PrintPrompt(const string& str)
 {
-	Attribute::set(Attribute::Fore::gray);
+	attribute::set(attribute::fore::gray);
 	printf("%s", match->substr(str.size(), pos).c_str());
 	for(size_t i = 0; i < pos; i++)
 		printf("\b");
-	Attribute::rest();
+	attribute::rest();
 }
 
 

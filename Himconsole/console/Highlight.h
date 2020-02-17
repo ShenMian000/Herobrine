@@ -21,20 +21,20 @@ public:
 
 	void run(State, const std::string&, const Command*, const Syntax*);
 
-	void setCommandFore(Attribute::Fore);
-	void setCommandMode(Attribute::Mode);
-	void setKeyFore(Attribute::Fore);
-	void setKeyMode(Attribute::Mode);
-	void setDelimFore(Attribute::Fore);
-	void setDelimMode(Attribute::Mode);
+	void setCommandFore(attribute::fore);
+	void setCommandMode(attribute::mode);
+	void setKeyFore(attribute::fore);
+	void setKeyMode(attribute::mode);
+	void setDelimFore(attribute::fore);
+	void setDelimMode(attribute::mode);
 
 private:
 	struct
 	{
 		struct
 		{
-			Attribute::Fore fore;
-			Attribute::Mode mode;
+			attribute::fore fore;
+			attribute::mode mode;
 		} command, key, delim, string, number;
 	} color;
 	Console* console;
