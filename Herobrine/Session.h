@@ -1,13 +1,14 @@
 
 #include <string>
 #include <boost/asio.hpp>
+#include <boost/asio/ssl.hpp>
 
 
 
 class Session
 {
 protected:
-	Session(boost::asio::io_context&, const std::string&, unsigned short);
+	Session(boost::asio::io_context&, boost::asio::ssl::context&, const std::string&, unsigned short);
 	~Session();
 
 	void Connect();
@@ -21,6 +22,6 @@ protected:
 	char buffer[1024];
 
 private:
-	boost::asio::ip::tcp::endpoint endpoint;
-	boost::asio::ip::tcp::socket	 sock;
+	boost::asio::ip::tcp::endpoint												 endpoint;
+	boost::asio::ssl::stream<boost::asio::ip::tcp::socket> sock;
 };

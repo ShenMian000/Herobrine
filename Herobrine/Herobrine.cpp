@@ -10,8 +10,8 @@ using namespace boost;
 
 
 
-Herobrine::Herobrine(boost::asio::io_context& ioc, const std::string& ip, unsigned short port)
-		: Session(ioc, ip, port)
+Herobrine::Herobrine(boost::asio::io_context& ioc, boost::asio::ssl::context& ssl, const std::string& ip, unsigned short port)
+		: Session(ioc, ssl, ip, port)
 {
 }
 

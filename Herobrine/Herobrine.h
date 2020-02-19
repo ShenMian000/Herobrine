@@ -4,7 +4,7 @@
 class Herobrine : public Session
 {
 public:
-	Herobrine(boost::asio::io_context&, const std::string&, unsigned short);
+	Herobrine(boost::asio::io_context&, boost::asio::ssl::context&, const std::string&, unsigned short);
 
 protected:
 	void OnConnect(const boost::system::error_code&) override;

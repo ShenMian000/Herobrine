@@ -5,8 +5,8 @@
 using std::string;
 using namespace boost;
 
-Session::Session(boost::asio::io_context& ioc, const std::string& ip, unsigned short port)
-		: sock(ioc), endpoint(asio::ip::address::from_string(ip), port)
+Session::Session(asio::io_context& ioc, asio::ssl::context& ssl, const std::string& ip, unsigned short port)
+		: sock(ioc, ssl), endpoint(asio::ip::address::from_string(ip), port)
 {
 	Connect();
 }
