@@ -12,8 +12,14 @@ typedef unsigned short ushort;
 typedef unsigned int   uint;
 typedef unsigned long  ulong;
 
-typedef ulong          id_t;
 
+
+// C 标准库
+#include <assert.h>
+
+
+// C++ Boost库
+#include <boost/asio.hpp>
 
 
 // C++ 标准库
@@ -65,13 +71,6 @@ using std::mutex;
 	#endif
 #else
 	#define   OS_LINUX  // Linux
-#endif
-
-
-
-#ifdef OS_WIN
-	#include <conio.h>
-	#include <windows.h>
 #endif
 
 

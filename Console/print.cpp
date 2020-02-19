@@ -1,12 +1,15 @@
 // Copyright 2019 SMS
 // License(Apache-2.0)
-//
 
-#include "Print.h"
+#include "print.h"
+#include "attribute.h";
+
+using std::string;
+using std::mutex;
 
 
+mutex print::mutex;
 
-std::mutex print::mutex;
 
 void print::info(const string& str)
 {

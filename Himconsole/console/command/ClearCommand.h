@@ -9,11 +9,11 @@ class ClearCommand : public Command
 {
 public:
 	ClearCommand()
-		: Command("clear", "清空命令行缓冲区", "Herobrine")
+			: Command("清空命令行缓冲区", "Herobrine", Platform::Common, License::Apache_2_0)
 	{
 	}
 
-	void excute(Console& console) override
+	void excute(Console& c) override
 	{
 #ifdef OS_WIN
 			system("cls");

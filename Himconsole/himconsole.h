@@ -5,10 +5,12 @@
 #ifndef HIMCONSOLE_H_
 #define HIMCONSOLE_H_
 
-#include "console.h"
-#include "slave.h"
+#include "console/Console.h"
+#include "Session.h"
 
 
+
+typedef ulong slave_id_t;
 
 class Himconsole : public Console
 {
@@ -16,10 +18,10 @@ public:
 	Himconsole();
 	~Himconsole();
 
-	const Slave& getSlave();
+	const Session_& getSlave();
 
 private:
-	map<id_t, Slave*> slave;
+	map<slave_id_t, Session_*> slave;
 };
 
 

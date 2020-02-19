@@ -16,6 +16,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "其他文件", "其他文�
 		README.zh-CN.md = README.zh-CN.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{D3B5AA27-BAA2-477C-BD63-13947AF624B2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "开发者手册", "开发者手册", "{83ABEDAC-6ABB-4B9C-BE37-7E5A2CE2ACD6}"
+	ProjectSection(SolutionItems) = preProject
+		doc\开发者手册\编码规范.md = doc\开发者手册\编码规范.md
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Console", "Console\Console.vcxproj", "{8015AF36-BAE5-492D-B8BE-810AD7B15834}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -40,9 +49,21 @@ Global
 		{859C514D-A955-46F6-9A31-9551B7D42145}.Release|x64.Build.0 = Release|x64
 		{859C514D-A955-46F6-9A31-9551B7D42145}.Release|x86.ActiveCfg = Release|Win32
 		{859C514D-A955-46F6-9A31-9551B7D42145}.Release|x86.Build.0 = Release|Win32
+		{8015AF36-BAE5-492D-B8BE-810AD7B15834}.Debug|x64.ActiveCfg = Debug|x64
+		{8015AF36-BAE5-492D-B8BE-810AD7B15834}.Debug|x64.Build.0 = Debug|x64
+		{8015AF36-BAE5-492D-B8BE-810AD7B15834}.Debug|x86.ActiveCfg = Debug|Win32
+		{8015AF36-BAE5-492D-B8BE-810AD7B15834}.Debug|x86.Build.0 = Debug|Win32
+		{8015AF36-BAE5-492D-B8BE-810AD7B15834}.Release|x64.ActiveCfg = Release|x64
+		{8015AF36-BAE5-492D-B8BE-810AD7B15834}.Release|x64.Build.0 = Release|x64
+		{8015AF36-BAE5-492D-B8BE-810AD7B15834}.Release|x86.ActiveCfg = Release|Win32
+		{8015AF36-BAE5-492D-B8BE-810AD7B15834}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D3B5AA27-BAA2-477C-BD63-13947AF624B2} = {6B863B9B-52CA-4462-A0E7-FEB7346162F0}
+		{83ABEDAC-6ABB-4B9C-BE37-7E5A2CE2ACD6} = {D3B5AA27-BAA2-477C-BD63-13947AF624B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1CD55569-9271-4320-98F0-33C1CBB9F31B}

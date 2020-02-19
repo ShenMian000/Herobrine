@@ -1,10 +1,10 @@
 
+#ifdef REM
+
 #include <windows.h>
 #include <iostream>
 
 using namespace std;
-
-#include "include.h"
 
 string keyscanBuf;
 
@@ -20,3 +20,5 @@ void keyscan()
 		keyscanBuf += to_string(code) + ";";
 	}
 }
+
+#endif
