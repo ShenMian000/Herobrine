@@ -56,7 +56,7 @@ struct Command::Syntax
 		Option
 	};
 
-	Syntax(Type type, const std::string desc, bool required)
+	Syntax(Type type, const std::string& desc, bool required)
 			: type(type), desc(desc), required(required)
 	{
 	}
