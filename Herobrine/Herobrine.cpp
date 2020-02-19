@@ -2,7 +2,6 @@
 // License(Apache-2.0)
 
 #include "Herobrine.h"
-#include <boost/asio.hpp>
 #include <string>
 
 using std::string;

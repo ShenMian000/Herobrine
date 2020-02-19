@@ -3,13 +3,12 @@
 // 
 
 #include "include.h"
-#include <boost/enable_shared_from_this.hpp>
 
 
 class Server
 {
 public:
-	Server(ushort port);
+	Server(boost::asio::io_context&, ushort port);
 
 	void run();
 
@@ -19,6 +18,6 @@ private:
 	void Accept();
 	void OnAccept(const boost::system::error_code&, socket_ptr);
 
-	boost::asio::io_service				 ios;
+	boost::asio::io_context&       ioc;
 	boost::asio::ip::tcp::acceptor acceptor;
 };

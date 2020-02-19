@@ -13,8 +13,8 @@ using namespace boost;
 
 
 
-Server::Server(ushort port)
-		: acceptor(ios, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port))
+Server::Server(asio::io_context& ioc, ushort port)
+		: ioc(ioc), acceptor(ioc, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port))
 {
 }
 
@@ -23,8 +23,6 @@ Server::Server(ushort port)
 void Server::run()
 {
 	Accept();
-
-	print::info("开始监听: " + acceptor.local_endpoint().address().to_string() + ":" + to_string(acceptor.local_endpoint().port()));
 }
 
 
@@ -37,7 +35,7 @@ void Server::OnAccept(const system::error_code& err, socket_ptr sock)
 	print::good("客户端接入: " + sock->remote_endpoint().address().to_string() + ":" + to_string(sock->remote_endpoint().port()));
 
 	// 添加新客户端
-	Session_ session(ios);
+
 
 	Accept();
 }
@@ -46,6 +44,6 @@ void Server::OnAccept(const system::error_code& err, socket_ptr sock)
 // 异步监听
 void Server::Accept()
 {
-	socket_ptr sock(new asio::ip::tcp::socket(ios));
+	socket_ptr sock(new asio::ip::tcp::socket(ioc));
 	acceptor.async_accept(*sock, boost::bind(&Server::OnAccept, this, asio::placeholders::error, sock));
 }

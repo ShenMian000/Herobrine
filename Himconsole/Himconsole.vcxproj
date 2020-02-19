@@ -148,7 +148,7 @@
     <ClInclude Include="module.h" />
     <ClInclude Include="print.h" />
     <ClInclude Include="Server.h" />
-    <ClInclude Include="Session.h" />
+    <ClInclude Include="Session_.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="attribute.cpp" />
@@ -160,10 +160,11 @@
     <ClCompile Include="database\mysql\result.cpp" />
     <ClCompile Include="himconsole.cpp" />
     <ClCompile Include="localization.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="module.cpp" />
     <ClCompile Include="print.cpp" />
     <ClCompile Include="Server.cpp" />
-    <ClCompile Include="Session.cpp" />
+    <ClCompile Include="Session_.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

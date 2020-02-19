@@ -39,10 +39,8 @@ class Session_
 public:
 	Session_(boost::asio::io_service&);
 
-	void send(const std::string&);
-	void recv(std::string&);
-
-	void update();
+	void write(const std::string&);
+	void read(std::string&);
 
 	const std::string& ipAddress() const;
 	ushort						 port() const;

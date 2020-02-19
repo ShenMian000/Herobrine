@@ -14,13 +14,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="keyscan.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Herobrine.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Session_.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Session.cpp">
@@ -32,9 +26,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Session.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Session_.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Herobrine.h">

@@ -2,8 +2,7 @@
 // License(Apache-2.0)
 // 被控端
 
-#include "Session.h"
-#include "Server.h"
+#include "Session_.h"
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 
@@ -19,7 +18,7 @@ Session_::Session_(asio::io_service& ios)
 
 
 // 发送数据
-void Session_::send(const string& buf)
+void Session_::write(const string& buf)
 {
 	//asio::async_write(sock, asio::buffer(buf),
 	//	boost::bind(&Session::OnSend, this, asio::placeholders::error));
@@ -32,7 +31,7 @@ void Session_::OnSend()
 
 
 // 接收数据
-void Session_::recv(string& buf)
+void Session_::read(string& buf)
 {
 	//asio::async_read(sock, asio::buffer(buf),
 	//	boost::bind(&Session::OnRecv, this, asio::placeholders::error, asio::placeholders::bytes_transferred));
@@ -56,11 +55,6 @@ ushort Session_::port() const
 	return sock.remote_endpoint().port();
 }
 
-
-// 更新基本信息
-void Session_::update()
-{
-}
 
 
 
