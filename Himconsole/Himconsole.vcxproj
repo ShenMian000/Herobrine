@@ -148,6 +148,7 @@
     <ClInclude Include="module.h" />
     <ClInclude Include="print.h" />
     <ClInclude Include="Server.h" />
+    <ClInclude Include="Session.h" />
     <ClInclude Include="Session_.h" />
   </ItemGroup>
   <ItemGroup>

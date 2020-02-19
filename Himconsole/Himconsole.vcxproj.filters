@@ -89,6 +89,9 @@
     <ClInclude Include="Session_.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="himconsole.cpp">
