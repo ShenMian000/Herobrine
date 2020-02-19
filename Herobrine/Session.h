@@ -1,64 +1,26 @@
-#ifndef __CLY_SESSION_H__
-#define __CLY_SESSION_H__
 
-#include <iostream>
 #include <string>
-
 #include <boost/asio.hpp>
-#include <boost/enable_shared_from_this.hpp>
 
-#define REPLY_SIZE (32)
-
-// 会话类
-class Session : public boost::enable_shared_from_this<Session>
+class Session
 {
-
 public:
-	typedef void pSessionCallback(std::string, std::string);
+	void run();
 
-public:
-	Session(boost::asio::io_service& _ioService);
-	virtual ~Session(void);
+protected:
+	Session(const std::string&, unsigned short);
+	~Session();
 
-	void start(void);
+	void Connect();
+	void Send(const std::string&);
+	void Recv(std::string&);
 
-	void setCallback(pSessionCallback* _callback)
-	{
-		callback_ = _callback;
-	}
-
-	// socket 实例
-	boost::asio::ip::tcp::socket& socket(void);
+	virtual void OnConnect(const boost::system::error_code&);
+	virtual void OnSend(const boost::system::error_code&, size_t);
+	virtual void OnRecv();
 
 private:
-	// 第一个协议包
-	void init_handler(const boost::system::error_code& _error);
-
-	// 解析协议包
-	void analyse_handler(const boost::system::error_code& _error);
-
-	// 完成数据传输后触发的收尾工作
-	void done_handler(const boost::system::error_code& _error);
-
-	// 读取成功后触发的函数
-	void read_handler(const boost::system::error_code& _error, size_t _readSize);
-
-	// 写入完成后触发的函数
-	void write_handler(const boost::system::error_code& _error);
-
-private:
-	// 临时信息缓冲区
-	char				msg_[1024];
-	std::string currentMsg_;
-	// 数据总数量
-	int sumSize_;
-	// 单个数据包大小
-	unsigned int maxSize_;
-	// socket句柄
-	boost::asio::ip::tcp::socket socket_;
-	// 回调
-	pSessionCallback* callback_;
+	boost::asio::io_service				 ios;
+	boost::asio::ip::tcp::endpoint endpoint;
+	boost::asio::ip::tcp::socket	 sock;
 };
-
-
-#endif // __CLY_SESSION_H__

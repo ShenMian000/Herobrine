@@ -11,10 +11,10 @@ std::mutex print::mutex;
 void print::info(const string& str)
 {
 	mutex.lock();
-	Attribute::set(Attribute::Fore::blue);
-	Attribute::set(Attribute::Mode::fore_bold);
+	attribute::set(attribute::fore::blue);
+	attribute::set(attribute::mode::fore_bold);
 	printf("[*] ");
-	Attribute::rest();
+	attribute::rest();
 	puts(str.c_str());
 	mutex.unlock();
 }
@@ -22,10 +22,10 @@ void print::info(const string& str)
 void print::good(const string& str)
 {
 	mutex.lock();
-	Attribute::set(Attribute::Fore::green);
-	Attribute::set(Attribute::Mode::fore_bold);
+	attribute::set(attribute::fore::green);
+	attribute::set(attribute::mode::fore_bold);
 	printf("[+] ");
-	Attribute::rest();
+	attribute::rest();
 	puts(str.c_str());
 	mutex.unlock();
 }
@@ -33,10 +33,10 @@ void print::good(const string& str)
 void print::error(const string& str)
 {
 	mutex.lock();
-	Attribute::set(Attribute::Fore::red);
-	Attribute::set(Attribute::Mode::fore_bold);
+	attribute::set(attribute::fore::red);
+	attribute::set(attribute::mode::fore_bold);
 	printf("[-] ");
-	Attribute::rest();
+	attribute::rest();
 	puts(str.c_str());
 	mutex.unlock();
 }
@@ -44,10 +44,10 @@ void print::error(const string& str)
 void print::warn(const string& str)
 {
 	mutex.lock();
-	Attribute::set(Attribute::Fore::yellow);
-	Attribute::set(Attribute::Mode::fore_bold);
+	attribute::set(attribute::fore::yellow);
+	attribute::set(attribute::mode::fore_bold);
 	printf("[!] ");
-	Attribute::rest();
+	attribute::rest();
 	puts(str.c_str());
 	mutex.unlock();
 }

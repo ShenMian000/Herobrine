@@ -32,12 +32,12 @@ struct system_info
 };
 
 
-class Session
+class Session_
 {
 	friend class Server;
 
 public:
-	Session(boost::asio::io_service&);
+	Session_(boost::asio::io_service&);
 
 	void send(const std::string&);
 	void recv(std::string&);

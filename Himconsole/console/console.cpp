@@ -356,9 +356,9 @@ void Console::run()
 void Console::PrintPrompt()
 {
 	printf("\n");
-	Attribute::set(Attribute::Mode::underline);
+	attribute::set(attribute::mode::underline);
 	printf(prompt.c_str());
-	Attribute::rest();
+	attribute::rest();
 	printf("> ");
 }
 
