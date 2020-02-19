@@ -10,22 +10,6 @@ using namespace boost;
 
 
 
-int main()
-{
-	asio::io_context ioc;
-
-	Herobrine him(ioc, "127.0.0.1", 25565);
-
-	ioc.run();
-
-
-	getchar();
-	getchar();
-	return 0;
-}
-
-
-
 Herobrine::Herobrine(boost::asio::io_context& ioc, const std::string& ip, unsigned short port)
 		: Session(ioc, ip, port)
 {
