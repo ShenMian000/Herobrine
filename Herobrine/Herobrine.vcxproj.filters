@@ -28,9 +28,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Client.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Session.h">
       <Filter>头文件</Filter>
     </ClInclude>

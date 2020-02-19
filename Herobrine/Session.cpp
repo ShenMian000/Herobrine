@@ -2,11 +2,13 @@
 #include "Session.h"
 #include <boost/bind.hpp>
 
+using std::string;
 using namespace boost;
 
-Session::Session(const std::string& ip, unsigned short port)
-		: sock(ios), endpoint(asio::ip::address::from_string(ip), port)
+Session::Session(boost::asio::io_context& ioc, const std::string& ip, unsigned short port)
+		: sock(ioc), endpoint(asio::ip::address::from_string(ip), port)
 {
+	Connect();
 }
 
 Session::~Session()
@@ -14,32 +16,32 @@ Session::~Session()
 }
 
 
-void Session::run()
-{
-	Connect();
-	ios.run();
-}
-
 
 void Session::Connect()
 {
 	sock.async_connect(endpoint, boost::bind(&Session::OnConnect, this, asio::placeholders::error));
 }
 
-void Session::Send(const std::string& buf)
+void Session::Write(const string& buf)
 {
-	sock.async_write_some(asio::buffer(buf), boost::bind(&Session::OnSend, this, asio::placeholders::error));
+	asio::async_write(sock, asio::buffer(buf), boost::bind(&Session::OnWrite, this, asio::placeholders::error));
 }
 
-void Session::Recv(std::string&)
+void Session::Read()
 {
+	memset(buffer, sizeof(buffer), '\0');
+	sock.async_read_some(asio::buffer(buffer), boost::bind(&Session::OnRead, this, asio::placeholders::error, asio::placeholders::bytes_transferred));
 }
 
 
-void Session::OnConnect(const boost::system::error_code&)
+void Session::OnConnect(const boost::system::error_code& error)
 {
 }
 
-void Session::OnSend(const boost::system::error_code&, size_t)
+void Session::OnWrite(const boost::system::error_code& error)
+{
+}
+
+void Session::OnRead(const boost::system::error_code& error, size_t len)
 {
 }

@@ -148,7 +148,6 @@
     <ClCompile Include="Session_.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Client.h" />
     <ClInclude Include="Herobrine.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="Session_.h" />
