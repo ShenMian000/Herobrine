@@ -4,15 +4,13 @@
 #ifndef SESSION_H_
 #define SESSION_H_
 
+#include <string>
+#include <memory>
+#include <boost/asio.hpp>
 
 
-typedef boost::shared_ptr<boost::asio::ip::tcp::socket> socket_ptr;
 
-struct system_info
-{
-	std::string language;
-	std::string architecture;
-};
+typedef std::shared_ptr<boost::asio::ip::tcp::socket> socket_ptr;
 
 
 class Session
@@ -30,9 +28,8 @@ private:
 	void OnWrite();
 	void OnRead();
 
-	char			  buffer[1024];
-	socket_ptr  pSock;
-	system_info systemInfo;
+	char			 buffer[1024];
+	socket_ptr pSock;
 };
 
 

@@ -34,8 +34,7 @@ void Server::OnAccept(const system::error_code& err, socket_ptr sock)
 
 	print::good("客户端接入: " + sock->remote_endpoint().address().to_string() + ":" + to_string(sock->remote_endpoint().port()));
 
-	// 添加新客户端
-
+	sessions.push_back(new Session(sock));
 
 	Accept();
 }

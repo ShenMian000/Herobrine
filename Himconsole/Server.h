@@ -9,7 +9,7 @@
 class Server
 {
 public:
-	Server(boost::asio::io_context&, ushort port);
+	Server(boost::asio::io_context&, unsigned short port);
 
 	void run();
 
@@ -19,5 +19,5 @@ private:
 
 	boost::asio::io_context&       ioc;
 	boost::asio::ip::tcp::acceptor acceptor;
-	std::vector<Session>           sessions;
+	std::vector<Session*>          sessions;
 };
