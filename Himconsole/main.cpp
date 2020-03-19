@@ -1,6 +1,6 @@
-// Copyright 2019 SMS
+Ôªø// Copyright 2019 SMS
 // License(Apache-2.0)
-// √¸¡Ó––
+// ÂëΩ‰ª§Ë°å
 
 #include "himconsole.h"
 #include "Server.h"
@@ -20,7 +20,7 @@ using namespace boost;
 int main()
 {
 	printf(
-			"  __      __    __\n"
+			"  __      __    __ \n"
 			" |  |    |  |  |__|   __________\n"
 			" |  |____|  |   __   |  __  __  |\n"
 			" |   ____   |  |  |  |  ||  ||  |\n"
@@ -37,7 +37,7 @@ int main()
 	Server server(ioc, 25565);
 	server.run();
 
-	ioc.run();
+	// ioc.run();
 
 	Console console;
 

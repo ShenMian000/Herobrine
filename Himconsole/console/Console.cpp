@@ -254,6 +254,8 @@ void Console::run()
 				break;
 
 			case '\t':
+				if(state == State::VALUE)
+					continue; // 值中无法出现'\t'
 				autoComplete.complete(buf);
 				if(state == State::KEY)
 				{
@@ -314,17 +316,20 @@ void Console::run()
 				buf += ch;
 			}
 
-			// 识别关键字
-			if(state == State::COMMAND)
-				pCommand = getCommand(buf);
-			else if(state == State::KEY)
-				pKey = getKey(buf);
+			if(state != State::VALUE)
+			{
+				// 识别关键字
+				if(state == State::COMMAND)
+					pCommand = getCommand(buf);
+				else if(state == State::KEY)
+					pKey = getKey(buf);
 
-			// 关键字高亮
-			highlight.run(state, buf, pCommand, pKey);
+				// 关键字高亮
+				highlight.run(state, buf, pCommand, pKey);
 
-			// 自动完成
-			autoComplete.run(state, buf, pCommand);
+				// 自动完成
+				autoComplete.run(state, buf, pCommand);
+			}
 		}
 
 		try
