@@ -27,6 +27,9 @@
     <ClInclude Include="attribute.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console.cpp">
@@ -44,5 +47,11 @@
     <ClCompile Include="attribute.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TODO.md" />
   </ItemGroup>
 </Project>

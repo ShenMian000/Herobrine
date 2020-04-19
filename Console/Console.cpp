@@ -82,6 +82,7 @@ void Console::run()
 			if(!isprint(c))
 				continue;
 
+			// 根据具体情况过滤非法字符
 			switch(state)
 			{
 			case InputState::Command:
@@ -169,23 +170,24 @@ void Console::run()
 			}
 		}
 	}
+}
 
 
-	// 添加命令
-	//   name : 要添加的命令名称
-	//   cmd  : 要添加的命令的指针
-	void Console::addCommand(const std::string& name, Command* cmd)
-	{
-		// 不存在名称
-		assert(cmd != nullptr);
+// 添加命令
+//   name : 要添加的命令名称
+//   cmd  : 要添加的命令的指针
+void Console::addCommand(const std::string& name, Command* cmd)
+{
+	// 不存在名称
+	assert(cmd != nullptr);
 
-		commands.insert({name, cmd});
-	}
+	commands.insert({name, cmd});
+}
 
 
-	// 设置命令提示符
-	//   prompt : 要设置的命令提示符
-	void Console::setPrompt(const string& prompt)
-	{
-		this->prompt = prompt;
-	}
+// 设置命令提示符
+//   prompt : 要设置的命令提示符
+void Console::setPrompt(const string& prompt)
+{
+	this->prompt = prompt;
+}
