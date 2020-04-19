@@ -5,11 +5,12 @@
 #ifndef CONSOLE_COLOR_H_
 #define CONSOLE_COLOR_H_
 
-// TODO(SMS): ½ö¹©µ÷ÊÔ
-#define OS_WIN
-
 #ifdef OS_WIN
 	#include <windows.h>
+#endif
+
+#ifdef OS_LINUX
+	#include <stdio.h>
 #endif
 
 #include <map>
@@ -59,8 +60,8 @@ public:
 		Mode mode;
 	};
 
-	static void add(unsigned int, Fore, Back, Mode);
-	static void set(unsigned int);
+	//static void add(unsigned int, Fore, Back, Mode);
+	//static void set(unsigned int);
 
 	static void set(Fore);
 	static void set(Back);
@@ -69,7 +70,7 @@ public:
 	static void reset();
 
 private:
-	static std::map<unsigned int, pair> pairs;
+	//static std::map<unsigned int, pair> pairs;
 
 #ifdef OS_WIN
 

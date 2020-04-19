@@ -24,9 +24,6 @@
     <ClInclude Include="print.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="attribute.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Color.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -42,9 +39,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="print.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="attribute.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Color.cpp">

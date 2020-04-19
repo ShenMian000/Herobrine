@@ -6,12 +6,13 @@
 
 typedef unsigned int uint;
 
-std::map<unsigned int, Color::pair> Color::pairs;
+//std::map<unsigned int, Color::pair> Color::pairs;
+
 
 
 
 // 添加配色方案
-void Color::add(uint id, Fore fore, Back back, Mode mode)
+/*void Color::add(uint id, Fore fore, Back back, Mode mode)
 {
 	pairs.insert(std::pair<uint, pair>(id, {fore, back, mode}));
 }
@@ -22,7 +23,7 @@ void Color::set(uint id)
 	set(pairs[id].fore);
 	set(pairs[id].back);
 	set(pairs[id].mode);
-}
+}*/
 
 
 #ifdef OS_WIN
@@ -82,3 +83,119 @@ public:
 WinColorInit winColorInit;
 
 #endif // OS_WIN
+
+
+#ifdef OS_LINUX
+
+// 设置前景色
+void Color::set(Fore attr)
+{
+	switch(attr)
+	{
+	case Fore::black:
+		printf("\033[30m");
+		break;
+
+	case Fore::blue:
+		printf("\033[34m");
+		break;
+
+	case Fore::cyan:
+		printf("\033[36m");
+		break;
+
+	case Fore::gray:
+		printf("");
+		break;
+
+	case Fore::green:
+		printf("\033[32m");
+		break;
+
+	case Fore::purple:
+		printf("\033[35m");
+		break;
+
+	case Fore::red:
+		printf("\033[31m");
+		break;
+
+	case Fore::white:
+		printf("\033[37m");
+		break;
+
+	case Fore::yellow:
+		printf("\033[33m");
+		break;
+	}
+}
+
+// 设置背景色
+void Color::set(Back attr)
+{
+	switch(attr)
+	{
+	case Back::black:
+		printf("\033[40;");
+		break;
+
+	case Back::blue:
+		printf("\033[34;");
+		break;
+
+	case Back::cyan:
+		printf("\033[36;");
+		break;
+
+	case Back::gray:
+		printf("");
+		break;
+
+	case Back::green:
+		printf("\033[32;");
+		break;
+
+	case Back::purple:
+		printf("\033[35;");
+		break;
+
+	case Back::red:
+		printf("\033[31;");
+		break;
+
+	case Back::white:
+		printf("\033[37;");
+		break;
+
+	case Back::yellow:
+		printf("\033[33;");
+		break;
+	}
+}
+
+// 设置其他属性
+void Color::set(Mode attr)
+{
+	switch(attr)
+	{
+	case Mode::back_bold:
+		printf("");
+		break;
+
+	case Mode::fore_bold:
+		printf("");
+		break;
+
+	case Mode::underline:
+		printf("\33[4m");
+		break;
+	}
+}
+
+// 还原默认属性
+void Color::reset()
+{
+	printf("\33[0m");
+}
+
+#endif // OS_LINUX
