@@ -5,6 +5,8 @@
 #ifndef CONSOLE_COLOR_H_
 #define CONSOLE_COLOR_H_
 
+#include "os.h"
+
 #ifdef OS_WIN
 	#include <windows.h>
 #endif
