@@ -10,7 +10,7 @@
 
 
 
-class print
+class Print
 {
 public:
 	static void info(const std::string&);

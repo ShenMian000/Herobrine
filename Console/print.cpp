@@ -8,10 +8,10 @@ using std::string;
 using std::mutex;
 
 
-mutex print::mutex;
+mutex Print::mutex;
 
 
-void print::info(const string& str)
+void Print::info(const string& str)
 {
 	mutex.lock();
 	Color::set(Color::Fore::blue);
@@ -22,7 +22,7 @@ void print::info(const string& str)
 	mutex.unlock();
 }
 
-void print::good(const string& str)
+void Print::good(const string& str)
 {
 	mutex.lock();
 	Color::set(Color::Fore::green);
@@ -33,7 +33,7 @@ void print::good(const string& str)
 	mutex.unlock();
 }
 
-void print::error(const string& str)
+void Print::error(const string& str)
 {
 	mutex.lock();
 	Color::set(Color::Fore::red);
@@ -44,7 +44,7 @@ void print::error(const string& str)
 	mutex.unlock();
 }
 
-void print::warn(const string& str)
+void Print::warn(const string& str)
 {
 	mutex.lock();
 	Color::set(Color::Fore::yellow);

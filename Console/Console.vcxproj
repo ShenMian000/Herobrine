@@ -142,14 +142,14 @@
     <ClInclude Include="Command.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="os.h" />
-    <ClInclude Include="print.h" />
+    <ClInclude Include="Print.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="print.cpp" />
+    <ClCompile Include="Print.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TODO.md" />
