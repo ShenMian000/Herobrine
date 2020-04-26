@@ -2,7 +2,7 @@
 
 ![banner](./banner.jpg)  
 
-For more information, please refer to [**Wiki**](https://gitee.com/ShenMian/Herobrine/wikis/).  
+For more information, please refer to [**Wiki**](https://gitee.com/ShenMian/Herobrine/wikis/).  :triangular_flag_on_post:
 
 **Feedback**  
 Welcome to submit errors or suggestions to [Issues](https://gitee.com/ShenMian/Herobrine/issues), or send e-mail to `shenmian000@outlook.com`/`shenmian000@foxmail.com`.  

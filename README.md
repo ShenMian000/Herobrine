@@ -2,7 +2,7 @@
 
 ![横幅](./banner.jpg) 
 
-详情请翻阅[**Wiki**](https://gitee.com/ShenMian/Herobrine/wikis/).  
+详情请翻阅[**Wiki**](https://gitee.com/ShenMian/Herobrine/wikis/).  :triangular_flag_on_post:
 
 **反馈**  
 欢迎提交错误或建议到[**Issues**](https://gitee.com/ShenMian/Herobrine/issues), 或发送电子邮件至`shenmian000@outlook.com`/`shenmian000@foxmail.com`.  

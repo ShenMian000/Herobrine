@@ -13,7 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "其他文件", "其他文�
 		LICENSE = LICENSE
 		README.en.md = README.en.md
 		README.md = README.md
-		README.zh-CN.md = README.zh-CN.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{D3B5AA27-BAA2-477C-BD63-13947AF624B2}"
