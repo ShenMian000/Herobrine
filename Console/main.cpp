@@ -1,5 +1,5 @@
-#include "Console.h"
-#include "Color.h"
+#include "console.h"
+#include "color.h"
 #include "print.h"
 
 int main()

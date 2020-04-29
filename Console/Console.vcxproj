@@ -138,18 +138,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Color.h" />
-    <ClInclude Include="Command.h" />
-    <ClInclude Include="Console.h" />
+    <ClInclude Include="color.h" />
+    <ClInclude Include="command.h" />
+    <ClInclude Include="console.h" />
     <ClInclude Include="os.h" />
-    <ClInclude Include="Print.h" />
+    <ClInclude Include="print.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Color.cpp" />
-    <ClCompile Include="Command.cpp" />
-    <ClCompile Include="Console.cpp" />
+    <ClCompile Include="color.cpp" />
+    <ClCompile Include="command.cpp" />
+    <ClCompile Include="console.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Print.cpp" />
+    <ClCompile Include="print.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TODO.md" />

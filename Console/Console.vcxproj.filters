@@ -21,13 +21,13 @@
     <ClInclude Include="Command.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Color.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="os.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Print.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="color.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

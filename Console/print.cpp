@@ -2,7 +2,7 @@
 // License(Apache-2.0)
 
 #include "print.h"
-#include "Color.h"
+#include "color.h"
 
 using std::string;
 using std::mutex;

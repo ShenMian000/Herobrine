@@ -2,7 +2,7 @@
 // License(Apache-2.0)
 // 修改控制台字体属性
 
-#include "Color.h"
+#include "color.h"
 
 typedef unsigned int uint;
 

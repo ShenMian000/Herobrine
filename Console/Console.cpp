@@ -1,8 +1,8 @@
 // Copyright 2019 SMS
 // License(Apache-2.0)
 
-#include "Console.h"
-#include "Command.h"
+#include "console.h"
+#include "command.h"
 #include <assert.h>
 
 #include <conio.h>
