@@ -29,7 +29,7 @@ void Session::Write(const string& buf)
 
 void Session::Read()
 {
-	memset(buffer, sizeof(buffer), '\0');
+	memset(buffer, '\0', sizeof(buffer));
 	sock.async_read_some(asio::buffer(buffer), boost::bind(&Session::OnRead, this, asio::placeholders::error, asio::placeholders::bytes_transferred));
 }
 
