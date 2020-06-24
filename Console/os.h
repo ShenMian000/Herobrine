@@ -9,9 +9,9 @@
 #ifdef _WIN32
 	#define OS_WIN // Windows
 	#ifdef _WIN64
-		#define OS_WIN64
+		#define OS_WIN_64
 	#else
-		#define OS_WIN32
+		#define OS_WIN_32
 	#endif
 #else
 	#define OS_LINUX // Linux
