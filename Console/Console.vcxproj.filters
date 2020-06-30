@@ -15,12 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Console.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="os.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -30,21 +24,24 @@
     <ClInclude Include="color.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="console.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="command.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Console.cpp">
+    <ClCompile Include="Color.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Print.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Command.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Color.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Print.cpp">
+    <ClCompile Include="command.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

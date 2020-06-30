@@ -147,7 +147,6 @@
   <ItemGroup>
     <ClCompile Include="color.cpp" />
     <ClCompile Include="command.cpp" />
-    <ClCompile Include="console.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="print.cpp" />
   </ItemGroup>
