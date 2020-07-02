@@ -3,16 +3,16 @@
 
 #include <stdio.h>
 #include "console.h"
+#include "print.h"
 
 int main()
 {
 	Console console;
 
-	while(true)
+	/*while(true)
 	{
 		printf("him> ");
-		console.run();
-	}
+	}*/
 
 	return 0;
 }

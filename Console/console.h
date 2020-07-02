@@ -4,11 +4,6 @@
 class Console
 {
 public:
-	virtual ~Console();
-
-	void insertCommand();
-
-	void run();
 
 private:
 };

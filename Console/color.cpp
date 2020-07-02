@@ -1,201 +1,134 @@
 // Copyright 2020 SMS
 // License(Apache-2.0)
-// 修改控制台字体属性
 
 #include "color.h"
+#include <stdio.h>
+#include <assert.h>
 
-typedef unsigned int uint;
-
-//std::map<unsigned int, Color::pair> Color::pairs;
-
-
-
-
-// 添加配色方案
-/*void Color::add(uint id, Fore fore, Back back, Mode mode)
+Color::Color(Fore f, Back b, bool bold, bool underline, bool reverse)
+	: fore(f), back(b), bold(bold), underline(underline), reverse(reverse)
 {
-	pairs.insert(std::pair<uint, pair>(id, {fore, back, mode}));
+	Compile();
 }
 
-// 使用配色方案
-void Color::set(uint id)
+Color::Color(Fore f, bool bold, bool underline, bool reverse)
+	: fore(f), back(Back::none), bold(bold), underline(underline), reverse(reverse)
 {
-	set(pairs[id].fore);
-	set(pairs[id].back);
-	set(pairs[id].mode);
-}*/
+	Compile();
+}
 
+Color::Color(Back b, bool bold, bool underline, bool reverse)
+	: fore(Fore::none), back(b), bold(bold), underline(underline), reverse(reverse)
+{
+	Compile();
+}
+
+void Color::print(const std::string& str)
+{
+	on();
+	printf("%s", str.c_str());
+	off();
+}
+
+void Color::on()
+{
+#ifdef OS_LINUX
+	printf("%s", attribute.c_str());
+#endif
 
 #ifdef OS_WIN
-
-HANDLE Color::hStdOut;
-WORD	 Color::attr;
-WORD	 Color::defAttr;
-
-
-// 设置前景色
-void Color::set(Fore attr)
-{
-	Color::attr &= 0xf0;
-	Color::attr |= (WORD)attr;
-	SetConsoleTextAttribute(hStdOut, Color::attr);
+	SetConsoleTextAttribute(hStdOut, attribute);
+#endif
 }
 
-// 设置背景色
-void Color::set(Back attr)
+void Color::off()
 {
-	Color::attr &= 0x0f;
-	Color::attr |= (WORD)attr;
-	SetConsoleTextAttribute(hStdOut, Color::attr);
+#ifdef OS_LINUX
+	printf("\e[0m");
+#endif
+
+#ifdef OS_WIN
+	SetConsoleTextAttribute(hStdOut, defAttribute);
+#endif
 }
 
-// 设置其他属性
-void Color::set(Mode attr)
+Color::Fore Color::getFore() const
 {
-	Color::attr |= (WORD)attr;
-	SetConsoleTextAttribute(hStdOut, Color::attr);
+	return fore;
 }
 
-
-// 还原默认属性
-void Color::reset()
+Color::Back Color::getBack() const
 {
-	attr = defAttr;
-	SetConsoleTextAttribute(hStdOut, attr);
+	return back;
 }
 
-
-class WinColorInit
+void Color::setFore(Fore f)
 {
-public:
-	WinColorInit()
+	fore = f;
+	Compile();
+}
+
+void Color::setBack(Back b)
+{
+	back = b;
+	Compile();
+}
+
+void Color::Compile()
+{
+#ifdef OS_LINUX
+	attribute = "\e[";
+
+	if(fore != Fore::none)
+		attribute += ';' + std::to_string((int)fore + 30);
+
+	if(back != Back::none)
+		attribute += ';' + std::to_string((int)back + 40);
+
+	if(bold)
+		attribute += ";1";
+
+	if(underline)
+		attribute += ";4";
+
+	if(reverse)
+		attribute += ";7";
+
+	attribute += 'm';
+#endif
+
+#ifdef OS_WIN
+	if(hStdOut == NULL)
 	{
-		Color::hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+		hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 		// 获取当前缓冲区字符属性
 		CONSOLE_SCREEN_BUFFER_INFO bufInfo;
-		GetConsoleScreenBufferInfo(Color::hStdOut, &bufInfo);
-		Color::defAttr = bufInfo.wAttributes;
-		Color::attr		 = bufInfo.wAttributes;
+		GetConsoleScreenBufferInfo(hStdOut, &bufInfo);
+		defAttribute = bufInfo.wAttributes;
 	}
-};
 
-WinColorInit winColorInit;
-
-#endif // OS_WIN
-
-
-#ifdef OS_LINUX
-
-// 设置前景色
-void Color::set(Fore attr)
-{
-	switch(attr)
+	attribute = defAttribute;
+	
+	if(fore != Fore::none)
 	{
-	case Fore::black:
-		printf("\033[30m");
-		break;
-
-	case Fore::blue:
-		printf("\033[34m");
-		break;
-
-	case Fore::cyan:
-		printf("\033[36m");
-		break;
-
-	case Fore::gray:
-		printf("");
-		break;
-
-	case Fore::green:
-		printf("\033[32m");
-		break;
-
-	case Fore::purple:
-		printf("\033[35m");
-		break;
-
-	case Fore::red:
-		printf("\033[31m");
-		break;
-
-	case Fore::white:
-		printf("\033[37m");
-		break;
-
-	case Fore::yellow:
-		printf("\033[33m");
-		break;
+		attribute &= 0xf0;
+		attribute |= (int)fore;
 	}
-}
 
-// 设置背景色
-void Color::set(Back attr)
-{
-	switch(attr)
+	if(back != Back::none)
 	{
-	case Back::black:
-		printf("\033[40;");
-		break;
-
-	case Back::blue:
-		printf("\033[34;");
-		break;
-
-	case Back::cyan:
-		printf("\033[36;");
-		break;
-
-	case Back::gray:
-		printf("");
-		break;
-
-	case Back::green:
-		printf("\033[32;");
-		break;
-
-	case Back::purple:
-		printf("\033[35;");
-		break;
-
-	case Back::red:
-		printf("\033[31;");
-		break;
-
-	case Back::white:
-		printf("\033[37;");
-		break;
-
-	case Back::yellow:
-		printf("\033[33;");
-		break;
+		attribute &= 0x0f;
+		attribute |= (int)back * 0x10;
 	}
+
+	if(bold)
+		attribute |= FOREGROUND_INTENSITY; // 前景色加强
+
+	if(underline)
+		attribute |= COMMON_LVB_UNDERSCORE;
+
+	if(reverse)
+		attribute |= COMMON_LVB_REVERSE_VIDEO;
+#endif
 }
-
-// 设置其他属性
-void Color::set(Mode attr)
-{
-	switch(attr)
-	{
-	case Mode::back_bold:
-		printf("");
-		break;
-
-	case Mode::fore_bold:
-		printf("");
-		break;
-
-	case Mode::underline:
-		printf("\33[4m");
-		break;
-	}
-}
-
-// 还原默认属性
-void Color::reset()
-{
-	printf("\33[0m");
-}
-
-#endif // OS_LINUX

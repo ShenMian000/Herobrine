@@ -14,10 +14,7 @@ mutex Print::mutex;
 void Print::info(const string& str)
 {
 	mutex.lock();
-	Color::set(Color::Fore::blue);
-	Color::set(Color::Mode::fore_bold);
-	printf("[*] ");
-	Color::reset();
+	Color(Color::Fore::blue).print("[*] ");
 	puts(str.c_str());
 	mutex.unlock();
 }
@@ -25,10 +22,7 @@ void Print::info(const string& str)
 void Print::good(const string& str)
 {
 	mutex.lock();
-	Color::set(Color::Fore::green);
-	Color::set(Color::Mode::fore_bold);
-	printf("[+] ");
-	Color::reset();
+	Color(Color::Fore::green).print("[+] ");
 	puts(str.c_str());
 	mutex.unlock();
 }
@@ -36,10 +30,7 @@ void Print::good(const string& str)
 void Print::error(const string& str)
 {
 	mutex.lock();
-	Color::set(Color::Fore::red);
-	Color::set(Color::Mode::fore_bold);
-	printf("[-] ");
-	Color::reset();
+	Color(Color::Fore::red).print("[-] ");
 	puts(str.c_str());
 	mutex.unlock();
 }
@@ -47,10 +38,7 @@ void Print::error(const string& str)
 void Print::warn(const string& str)
 {
 	mutex.lock();
-	Color::set(Color::Fore::yellow);
-	Color::set(Color::Mode::fore_bold);
-	printf("[!] ");
-	Color::reset();
+	Color(Color::Fore::yellow).print("[!] ");
 	puts(str.c_str());
 	mutex.unlock();
 }

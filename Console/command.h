@@ -11,7 +11,7 @@ class Command
 	struct Syntax;
 
 public:
-	virtual void execute();
+	virtual void execute(Console&);
 	
 	void insertSyntax(const std::string&, const Syntax&);
 

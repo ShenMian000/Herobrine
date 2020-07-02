@@ -3,7 +3,7 @@
 
 #include "command.h"
 
-void Command::execute()
+void Command::execute(Console& c)
 {
-	func();
+	func(c);
 }
