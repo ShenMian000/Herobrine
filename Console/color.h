@@ -34,13 +34,13 @@ public:
 	void setBack(Back);
 
 private:
-	void Compile(); // 根据属性更新attribute
+	void Compile();
 
 	Fore fore;
 	Back back;
-	bool bold;			// 高亮
-	bool underline;	// 下划线
-	bool reverse;   // 反转
+	bool bold;
+	bool underline;
+	bool reverse;
 
 #ifdef OS_LINUX
 	std::string attribute;
