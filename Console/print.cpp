@@ -13,32 +13,36 @@ mutex Print::mutex;
 
 void Print::info(const string& str)
 {
+	static Color blue(Color::Fore::blue);
 	mutex.lock();
-	Color(Color::Fore::blue).print("[*] ");
+	blue.print("[*] ");
 	puts(str.c_str());
 	mutex.unlock();
 }
 
 void Print::good(const string& str)
 {
+	static Color green(Color::Fore::green);
 	mutex.lock();
-	Color(Color::Fore::green).print("[+] ");
+	green.print("[+] ");
 	puts(str.c_str());
 	mutex.unlock();
 }
 
 void Print::error(const string& str)
 {
+	static Color red(Color::Fore::red);
 	mutex.lock();
-	Color(Color::Fore::red).print("[-] ");
+	red.print("[-] ");
 	puts(str.c_str());
 	mutex.unlock();
 }
 
 void Print::warn(const string& str)
 {
+	static Color yellow(Color::Fore::yellow);
 	mutex.lock();
-	Color(Color::Fore::yellow).print("[!] ");
+	yellow.print("[!] ");
 	puts(str.c_str());
 	mutex.unlock();
 }
