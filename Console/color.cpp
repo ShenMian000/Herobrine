@@ -52,6 +52,7 @@ void Color::off()
 #endif
 }
 
+/*
 Color::Fore Color::getFore() const
 {
 	return fore;
@@ -73,6 +74,7 @@ void Color::setBack(Back b)
 	back = b;
 	Compile();
 }
+*/
 
 void Color::Compile()
 {

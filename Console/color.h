@@ -27,11 +27,13 @@ public:
 	void on();
 	void off();
 
+	/*
 	Fore getFore() const;
 	Back getBack() const;
 
 	void setFore(Fore);
 	void setBack(Back);
+	*/
 
 private:
 	void Compile();
