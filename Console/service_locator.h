@@ -8,18 +8,20 @@
 #include <string>
 #include <map>
 
-class Service
-{
-};
+class Service;
 
 class ServiceLocator
 {
 public:
-	void     addService(const std::string&, Service*);
+	void     addService(const std::string&, Service&);
 	Service& getService(const std::string&);
 
 private:
 	std::map<std::string, Service*> services;
+};
+
+class Service
+{
 };
 
 #endif // SERVICE_LOCATOR_H_

@@ -7,18 +7,20 @@
 #include <string>
 #include <mutex>
 
-class Service;
+#include "service_locator.h"
 
-class Print : Service
+class Print : public Service
 {
 public:
+	Print(std::mutex&);
+
 	void info(const std::string&);
 	void good(const std::string&);
 	void error(const std::string&);
 	void warn(const std::string&);
 
 private:
-	std::mutex mutex;
+	std::mutex& mutex;
 
 };
 

@@ -4,11 +4,13 @@
 #include <stdio.h>
 #include "service_locator.h"
 #include "print.h"
-#include "console.h"
 
 int main()
 {
 	ServiceLocator sl;
+	
+	std::mutex out;
+	Print*     print = new Print(out);
 
 	return 0;
 }
