@@ -2,17 +2,13 @@
 // License(Apache-2.0)
 
 #include <stdio.h>
-#include "console.h"
+#include "service_locator.h"
 #include "print.h"
+#include "console.h"
 
 int main()
 {
-	Console console;
-
-	/*while(true)
-	{
-		printf("him> ");
-	}*/
+	ServiceLocator sl;
 
 	return 0;
 }

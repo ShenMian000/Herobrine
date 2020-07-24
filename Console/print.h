@@ -1,27 +1,25 @@
 // Copyright 2020 SMS
 // License(Apache-2.0)
-//
 
-#ifndef PRINT_H_
-#define PRINT_H_
+#ifndef PRINT_SERVICE_H_
+#define PRINT_SERVICE_H_
 
 #include <string>
 #include <mutex>
 
+class Service;
 
-
-class Print
+class Print : Service
 {
 public:
-	static void info(const std::string&);
-	static void good(const std::string&);
-	static void error(const std::string&);
-	static void warn(const std::string&);
+	void info(const std::string&);
+	void good(const std::string&);
+	void error(const std::string&);
+	void warn(const std::string&);
 
 private:
-	static std::mutex mutex;
+	std::mutex mutex;
+
 };
 
-
-
-#endif // PRINT_H_
+#endif // PRINT_SERVICE_H_

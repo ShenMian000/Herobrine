@@ -1,21 +1,16 @@
 // Copyright 2020 SMS
 // License(Apache-2.0)
 
-#include "print.h"
+#include "Print_service.h"
 #include "color.h"
 
 using std::string;
-using std::mutex;
-
-
-mutex Print::mutex;
-
 
 void Print::info(const string& str)
 {
 	static Color blue(Color::Fore::blue);
 	mutex.lock();
-	blue.print("[*] ");
+	blue.Print("[*] ");
 	puts(str.c_str());
 	mutex.unlock();
 }
@@ -24,7 +19,7 @@ void Print::good(const string& str)
 {
 	static Color green(Color::Fore::green);
 	mutex.lock();
-	green.print("[+] ");
+	green.Print("[+] ");
 	puts(str.c_str());
 	mutex.unlock();
 }
@@ -33,7 +28,7 @@ void Print::error(const string& str)
 {
 	static Color red(Color::Fore::red);
 	mutex.lock();
-	red.print("[-] ");
+	red.Print("[-] ");
 	puts(str.c_str());
 	mutex.unlock();
 }
@@ -42,7 +37,7 @@ void Print::warn(const string& str)
 {
 	static Color yellow(Color::Fore::yellow);
 	mutex.lock();
-	yellow.print("[!] ");
+	yellow.Print("[!] ");
 	puts(str.c_str());
 	mutex.unlock();
 }
