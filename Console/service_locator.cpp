@@ -3,22 +3,29 @@
 // 服务定位器模式
 
 #include "service_locator.h"
-#include <assert.h>
 
-void ServiceLocator::addService(const std::string& id, Service& s)
+using std::string;
+
+void ServiceLocator::addService(const string& id, Service* s)
 {
-	if(services.find(id) == services.end())
-		assert(false); // ID 已存在
+	if(services.find(id) != services.end())
+		throw std::invalid_argument("ID already exists");
 
-	services.insert({id, &s});
+	services.insert({id, s});
 }
 
-Service& ServiceLocator::getService(const std::string& id)
+template <class T>
+T* ServiceLocator::getService(const string& id)
 {
-	Service s = services.find(id);
-	
-	if(s != services.end())
-		assert(false); // ID 不存在
+	auto s = services.find(id);
 
-	return *s;
+	if(s == services.end())
+		throw std::invalid_argument("ID does not exist");
+
+	return dynamic_cast<T*>(s->second);
+}
+
+
+Service::~Service()
+{
 }

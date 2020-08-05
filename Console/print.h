@@ -6,7 +6,6 @@
 
 #include <string>
 #include <mutex>
-
 #include "service_locator.h"
 
 class Print : public Service
@@ -21,7 +20,6 @@ public:
 
 private:
 	std::mutex& mutex;
-
 };
 
 #endif // PRINT_SERVICE_H_

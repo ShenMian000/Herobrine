@@ -2,25 +2,23 @@
 // License(Apache-2.0)
 
 #include "console.h"
+#include <conio.h>
 #include <assert.h>
-#include <stdexcept>
 
-using namespace std;
-
-void Console::execute(const std::string& cmd)
+void Console::inputLine()
 {
-	
+	do
+	{
+		char c = _getch();
+		input.handle(c);
+	} while(!input.isEnded());
 }
 
-const string& Console::getStringArg(const string& key)
+void Console::setCommand(const std::string&)
 {
-	try
-	{
-		return args.at(key);
-	}
-	catch(std::out_of_range)
-	{
-		// 尝试访问不存在的参数
-		assert(false);
-	}
+}
+
+void Console::addParameter(const std::string& key, const std::string& value)
+{
+	parameters.insert({key, value});
 }

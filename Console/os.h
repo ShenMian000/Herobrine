@@ -4,7 +4,6 @@
 #ifndef OS_H_
 #define OS_H_
 
-
 // 定义操作系统宏, 用于判断操作系统类型
 #ifdef _WIN32
 	#define OS_WIN // Windows
@@ -19,8 +18,6 @@
 	#endif
 
 	#define OS_LINUX // Linux
-
 #endif
-
 
 #endif // OS_H_

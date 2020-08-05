@@ -26,7 +26,7 @@ Color::Color(Back b, bool bold, bool underline, bool reverse)
 void Color::print(const std::string& str)
 {
 	on();
-	printf("%s", str.c_str());
+	printf(str.c_str());
 	off();
 }
 

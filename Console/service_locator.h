@@ -5,23 +5,28 @@
 #ifndef SERVICE_LOCATOR_H_
 #define SERVICE_LOCATOR_H_
 
+#include <assert.h>
 #include <string>
 #include <map>
+#include <stdexcept>
 
-class Service;
+using std::string;
+using std::string;
+
+class Service
+{
+public:
+	virtual ~Service();
+};
 
 class ServiceLocator
 {
 public:
-	void     addService(const std::string&, Service&);
-	Service& getService(const std::string&);
+	void addService(const std::string&, Service*);
+	template <class T> T* getService(const std::string&);
 
 private:
 	std::map<std::string, Service*> services;
-};
-
-class Service
-{
 };
 
 #endif // SERVICE_LOCATOR_H_

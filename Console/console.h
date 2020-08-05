@@ -1,16 +1,25 @@
 // Copyright 2020 SMS
 // License(Apache-2.0)
 
+#ifndef CONSOLE_H_
+#define CONSOLE_H_
+
 #include <string>
-#include <unordered_map>
+#include <map>
+#include "console_input.h"
 
 class Console
 {
 public:
-	void execute(const std::string& cmd);
+	void inputLine();
 
-	const std::string& getStringArg(const std::string& key);
+	void setCommand(const std::string&);
+	void addParameter(const std::string&, const std::string&);
 
 private:
-	std::unordered_map<std::string, std::string> args;
+	std::map<std::string, std::string> parameters;
+	ConsoleInput input;
 };
+
+#endif // CONSOLE_H_
+
